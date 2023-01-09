@@ -1,18 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
+using Photon.Pun;
+using Tools;
 using UnityEngine;
 
 public class GameAdministrator : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static PlayerManager localPlayer;
+    public static NetworkDelegate.OnServerUpdate NetworkUpdate;
+    public static NetworkDelegate.OnUpdated OnUpdated;
+    
+    public double tickRate;
+    private double timer;
+    private double lastTickTime;
+    
+    private void Awake()
     {
-        
+        OnUpdated += UpdateNetwork;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        OnUpdated?.Invoke();
+    }
+
+    public void UpdateNetwork()
+    {
+        if (timer >= 1.00 / tickRate)
+        {
+            Tick();
+            lastTickTime = PhotonNetwork.Time;
+        }
+        else
+        {
+            timer = PhotonNetwork.Time - lastTickTime;
+        }
+    }
+    
+    void Tick()
+    {
+        NetworkUpdate?.Invoke();
     }
 }

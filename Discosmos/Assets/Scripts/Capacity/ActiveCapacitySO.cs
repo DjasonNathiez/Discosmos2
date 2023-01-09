@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ActiveCapacitySO : MonoBehaviour
+public abstract class ActiveCapacitySO : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public ActiveCapacity activeCapacity;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public int amount;
+
+    public byte index;
+    public float castTime;
+    public float cooldownTime;
+
+    public float durationBase;
+    public float speedBase;
+
+    public abstract void GetActiveCapacity();
 }

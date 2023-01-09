@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VegaAnimationController : MonoBehaviour
+public class VegaAnimationController : AnimationController
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+   public void CastVegaBlackHole()
+   {
+   }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   public void CastVegaUltimate()
+   {
+      
+   }
 }
