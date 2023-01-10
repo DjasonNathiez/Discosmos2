@@ -94,6 +94,7 @@ public class Rail : MonoBehaviour
             }
             else if (down)
             {
+
                 downTimer -= Time.deltaTime;
                 material.SetFloat("_Slider",Mathf.Lerp(material.GetFloat("_Slider"),1.2f,Time.deltaTime*2));
             }
@@ -117,6 +118,7 @@ public class Rail : MonoBehaviour
                 {
                     if(Vector3.SqrMagnitude(new Vector3(player.transform.position.x,0,player.transform.position.z) - new Vector3(distancedNodes[0].x,0,distancedNodes[0].z)) <= entryZoneLenght * entryZoneLenght)
                     {
+                        Debug.Log("Contact Rail");
                         player.OnEnterRail(this,true,0);
                         material.SetFloat("_Reverse",1);
                         material.SetFloat("_Slider",-0.2f);
@@ -124,6 +126,7 @@ public class Rail : MonoBehaviour
                     }
                     else if (Vector3.SqrMagnitude(new Vector3(player.transform.position.x, 0, player.transform.position.z) - new Vector3(distancedNodes[distancedNodes.Count - 1].x, 0, distancedNodes[distancedNodes.Count - 1].z)) <= entryZoneLenght * entryZoneLenght)
                     {
+                        Debug.Log("Contact Rail");
                         player.OnEnterRail(this,false,distancedNodes.Count - 1);
                         material.SetFloat("_Reverse",0);
                         material.SetFloat("_Slider",-0.2f);

@@ -51,7 +51,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
-        ChangePlayerCharacter(Enums.Characters.Mimi);
+        ChangePlayerCharacter(Enums.Characters.Vega);
         ChangePlayerTeam(Enums.Team.Green);
     }
 
