@@ -133,6 +133,8 @@ public class PlayerController : MonoBehaviour
 
     private void KeepDirection()
     {
+        transform.position += direction * (manager.currentSpeed * Time.deltaTime);
+        
         manager.force -= manager.slowDownCurve.Evaluate(manager.force) * Time.deltaTime;
         manager.force = Mathf.Clamp01(manager.force);
         
@@ -198,6 +200,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnEnterRail(Rail railLD, bool forward, int startIndex)
     {
+        Debug.Log("Enter Rail");
         //ResetTarget();
         onRamp = true;
         forwardOnRamp = forward;
@@ -210,7 +213,7 @@ public class PlayerController : MonoBehaviour
         
         ChangeAnimation(3);
         
-        manager.sparkles.SetActive(true);
+        if(manager.sparkles) manager.sparkles.SetActive(true);
     }
 
     
@@ -303,12 +306,12 @@ public class PlayerController : MonoBehaviour
     {
         switch (manager.currentCharacter)
         {
-            case Enums.CurrentCharacter.Mimi:
+            case Enums.Characters.Mimi:
                 mimiAnimator.SetInteger("Animation",index);
 
                 break;
             
-            case Enums.CurrentCharacter.Vega:
+            case Enums.Characters.Vega:
                 vegaAnimator.SetInteger("Animation",index);
                 break;
         }
