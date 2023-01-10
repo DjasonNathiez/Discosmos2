@@ -9,11 +9,20 @@
     
     public class Enums
     {
-        public enum CurrentCharacter
+        public enum Characters
         {
             Mimi,
-            Vega
+            Vega,
+            Null
         }
+
+        public enum Team
+        {
+            Pink,
+            Green,
+            Neutral
+        }
+        
         public enum MovementType
         {
             MoveToClick,

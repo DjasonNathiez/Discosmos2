@@ -303,12 +303,12 @@ public class PlayerController : MonoBehaviour
     {
         switch (manager.currentCharacter)
         {
-            case Enums.CurrentCharacter.Mimi:
+            case Enums.Characters.Mimi:
                 mimiAnimator.SetInteger("Animation",index);
 
                 break;
             
-            case Enums.CurrentCharacter.Vega:
+            case Enums.Characters.Vega:
                 vegaAnimator.SetInteger("Animation",index);
                 break;
         }

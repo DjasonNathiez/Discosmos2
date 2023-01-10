@@ -245,6 +245,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4413636368408399306, guid: c42e4ebfdfa897d45b3b1d1c7dc882cc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4413636368500347528, guid: c42e4ebfdfa897d45b3b1d1c7dc882cc,
         type: 3}
       propertyPath: m_Name
@@ -701,41 +706,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 820134595730722678, guid: d6b7cd03a79e5c748af9c6d45e3aa8e4,
-        type: 3}
-      propertyPath: sceneViewId
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1303469052307901206, guid: d6b7cd03a79e5c748af9c6d45e3aa8e4,
-        type: 3}
-      propertyPath: m_Speed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1303469052307901206, guid: d6b7cd03a79e5c748af9c6d45e3aa8e4,
-        type: 3}
-      propertyPath: m_Height
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1303469052307901206, guid: d6b7cd03a79e5c748af9c6d45e3aa8e4,
-        type: 3}
-      propertyPath: m_Acceleration
-      value: 360
-      objectReference: {fileID: 0}
-    - target: {fileID: 1303469052307901206, guid: d6b7cd03a79e5c748af9c6d45e3aa8e4,
-        type: 3}
-      propertyPath: m_AngularSpeed
-      value: 720
-      objectReference: {fileID: 0}
-    - target: {fileID: 1462538706748285851, guid: d6b7cd03a79e5c748af9c6d45e3aa8e4,
-        type: 3}
-      propertyPath: sceneViewId
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4781810356583603457, guid: d6b7cd03a79e5c748af9c6d45e3aa8e4,
-        type: 3}
-      propertyPath: sceneViewId
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4809639663765671438, guid: d6b7cd03a79e5c748af9c6d45e3aa8e4,
         type: 3}
       propertyPath: m_Name
@@ -795,11 +765,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6319531978680929546, guid: d6b7cd03a79e5c748af9c6d45e3aa8e4,
-        type: 3}
-      propertyPath: sceneViewId
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6b7cd03a79e5c748af9c6d45e3aa8e4, type: 3}
