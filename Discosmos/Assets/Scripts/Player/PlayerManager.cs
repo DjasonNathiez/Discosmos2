@@ -1,3 +1,5 @@
+using System;
+using Photon.Pun;
 using Tools;
 using UnityEngine;
 
@@ -6,11 +8,14 @@ public class PlayerManager : MonoBehaviour
     [Header("REFERENCES")] 
     public PlayerController controller;
     public Camera _camera;
+    public GameObject cameraObject;
+    public PhotonView photonView;
     
     //Visual
     public GameObject sparkles;
 
     [Header("STATE")] 
+    public static bool isLoaded;
     public bool isCasting;
     public Enums.Characters currentCharacter;
 
@@ -49,14 +54,57 @@ public class PlayerManager : MonoBehaviour
 
     #region UNITY METHODS
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+        
+        if(photonView == null) photonView = PhotonView.Get(gameObject);
+    }
+
     private void Start()
     {
-        ChangePlayerCharacter(Enums.Characters.Vega);
-        ChangePlayerTeam(Enums.Team.Green);
+        name = "Client" + "_" + photonView.Owner.NickName + "_" + photonView.ViewID + "_IsMine : " + photonView.IsMine;
+    }
+
+    private void Update()
+    {
+        if (GameAdministrator.gameState == Enums.GameState.Game && !controller.gameObject.activeSelf)
+        {
+            ActivePlayerVisual();
+        }
     }
 
     #endregion
 
+    public void Initialize()
+    {
+        if (photonView == null)
+        {
+            photonView = GetComponent<PhotonView>();
+        }
+        
+        if (photonView.IsMine)
+        {
+            _camera.enabled = true;
+            controller.enabled = true;
+        }
+    }
+
+    public void ActivePlayerVisual()
+    {
+        if (photonView.IsMine)
+        {
+            cameraObject.SetActive(true);
+        }
+        
+        controller.gameObject.SetActive(true);
+
+        ChangePlayerCharacter(Enums.Characters.Vega);
+        ChangePlayerTeam(Enums.Team.Green);
+
+        isLoaded = true;
+    }
+    
     public void ChangePlayerCharacter(Enums.Characters character)
     {
         if(currentCharacter == character) return;

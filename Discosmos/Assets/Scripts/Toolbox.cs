@@ -9,6 +9,20 @@
     
     public class Enums
     {
+        public enum GameState
+        {
+            Disconnected,
+            Hub,
+            Game
+        }
+
+        public enum NetworkRoomState
+        {
+            Inside,
+            Outside,
+            Switch
+        }
+        
         public enum Characters
         {
             Mimi,

@@ -1,19 +1,46 @@
+using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Realtime;
 using Tools;
 using UnityEngine;
 
-public class GameAdministrator : MonoBehaviour
+public class GameAdministrator : MonoBehaviourPunCallbacks
 {
+    public static GameAdministrator instance;
+
+    [Header("STATE")]
+    public static Enums.GameState gameState = Enums.GameState.Disconnected;
+    public static Enums.NetworkRoomState roomState = Enums.NetworkRoomState.Outside;
+    
+    [Header("NETWORK UPDATE")]  
     public static PlayerManager localPlayer;
     public static NetworkDelegate.OnServerUpdate NetworkUpdate;
     public static NetworkDelegate.OnUpdated OnUpdated;
     
-    public double tickRate;
+    public double tickRate = 0.2f;
     private double timer;
     private double lastTickTime;
+
+    [Header("GAME DATA")] 
+    public static int playerPerGame = 2;
+
+    public static List<PlayerManager> players;
     
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
+
+        players = new List<PlayerManager>();
+        
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
         OnUpdated += UpdateNetwork;
     }
 
@@ -38,5 +65,14 @@ public class GameAdministrator : MonoBehaviour
     void Tick()
     {
         NetworkUpdate?.Invoke();
+        Debug.Log("tick");
     }
+
+    public static void UpdatePlayersList()
+    {
+        players.Clear();
+        players.AddRange(FindObjectsOfType<PlayerManager>());
+    }
+
+   
 }
