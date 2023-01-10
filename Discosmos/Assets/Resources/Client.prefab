@@ -369,7 +369,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 6455215863271625269}
-  sceneViewId: 0
+  sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &6455215863271625269
@@ -1068,11 +1068,15 @@ MonoBehaviour:
   - {fileID: 2434600912362620563}
   - {fileID: 449635866936818616}
   - {fileID: 5650383395514419003}
-  pinkMaterial: {fileID: 0}
-  greenMaterial: {fileID: 0}
+  pinkMaterial: {fileID: 2100000, guid: 953f208ba53abd54e852311d18549220, type: 2}
+  greenMaterial: {fileID: 2100000, guid: 08163484fc8a9d14ea96a55b36ae1684, type: 2}
   neutralMaterial: {fileID: 0}
   capacity1Index: 0
   capacity2Index: 0
+  weaponPart: {fileID: 5650383395514419003}
+  pinkWeaponMaterial: {fileID: 2100000, guid: de48daffaae1ba44aa7380f34b912329, type: 2}
+  greenWeaponMaterial: {fileID: 2100000, guid: df9d1f0de52c41e4ebd116ed892c9e84, type: 2}
+  neutralWeaponMaterial: {fileID: 0}
 --- !u!114 &1462538706748285851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1093,7 +1097,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 6802419628345459760}
-  sceneViewId: 0
+  sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &6802419628345459760
@@ -3435,7 +3439,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 0
+  sceneViewId: 4
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &4809639664043971264
@@ -3588,7 +3592,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 2165956080062404778}
-  sceneViewId: 0
+  sceneViewId: 3
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &4809639664117432520

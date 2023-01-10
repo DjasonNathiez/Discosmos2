@@ -16,7 +16,7 @@ public class AnimationController : MonoBehaviour
     public int capacity1Index;
     public int capacity2Index;
 
-    public void SetTeamMaterial()
+    public virtual void SetTeamMaterial()
     {
         for (int i = 0; i < bodyParts.Length; i++)
         {
