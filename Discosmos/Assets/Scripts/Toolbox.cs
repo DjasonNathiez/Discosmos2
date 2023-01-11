@@ -6,6 +6,23 @@
         public delegate void OnServerUpdate();
         public delegate void OnUpdated();
     }
+
+    public class RaiseEvent
+    {
+        //PlayerSetup
+        public static byte SetCharacter = 1;
+        public static byte SetTeam = 2;
+        
+        //Input
+        public static byte Input = 10;
+
+        //BEGIN AT 100
+        public static byte DamageTarget = 100;
+        public static byte HealTarget = 101;
+        public static byte Death = 102;
+        public static byte HitStopTarget = 103;
+        public static byte KnockBackTarget = 104;
+    }
     
     public class Enums
     {

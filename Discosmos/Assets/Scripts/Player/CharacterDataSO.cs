@@ -1,18 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterDataSO : MonoBehaviour
+[CreateAssetMenu(order = 0, menuName = "Character Data", fileName = "new character data")]
+public class CharacterDataSO : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("STATE")]
+    public int maxHealth;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("MOVEMENT")]
+    public float baseSpeed;
+    public AnimationCurve speedCurve;
+    public AnimationCurve slowDownCurve;
+    
+    [Header("COMBAT")]
+    public int attackDamage;
+    public float attackRange;
+    public float attackSpeed;
+    public AnimationCurve damageMultiplier;
+
+    [Header("CAPACITIES")] 
+    public ActiveCapacitySO capacity1;
+    public ActiveCapacitySO capacity2;
 }

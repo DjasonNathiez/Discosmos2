@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net;
+using Photon.Pun;
 using Tools;
 using UnityEngine;
 using UnityEngine.AI;
@@ -16,13 +13,28 @@ public class PlayerController : MonoBehaviour
     public NavMeshAgent agent;
     public PlayerManager manager;
     public Rigidbody rb;
+    public Targetable myTargetable;
     
     [Header("STATE")] 
     public Enums.MovementType movementType;
     private bool isMoving;
+    private bool isAttacking;
 
-    [Header("Movement")] 
+    [Header("MOVEMENT")] 
     private Vector3 direction;
+    private bool movementEnabled;
+    private float hitStopTime;
+    private float hitStopTimer;
+    private float networkTimeBackup;
+
+    [Header("ATTACK")] 
+    public Targetable target;
+
+    private Vector3 knockbackDirection;
+    public float knockBackDuration;
+    public float knockBackTime;
+    public bool knockBackImmediatly;
+    public float knockBackForce;
     
     [Header("RAIL")] 
     [HideInInspector] public int rampIndex;
@@ -35,7 +47,7 @@ public class PlayerController : MonoBehaviour
     public Animator mimiAnimator;
     public Animator vegaAnimator;
 
-    #region UNITY
+    #region UNITY METHODS
 
     private void Start()
     {
@@ -45,6 +57,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        
+        
+        AttackInputCheck();
         MovementTypeCheck();
         CapacityInputCheck();
     }
@@ -86,7 +101,7 @@ public class PlayerController : MonoBehaviour
                 break;
             
             case Enums.MovementType.FollowTarget:
-
+                FollowTarget();
                 break;
             
             case Enums.MovementType.Slide:
@@ -94,7 +109,7 @@ public class PlayerController : MonoBehaviour
                 break;
             
             case Enums.MovementType.Attack:
-
+                Attack();
                 break;
         }
     }
@@ -153,6 +168,41 @@ public class PlayerController : MonoBehaviour
             
         }
     }
+
+    private void FollowTarget()
+    {
+        agent.ResetPath();
+
+
+        agent.SetDestination(target.targetableBody.position);
+
+        manager.force -= manager.slowDownCurve.Evaluate(manager.force) * Time.deltaTime;
+        manager.force = Mathf.Clamp01(manager.force);
+        agent.enabled = true;
+        if (isMoving && agent.remainingDistance == 0)
+        {
+            isMoving = false;
+            ChangeAnimation(0);
+        }
+
+        
+        if (Vector3.SqrMagnitude(target.targetableBody.position - transform.position) <= manager.attackRange * manager.attackRange)
+        {
+            agent.ResetPath();
+            movementType = Enums.MovementType.Attack;
+        }
+
+
+        if (Input.GetMouseButton(1))
+        {
+            agent.ResetPath();
+            ResetTarget();
+            agent.SetDestination(MouseWorldPosition());
+            movementType = Enums.MovementType.MoveToClick;
+            isMoving = true;
+            ChangeAnimation(manager.force <= 0 ? 1 : 2);
+        }
+    }
     
     private void Slide()
     {
@@ -194,6 +244,126 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    #endregion
+
+    #region ATTACK
+
+    void AttackInputCheck()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (target)
+            {
+                target.HideTarget();
+            }
+
+            target = GetTarget();
+
+            if (target)
+            {
+                target.ShowTarget();
+
+                if (onRamp)
+                {
+                    OnExitRail();
+                }
+
+                movementType = Enums.MovementType.FollowTarget;
+                ChangeAnimation(manager.force <= 0 ? 1 : 2);
+            }
+            else
+            {
+                movementType = Enums.MovementType.MoveToClick;
+                ChangeAnimation(0);
+            } 
+        }
+        
+    }
+    
+    public void Attack()
+    {
+        if (!isAttacking)
+        {
+            if (Vector3.SqrMagnitude(target.targetableBody.transform.position - transform.position) > manager.attackRange * manager.attackRange)
+            {
+                isAttacking = false;
+                movementType = Enums.MovementType.FollowTarget;
+                ChangeAnimation(manager.force <= 0 ? 1 : 2);
+            }
+            else
+            {
+                ChangeAnimation(4);
+                isAttacking = true;
+                if(manager.force > 0) InitializeKnockBack(0.1f,manager.speedCurve.Evaluate(manager.force),target.targetableBody.position - transform.position,true);
+            }
+        }
+        else
+        {
+            manager.force -= manager.slowDownCurve.Evaluate(manager.force) * Time.deltaTime;
+
+            
+            if(!manager.isCasting) transform.rotation = Quaternion.LookRotation(target.targetableBody.position - transform.position);
+
+            switch (manager.currentCharacter)
+            {
+                case Enums.Characters.Mimi:
+                    if (mimiAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+                    {
+                        isAttacking = false;
+                    }
+                    break;
+                
+                case Enums.Characters.Vega:
+                    if (vegaAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+                    {
+                        isAttacking = false;
+                    }
+                    break;
+            }
+
+            if (Input.GetMouseButton(1))
+            {
+                ResetTarget();
+                isAttacking = false;
+                movementType = Enums.MovementType.MoveToClick;
+                agent.ResetPath();
+                agent.SetDestination(MouseWorldPosition());
+                isMoving = true;
+                ChangeAnimation(manager.force <= 0 ? 1 : 2);
+            }
+        }
+    }
+
+    public void OnAttack()
+    {
+        if (enabled)
+        {
+            int damages = Mathf.RoundToInt(manager.attackDamage * manager.damageMultiplier.Evaluate(manager.force));
+
+            manager.DealDamage(new []{target.photonID}, damages);
+            manager.HitStop(new []{target.photonID}, manager.force > 0 ? 0.7f * manager.force : 0,manager.force > 0 ? 0.3f * manager.force : 0);
+            
+            Vector3 kbDirection = target.targetableBody.position - transform.position;
+            manager.KnockBack(new []{target.photonID}, manager.force > 0 ? 0.45f * manager.force : 0,manager.force > 0 ? 9f * manager.force : 0,kbDirection.normalized);
+            
+            manager.force = 0;
+        }
+    }
+    private void ApplyKnockBack()
+    {
+        agent.nextPosition += knockbackDirection * (knockBackForce * Time.deltaTime * (knockBackTime / knockBackDuration));
+        knockBackTime -= Time.deltaTime;
+    }
+    
+    public void InitializeKnockBack(float kbTime,float kbForce, Vector3 kbDirection,bool applyImmediatly = false)
+    {
+        knockbackDirection = kbDirection;
+        knockBackDuration = kbTime;
+        knockBackTime = kbTime;
+        knockBackForce = kbForce;
+        knockBackImmediatly = applyImmediatly;
+    }
+    
     #endregion
     
     #region RAIL
@@ -290,6 +460,30 @@ public class PlayerController : MonoBehaviour
     
     #region TOOLS
 
+    public void HitStop(float time)
+    {
+        Debug.Log("hitStop " + time);
+        movementEnabled = false;
+        hitStopTime = time;
+        networkTimeBackup = (float)PhotonNetwork.Time;
+        agent.isStopped = true;
+        
+        GameAdministrator.NetworkUpdate += HitStopTimer;
+    }
+
+    void HitStopTimer()
+    {
+        if (hitStopTimer >= hitStopTime)
+        {
+            movementEnabled = true;
+            GameAdministrator.NetworkUpdate -= HitStopTimer;
+        }
+        else
+        {
+            hitStopTimer = (float)(PhotonNetwork.Time - networkTimeBackup);
+        }
+    }
+    
     public Vector3 MouseWorldPosition()
     {
         Ray ray = manager._camera.ScreenPointToRay(Input.mousePosition);
@@ -317,37 +511,47 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-    /*
+    
      public Targetable GetTarget()
     {
-        if (manager._camera == null) return null;
+        if (!manager._camera) return null;
         
         Ray ray = manager._camera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            Targetable targetable = hit.transform.GetComponentInParent<Targetable>();
-            ITeamable teamable = hit.transform.GetComponentInParent<ITeamable>();
+            Targetable targetable = hit.transform.GetComponent<Targetable>();
 
-            if (targetable == null || targetable == myTargetable) return null;
+            if (!targetable || targetable == myTargetable) return null;
 
-            if (teamable != null)
+            if (manager.currentTeam == targetable.ownerTeam) return null;
+            
+            switch (manager.currentCharacter)
             {
-                if (manager.CurrentTeam() == teamable.CurrentTeam()) return null;
+                case Enums.Characters.Mimi:
+                    mimiAnimator.SetInteger("Target",targetable.bodyPhotonID);
+                    break;
+                
+                case Enums.Characters.Vega:
+                    vegaAnimator.SetInteger("Target",targetable.bodyPhotonID);
+                    break;
             }
-            if (manager.currentData == manager.mimiData)
-            {
-                animatorMimi.SetInteger("Target",targetable.bodyPhotonID);   
-            }
-            else
-            {
-                animatorVega.SetInteger("Target",targetable.bodyPhotonID);   
-            }
+            Debug.Log(targetable);
             return targetable;
         }
+        
+        Debug.Log("null");
         return null;
     }
-*/
-    
-    
-    #endregion
+     
+     public void ResetTarget()
+     {
+         if (target)
+         {
+             target.HideTarget();
+         }
+        
+         target = null;
+     }
+
+     #endregion
 }

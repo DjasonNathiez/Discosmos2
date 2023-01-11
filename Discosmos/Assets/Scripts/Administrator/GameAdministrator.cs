@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Photon.Pun;
-using Photon.Realtime;
 using Tools;
 using UnityEngine;
 
@@ -22,7 +21,7 @@ public class GameAdministrator : MonoBehaviourPunCallbacks
     private double lastTickTime;
 
     [Header("GAME DATA")] 
-    public static int playerPerGame = 2;
+    public static int playerPerGame = 1;
 
     public static List<PlayerManager> players;
     
