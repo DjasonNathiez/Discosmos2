@@ -147,6 +147,11 @@ public class PlayerController : MonoBehaviour
            ChangeAnimation(manager.force <= 0 ? 1 : 2);
         }
         
+        if (Input.GetMouseButtonDown(1))
+        {
+            manager.pointerVFX.transform.position = new Vector3(agent.destination.x, manager.pointerVFX.transform.position.y, agent.destination.z);
+            manager.pointerVFX.Play();
+        }
     }
 
     private void KeepDirection()
@@ -169,6 +174,12 @@ public class PlayerController : MonoBehaviour
             agent.SetDestination(MouseWorldPosition());
             SwitchMovementType(Enums.MovementType.MoveToClick);
             
+        }
+        
+        if (Input.GetMouseButtonDown(1))
+        {
+            manager.pointerVFX.transform.position = new Vector3(agent.destination.x, manager.pointerVFX.transform.position.y, agent.destination.z);
+            manager.pointerVFX.Play();
         }
     }
 
@@ -200,9 +211,16 @@ public class PlayerController : MonoBehaviour
             agent.ResetPath();
             ResetTarget();
             agent.SetDestination(MouseWorldPosition());
+
             movementType = Enums.MovementType.MoveToClick;
             isMoving = true;
             ChangeAnimation(manager.force <= 0 ? 1 : 2);
+        }
+        
+        if (Input.GetMouseButtonDown(1))
+        {
+            manager.pointerVFX.transform.position = new Vector3(agent.destination.x, manager.pointerVFX.transform.position.y, agent.destination.z);
+            manager.pointerVFX.Play();
         }
     }
     

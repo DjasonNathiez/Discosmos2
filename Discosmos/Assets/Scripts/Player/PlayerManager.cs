@@ -80,6 +80,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public AnimationController mimiAnimationController;
     public AnimationController vegaAnimationController;
 
+    public ParticleSystem pointerVFX;
+
     #region UNITY METHODS
 
     private void Awake()
