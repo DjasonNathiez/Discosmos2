@@ -21,7 +21,8 @@ public class GameAdministrator : MonoBehaviourPunCallbacks
     private double lastTickTime;
 
     [Header("GAME DATA")] 
-    public static int playerPerGame = 1;
+    public static int connectToRoomNeedPlayer = 1;
+    public int playerPerGame = 4;
 
     public static List<PlayerManager> players;
     

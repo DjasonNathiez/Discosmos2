@@ -191,7 +191,7 @@ public class NetworkConnector : MonoBehaviourPunCallbacks
 
     void CheckCountToLoadLevel()
     {
-        if (PhotonNetwork.CurrentRoom.Name != "Hub" && PhotonNetwork.CurrentRoom.PlayerCount == GameAdministrator.playerPerGame)
+        if (PhotonNetwork.CurrentRoom.Name != "Hub" && PhotonNetwork.CurrentRoom.PlayerCount == GameAdministrator.connectToRoomNeedPlayer)
         {
             //LOAD THE LEVEL
             SceneManager.LoadScene(1);

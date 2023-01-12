@@ -2,9 +2,7 @@ using System.Threading.Tasks;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using TMPro;
 using Tools;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
@@ -14,8 +12,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public Camera _camera;
     public GameObject cameraObject;
     public PhotonView photonView;
+    public InterfaceManager interfaceManager;
     
-    //Visual
     public GameObject sparkles;
     
     [Header("STATE")] 
@@ -36,7 +34,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public GameObject capacity2Visu;
     public UtilityDelegate.OnCooldown OnCooldownCapacity1;
     public UtilityDelegate.OnCooldown OnCooldownCapacity2;
-
 
     [Header("DATA")] 
     public CharacterDataSO mimiData;
@@ -111,6 +108,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         }
         
         controller.myTargetable.UpdateUI(false, true, currentHealth, maxHealth, false, 0, true, photonView.Owner.NickName);
+        interfaceManager.UpdatePlayerInRoomCount();
     }
     
     private void Update()
@@ -155,6 +153,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
             controller.enabled = true;
             controller.EnableMovement();
         }
+        
     }
 
     public void SetData()
@@ -176,6 +175,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void ResetPlayerStats()
     {
+        SetData();
+        
         currentHealth = maxHealth;
         currentSpeed = baseSpeed;
         force = 0;
@@ -541,4 +542,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
       }
       
       #endregion
+
+      public override void OnPlayerEnteredRoom(Player newPlayer)
+      {
+          base.OnPlayerEnteredRoom(newPlayer);
+          
+          interfaceManager.UpdatePlayerInRoomCount();
+      }
+
 }
