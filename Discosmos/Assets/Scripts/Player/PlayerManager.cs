@@ -28,10 +28,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public Enums.Team currentTeam;
 
     [Header("CAPACITIES")] 
-    public ActiveCapacity capacity1;
+    public ActiveCapacitySO capacity1;
+    public bool capacity1InCooldown;
     public GameObject capacity1Visu;
-    public ActiveCapacity capacity2;
+    public ActiveCapacitySO capacity2;
+    public bool capacity2InCooldown;
     public GameObject capacity2Visu;
+    public UtilityDelegate.OnCooldown OnCooldownCapacity1;
+    public UtilityDelegate.OnCooldown OnCooldownCapacity2;
+
 
     [Header("DATA")] 
     public CharacterDataSO mimiData;
@@ -87,6 +92,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         if(photonView == null) photonView = PhotonView.Get(gameObject);
     }
 
+  
+
     private void Start()
     {
         name = "Client" + "_" + photonView.Owner.NickName + "_" + photonView.ViewID + "_IsMine : " + photonView.IsMine;
@@ -115,6 +122,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         {
             controller.myTargetable.UpdateUI(false, false, 0, 0, true, Mathf.Lerp(controller.myTargetable.healthBar.speedFill.fillAmount, force, Time.deltaTime * 5f));
         }
+        
+        OnCooldownCapacity1?.Invoke();
+        OnCooldownCapacity2?.Invoke();
+        
+        
     }
 
     #endregion
@@ -141,6 +153,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         if (photonView.IsMine)
         {
             controller.enabled = true;
+            controller.EnableMovement();
         }
     }
 
@@ -156,6 +169,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         attackRange = currentData.attackRange;
         attackSpeed = currentData.attackSpeed;
         damageMultiplier = currentData.damageMultiplier;
+
+        capacity1 = currentData.capacity1;
+        capacity2 = currentData.capacity2;
     }
 
     public void ResetPlayerStats()
@@ -169,8 +185,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     
     public void ChangePlayerCharacter(int index)
     {
-        Debug.Log("Receievd Character event");
-        
         switch (index)
         {
             case 0:
@@ -236,6 +250,57 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
         currentAnimationController.SetTeamMaterial();
     }
+
+    #region CAPACITIES
+
+    private float capacity1Timer;
+    private float capacity1NetworkTime;
+    public void SetCapacity1OnCooldown()
+    {
+        capacity1InCooldown = true;        
+        capacity1NetworkTime = (float)PhotonNetwork.Time;
+        capacity1Timer = 0;
+        OnCooldownCapacity1 += CooldownCapacity1;
+    }
+
+    void CooldownCapacity1()
+    {
+        if (capacity1Timer >= capacity1.cooldownTime)
+        {
+            capacity1InCooldown = false;
+            OnCooldownCapacity1 -= CooldownCapacity1;
+        }
+        else
+        {
+            capacity1Timer = (float) (PhotonNetwork.Time - capacity1NetworkTime);
+        }
+    }
+    
+    private float capacity2Timer;
+    private float capacity2NetworkTime;
+    public void SetCapacity2OnCooldown()
+    {
+        capacity2InCooldown = true;        
+        capacity2Timer = 0;
+        capacity2NetworkTime = (float)PhotonNetwork.Time;
+        OnCooldownCapacity1 += CooldownCapacity2;
+    }
+    
+    void CooldownCapacity2()
+    {
+        if (capacity2Timer >= capacity2.cooldownTime)
+        {
+            capacity2InCooldown = false;
+            OnCooldownCapacity2 -= CooldownCapacity1;
+        }
+        else
+        {
+            capacity2Timer = (float) (PhotonNetwork.Time - capacity2NetworkTime);
+        }
+    }
+
+    #endregion
+    
     
     #endregion
 
@@ -243,6 +308,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     
     public void DealDamage(int[] targetsID, int damageAmount)
     {
+        if(!photonView.IsMine) return;
+        
         Hashtable data = new Hashtable
         {
             {"TargetsID", targetsID},
@@ -256,6 +323,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void HitStop(int[] targetsID,float time,float shakeForce)
     {
+        if(!photonView.IsMine) return;
+        
         Hashtable data = new Hashtable
         {
             {"TargetsID", targetsID},
@@ -270,6 +339,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     
     public void KnockBack(int[] targetsID,float time,float force,Vector3 direction)
     {
+        if(!photonView.IsMine) return;
+        
         Hashtable data = new Hashtable
         {
             {"TargetsID", targetsID},
@@ -285,6 +356,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void SendPlayerCharacter(int characterID)
     {
+        if(!photonView.IsMine) return;
+        
         Hashtable data = new Hashtable()
         {
             { "ID", photonView.ViewID },
@@ -298,6 +371,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void SendPlayerTeam(int team)
     {
+        if(!photonView.IsMine) return;
+        
         Hashtable data = new Hashtable()
         {
             { "ID", photonView.ViewID },
@@ -340,7 +415,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         if (photonEvent.Code == RaiseEvent.DamageTarget)
         { 
             Hashtable data = (Hashtable)photonEvent.CustomData;
-
             
             int[] targets = (int[])data["TargetsID"];
             if(targets == null) return;

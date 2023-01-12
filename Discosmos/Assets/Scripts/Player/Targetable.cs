@@ -14,6 +14,7 @@ public class Targetable : MonoBehaviour
     public HealthBar healthBar;
     public GameObject uiObject;
     public PhotonView masterPhotonView;
+    public PhotonView bodyPhotonView;
     public int photonID;
     public int bodyPhotonID;
     public Transform targetableBody;
@@ -26,7 +27,8 @@ public class Targetable : MonoBehaviour
         {
             masterPhotonView = PhotonView.Get(gameObject);
         }
-        
+
+        bodyPhotonID = bodyPhotonView.ViewID;
         photonID = masterPhotonView.ViewID;
         
     }

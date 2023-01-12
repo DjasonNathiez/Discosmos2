@@ -1,6 +1,11 @@
 ﻿namespace Tools
 {
 
+    public class UtilityDelegate
+    {
+        public delegate void OnCooldown();
+    }
+    
     public class NetworkDelegate
     {
         public delegate void OnServerUpdate();

@@ -13,5 +13,5 @@ public abstract class ActiveCapacitySO : ScriptableObject
     public float durationBase;
     public float speedBase;
 
-    public abstract void GetActiveCapacity();
+    public bool stopMovement;
 }

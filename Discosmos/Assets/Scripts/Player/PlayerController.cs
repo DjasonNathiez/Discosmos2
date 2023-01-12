@@ -47,6 +47,9 @@ public class PlayerController : MonoBehaviour
     public Animator mimiAnimator;
     public Animator vegaAnimator;
 
+    private float cooldownTimer;
+    private float cooldownNetBackup;
+
     #region UNITY METHODS
 
     private void Start()
@@ -57,8 +60,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        
-        
         AttackInputCheck();
         MovementTypeCheck();
         CapacityInputCheck();
@@ -90,6 +91,8 @@ public class PlayerController : MonoBehaviour
 
     void MovementTypeCheck()
     {
+        if(!movementEnabled) return;
+        
         switch (movementType)
         {
             case Enums.MovementType.MoveToClick:
@@ -172,8 +175,7 @@ public class PlayerController : MonoBehaviour
     private void FollowTarget()
     {
         agent.ResetPath();
-
-
+        
         agent.SetDestination(target.targetableBody.position);
 
         manager.force -= manager.slowDownCurve.Evaluate(manager.force) * Time.deltaTime;
@@ -243,6 +245,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void EnableMovement()
+    {
+        movementEnabled = true;
+    }
+    
+    public void DisableMovement()
+    {
+        movementEnabled = false;
+        agent.ResetPath();
+    }
+    
 
     #endregion
 
@@ -336,6 +349,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnAttack()
     {
+        Debug.Log("ON ATTACK");
         if (enabled)
         {
             int damages = Mathf.RoundToInt(manager.attackDamage * manager.damageMultiplier.Evaluate(manager.force));
@@ -404,56 +418,72 @@ public class PlayerController : MonoBehaviour
 
     void CapacityInputCheck()
     {
-        //PRESS
-        if (Input.GetKeyDown(capacity1Input))
+        if (!manager.capacity1InCooldown)
         {
-            manager.capacity1Visu.SetActive(true);
-        }
-
-        if (Input.GetKeyDown(capacity2Input))
-        {
-            manager.capacity2Visu.SetActive(true);
-        }
-        
-        //HOLD
-        if (Input.GetKey(capacity1Input))
-        {
-            manager.capacity1Visu.transform.rotation = Quaternion.Euler(0,Quaternion.LookRotation(MouseWorldPosition()- transform.position).eulerAngles.y,0);
-        }
-
-        if (Input.GetKey(capacity2Input))
-        {
-            manager.capacity2Visu.transform.rotation = Quaternion.Euler(0,Quaternion.LookRotation(MouseWorldPosition()- transform.position).eulerAngles.y,0);
-        }
-        
-        //RELEASE
-        if (Input.GetKeyUp(capacity1Input))
-        {
-            transform.rotation = Quaternion.Euler(0,Quaternion.LookRotation(MouseWorldPosition()- transform.position).eulerAngles.y,0);
-
-            if (!manager.capacity1.onCooldown)
+            if (Input.GetKeyDown(capacity1Input))
             {
-                manager.capacity1.Cast();
-                manager.capacity1Visu.SetActive(false);
+                if(manager.capacity1Visu) manager.capacity1Visu.SetActive(true);
+            }
+            
+            if (Input.GetKey(capacity1Input))
+            {
+                if (manager.capacity1Visu)
+                {
+                    manager.capacity1Visu.transform.rotation = Quaternion.Euler(0,Quaternion.LookRotation(MouseWorldPosition()- transform.position).eulerAngles.y,0);
+                    manager.capacity1Visu.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                }
+            }
+            
+            if (Input.GetKeyUp(capacity1Input))
+            {
+                transform.rotation = Quaternion.Euler(0,Quaternion.LookRotation(MouseWorldPosition()- transform.position).eulerAngles.y,0);
+
+                if(manager.capacity1Visu) manager.capacity1Visu.SetActive(false);
+            
                 ChangeAnimation(manager.currentAnimationController.capacity1Index);
+                if(onRamp) OnExitRail();
+                if(manager.capacity1.stopMovement) DisableMovement();
+
+                manager.SetCapacity1OnCooldown();
+                
             }
         }
 
-        if (Input.GetKeyUp(capacity2Input))
+        if (!manager.capacity2InCooldown)
         {
-            transform.rotation = Quaternion.Euler(0,Quaternion.LookRotation(MouseWorldPosition()- transform.position).eulerAngles.y,0);
-
-            if (!manager.capacity2.onCooldown)
+            if (Input.GetKeyDown(capacity2Input))
             {
-                manager.capacity2.Cast();
-                manager.capacity2Visu.SetActive(false);
+                if(manager.capacity2Visu) manager.capacity2Visu.SetActive(true);
+            }
+
+            if (Input.GetKey(capacity2Input))
+            {
+                if (manager.capacity2Visu)
+                {
+                    manager.capacity2Visu.transform.rotation = Quaternion.Euler(0,Quaternion.LookRotation(MouseWorldPosition()- transform.position).eulerAngles.y,0);
+                    manager.capacity2Visu.transform.position =
+                        new Vector3(transform.position.x, 0, transform.position.z);
+                }
+            }
+            
+            if (Input.GetKeyUp(capacity2Input))
+            {
+                transform.rotation = Quaternion.Euler(0,Quaternion.LookRotation(MouseWorldPosition()- transform.position).eulerAngles.y,0);
+            
+                if(manager.capacity2Visu) manager.capacity2Visu.SetActive(false);
+            
                 ChangeAnimation(manager.currentAnimationController.capacity2Index);
+                
+                if(onRamp) OnExitRail();
+                
+                if(manager.capacity1.stopMovement) DisableMovement();
+                
+                manager.SetCapacity2OnCooldown();
+                
             }
         }
-    }
-
-    void AskCastCapacity(ActiveCapacity capacity)
-    {
+        
+       
     }
 
     #endregion
@@ -519,12 +549,13 @@ public class PlayerController : MonoBehaviour
         Ray ray = manager._camera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
+            Debug.Log(hit.transform.gameObject.name);
             Targetable targetable = hit.transform.GetComponent<Targetable>();
 
             if (!targetable || targetable == myTargetable) return null;
 
             if (manager.currentTeam == targetable.ownerTeam) return null;
-            
+
             switch (manager.currentCharacter)
             {
                 case Enums.Characters.Mimi:
@@ -535,11 +566,8 @@ public class PlayerController : MonoBehaviour
                     vegaAnimator.SetInteger("Target",targetable.bodyPhotonID);
                     break;
             }
-            Debug.Log(targetable);
             return targetable;
         }
-        
-        Debug.Log("null");
         return null;
     }
      

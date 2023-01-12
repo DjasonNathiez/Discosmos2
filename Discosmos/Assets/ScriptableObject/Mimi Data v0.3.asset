@@ -89,3 +89,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  capacity1: {fileID: 11400000, guid: 758dd29b71966d14bb5f8de83b554e0e, type: 2}
+  capacity2: {fileID: 0}
