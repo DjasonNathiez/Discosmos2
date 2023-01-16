@@ -367,18 +367,17 @@ public class PlayerController : MonoBehaviour
 
     public void OnAttack()
     {
-        Debug.Log("ON ATTACK");
+        int damages = Mathf.RoundToInt(manager.attackDamage * manager.damageMultiplier.Evaluate(manager.force));
+
         if (enabled)
         {
-            int damages = Mathf.RoundToInt(manager.attackDamage * manager.damageMultiplier.Evaluate(manager.force));
-
-            manager.DealDamage(new []{target.photonID}, damages);
-            manager.HitStop(new []{target.photonID}, manager.force > 0 ? 0.7f * manager.force : 0,manager.force > 0 ? 0.3f * manager.force : 0);
+                manager.DealDamage(new []{target.photonID}, damages);
+                manager.HitStop(new []{target.photonID}, manager.force > 0 ? 0.7f * manager.force : 0,manager.force > 0 ? 0.3f * manager.force : 0);
             
-            Vector3 kbDirection = target.targetableBody.position - transform.position;
-            manager.KnockBack(new []{target.photonID}, manager.force > 0 ? 0.45f * manager.force : 0,manager.force > 0 ? 9f * manager.force : 0,kbDirection.normalized);
+                Vector3 kbDirection = target.targetableBody.position - transform.position;
+                manager.KnockBack(new []{target.photonID}, manager.force > 0 ? 0.45f * manager.force : 0,manager.force > 0 ? 9f * manager.force : 0,kbDirection.normalized);
             
-            manager.force = 0;
+                manager.force = 0;
         }
     }
     private void ApplyKnockBack()
@@ -402,7 +401,6 @@ public class PlayerController : MonoBehaviour
 
     public void OnEnterRail(Rail railLD, bool forward, int startIndex)
     {
-        Debug.Log("Enter Rail");
         //ResetTarget();
         onRamp = true;
         forwardOnRamp = forward;
@@ -510,7 +508,6 @@ public class PlayerController : MonoBehaviour
 
     public void HitStop(float time)
     {
-        Debug.Log("hitStop " + time);
         movementEnabled = false;
         hitStopTime = time;
         networkTimeBackup = (float)PhotonNetwork.Time;
@@ -567,7 +564,6 @@ public class PlayerController : MonoBehaviour
         Ray ray = manager._camera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            Debug.Log(hit.transform.gameObject.name);
             Targetable targetable = hit.transform.GetComponent<Targetable>();
 
             if (!targetable || targetable == myTargetable) return null;

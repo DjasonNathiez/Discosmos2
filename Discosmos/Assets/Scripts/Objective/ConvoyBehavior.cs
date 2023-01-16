@@ -123,7 +123,7 @@ public class ConvoyBehavior : MonoBehaviour
         factor = startFactor;
     }
     
-    void ApplyForce(float impulse)
+    public void ApplyForce(float impulse)
     {
         if (!pointReached)
         {

@@ -65,7 +65,6 @@ public class GameAdministrator : MonoBehaviourPunCallbacks
     void Tick()
     {
         NetworkUpdate?.Invoke();
-        Debug.Log("tick");
     }
 
     public static void UpdatePlayersList()

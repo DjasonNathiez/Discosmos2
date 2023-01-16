@@ -63,7 +63,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   attackDamage: 10
-  attackRange: 2
+  attackRange: 4
   attackSpeed: 3.2
   damageMultiplier:
     serializedVersion: 2

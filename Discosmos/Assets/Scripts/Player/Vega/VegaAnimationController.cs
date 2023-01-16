@@ -81,7 +81,7 @@ public class VegaAnimationController : AnimationController
    private void InsideBlackHoleEffect()
    {
       
-      foreach (GameObject target in outsideBlackHole.targets)
+      foreach (GameObject target in insideBlackHole.targets)
       {
          Rigidbody rb = target.GetComponent<Rigidbody>();
          rb.velocity = (transform.position - rb.transform.position).normalized * (attractForce * Time.deltaTime);

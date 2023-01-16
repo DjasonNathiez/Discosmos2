@@ -673,6 +673,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8764159639698448135}
+  - component: {fileID: 1607490962797081787}
+  - component: {fileID: 1602377825}
   m_Layer: 0
   m_Name: nexus_sans_tentacule (3)
   m_TagString: Untagged
@@ -703,6 +705,45 @@ Transform:
   m_Father: {fileID: 8966936229834064951}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1607490962797081787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8280813964778718653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &1602377825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8280813964778718653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1607490962797081787}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8966936227790740311
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,6 +755,9 @@ GameObject:
   - component: {fileID: 8966936227790740315}
   - component: {fileID: 8966936227790740312}
   - component: {fileID: 8966936227790740316}
+  - component: {fileID: 1602377822}
+  - component: {fileID: 8692056678688015377}
+  - component: {fileID: 1057063362770608020}
   m_Layer: 0
   m_Name: Convoy 1
   m_TagString: Untagged
@@ -871,6 +915,75 @@ MonoBehaviour:
   factor: 0.5
   startIndex: 43
   startFactor: 0.5
+--- !u!114 &1602377822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8966936227790740311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839b72d32d4b35444bec189a542e1067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerTeam: 2
+  hideUI: 1
+  healthBar:
+    transform: {fileID: 0}
+    healthFill: {fileID: 0}
+    speedFill: {fileID: 0}
+    healthText: {fileID: 0}
+    nameText: {fileID: 0}
+    target: {fileID: 0}
+    name: 
+  uiObject: {fileID: 0}
+  masterPhotonView: {fileID: 8692056678688015377}
+  bodyPhotonView: {fileID: 8692056678688015377}
+  photonID: 0
+  bodyPhotonID: 0
+  targetableBody: {fileID: 8966936229834064951}
+  heightUI: 0
+  type: 0
+--- !u!114 &8692056678688015377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8966936227790740311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1057063362770608020}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1057063362770608020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8966936227790740311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &8966936229834064950
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,6 +993,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8966936229834064951}
+  - component: {fileID: 9093293067502853600}
+  - component: {fileID: 1602377826}
   m_Layer: 0
   m_Name: ConvoyRenderBody
   m_TagString: Untagged
@@ -903,3 +1018,43 @@ Transform:
   m_Father: {fileID: 8966936227790740315}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9093293067502853600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8966936229834064950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &1602377826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8966936229834064950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 9093293067502853600}
+  - {fileID: 1607490962797081787}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

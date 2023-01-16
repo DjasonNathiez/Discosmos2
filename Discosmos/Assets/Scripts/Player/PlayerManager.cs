@@ -64,6 +64,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public float attackRange;
     public float attackSpeed;
     public AnimationCurve damageMultiplier;
+    public float pushForce;
 
     #endregion
 
@@ -312,6 +313,30 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public void DealDamage(int[] targetsID, int damageAmount)
     {
         if(!photonView.IsMine) return;
+
+        ConvoyBehavior convoy = null;
+        
+        foreach (var id in targetsID)
+        {
+            convoy = PhotonView.Find(id).GetComponent<ConvoyBehavior>();
+            if(convoy != null) break;
+        }
+
+        
+        if (convoy != null)
+        {
+            float position = controller.transform.position.x - convoy.renderBody.transform.position.x;
+
+            switch (position)
+            {
+                case < 0:
+                    convoy.ApplyForce(damageAmount);
+                    break;
+                case > 0:
+                    convoy.ApplyForce(-damageAmount);
+                    break;
+            }
+        }
         
         Hashtable data = new Hashtable
         {

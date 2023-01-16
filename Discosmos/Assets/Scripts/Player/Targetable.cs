@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class Targetable : MonoBehaviour
 {
     public Enums.Team ownerTeam;
-    
+    public bool hideUI;
     public HealthBar healthBar;
     public GameObject uiObject;
     public PhotonView masterPhotonView;
@@ -35,7 +35,7 @@ public class Targetable : MonoBehaviour
 
     private void Start()
     {
-        CreateUI();
+        if(!hideUI) CreateUI();
     }
 
    
@@ -65,16 +65,19 @@ public class Targetable : MonoBehaviour
     }
     public void ShowTarget()
     {
+        if(hideUI) return;
         healthBar.target.gameObject.SetActive(true);
     }
     
     public void HideTarget()
     {
+        if(hideUI) return;
         healthBar.target.gameObject.SetActive(false);
     }
 
     private void LateUpdate()
     {
+        if(hideUI) return;
         healthBar.transform.position = GameAdministrator.localPlayer._camera.WorldToScreenPoint(targetableBody.position + Vector3.up) + Vector3.up * heightUI;   
     }
 
