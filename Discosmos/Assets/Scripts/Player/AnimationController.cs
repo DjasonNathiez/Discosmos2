@@ -44,7 +44,6 @@ public class AnimationController : MonoBehaviour
     
     public void CallAttackEvent()
     {
-        Debug.Log("ATTACK EVENT");
         manager.controller.OnAttack();
     }
 

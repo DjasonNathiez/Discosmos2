@@ -116,12 +116,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     
     private void Update()
     {
-        currentSpeed = speedCurve.Evaluate(force) + baseSpeed;
-        controller.agent.speed = currentSpeed;
-
-        if (controller.myTargetable)
+        if (controller.enabled)
         {
-            controller.myTargetable.UpdateUI(false, false, 0, 0, true, Mathf.Lerp(controller.myTargetable.healthBar.speedFill.fillAmount, force, Time.deltaTime * 5f));
+            currentSpeed = speedCurve.Evaluate(force) + baseSpeed;
+            controller.agent.speed = currentSpeed;
+            
+            if (controller.myTargetable)
+            {
+                controller.myTargetable.UpdateUI(false, false, 0, 0, true, Mathf.Lerp(controller.myTargetable.healthBar.speedFill.fillAmount, force, Time.deltaTime * 5f));
+            }
         }
         
         OnCooldownCapacity1?.Invoke();
@@ -144,6 +147,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         if (photonView.IsMine)
         {
             _camera.enabled = true;
+            controller.agent.enabled = true;
             localCanvas.SetActive(true);
             cameraObject.SetActive(true);
         }
@@ -189,6 +193,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     
     public void ChangePlayerCharacter(int index)
     {
+        if(!controller.gameObject.activeSelf) controller.gameObject.SetActive(true);
+        
         switch (index)
         {
             case 0:
@@ -239,6 +245,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     
     public void ChangePlayerTeam(int index)
     {
+        if(!controller.gameObject.activeSelf) controller.gameObject.SetActive(true);
+
         switch (index)
         {
             case 0:
@@ -353,6 +361,17 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         if(!photonView.IsMine) return;
         
+        ConvoyBehavior convoy = null;
+        
+        foreach (var id in targetsID)
+        {
+            convoy = PhotonView.Find(id).GetComponent<ConvoyBehavior>();
+            if(convoy != null) break;
+        }
+
+        
+        if (convoy != null) { convoy.InitializeHitStop(time, shakeForce); }
+        
         Hashtable data = new Hashtable
         {
             {"TargetsID", targetsID},
@@ -384,7 +403,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void SendPlayerCharacter(int characterID)
     {
-        if(!photonView.IsMine) return;
+       // if(!photonView.IsMine) return;
         
         Hashtable data = new Hashtable()
         {
@@ -399,7 +418,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void SendPlayerTeam(int team)
     {
-        if(!photonView.IsMine) return;
+        //if(!photonView.IsMine) return;
         
         Hashtable data = new Hashtable()
         {
@@ -570,7 +589,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
       
       #endregion
 
-      public override void OnPlayerEnteredRoom(Player newPlayer)
+    public override void OnPlayerEnteredRoom(Player newPlayer)
       {
           base.OnPlayerEnteredRoom(newPlayer);
           

@@ -83,6 +83,8 @@ public class Targetable : MonoBehaviour
 
     public void UpdateUI(bool updatePos,bool updateHealth = false,int currentHealth = 0,int maxHealth = 0,bool updateSpeed = false,float speed = 0,bool updateName = false, string name = "[not defined]")
     {
+        if (hideUI) return;    
+        
         if (updateHealth)
         {
             healthBar.healthFill.fillAmount = currentHealth / (float) maxHealth;

@@ -14899,7 +14899,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &869116014736770473
 Transform:
   m_ObjectHideFlags: 0
@@ -15801,7 +15801,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 6339477792097956558}
-  championSelectCanvas: {fileID: 0}
+  championSelectCanvas: {fileID: 163923476507481450}
   playerInRoomText: {fileID: 8513229356618515867}
   hud: {fileID: 0}
 --- !u!114 &2919284406442361481
@@ -72949,7 +72949,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4809639664043971265
 Transform:
   m_ObjectHideFlags: 0
@@ -73035,7 +73035,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4809639664043971264}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 20

@@ -758,6 +758,7 @@ GameObject:
   - component: {fileID: 1602377822}
   - component: {fileID: 8692056678688015377}
   - component: {fileID: 1057063362770608020}
+  - component: {fileID: 1438108242249812917}
   m_Layer: 0
   m_Name: Convoy 1
   m_TagString: Untagged
@@ -808,7 +809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: 0
-  decceleration: 5
+  decceleration: 2
   master: 1
   xMax: 0
   xMin: 0
@@ -984,6 +985,22 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!54 &1438108242249812917
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8966936227790740311}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8966936229834064950
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,7 +1050,7 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
-  m_UseLocal: 1
+  m_UseLocal: 0
 --- !u!114 &1602377826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1054,7 +1071,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 9093293067502853600}
-  - {fileID: 1607490962797081787}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
