@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
+using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using Photon.Realtime;
 using Tools;
@@ -17,6 +18,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
    public List<PlayerManager> greenPlayers;
    public bool greenTeamReady;
 
+   public Transform[] spawnPink;
+   public Transform[] spawnGreen;
+   
    public bool gameIsFull;
    public float timeBeforeStart = 60;
    public float startTimer;
@@ -35,7 +39,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
    private void Start()
    {
-      GameAdministrator.localPlayer.controller.transform.position = spawnPoint.position;
+     // GameAdministrator.localPlayer.controller.transform.localPosition = spawnPoint.position;
+      GameAdministrator.localPlayer.controller.agent.Warp(spawnPoint.position);
       GameAdministrator.UpdatePlayersList();
    }
 
@@ -58,38 +63,35 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
    public void ForceStartGame()
    {
-      playerManagers.Clear();
-      pinkPlayers.Clear();
-      greenPlayers.Clear();
-      playerManagers.AddRange(FindObjectsOfType<PlayerManager>());
 
-      pinkPlayers.Add(playerManagers[0]);
-      pinkPlayers.Add(playerManagers[1]);
-      greenPlayers.Add(playerManagers[2]);
-      greenPlayers.Add(playerManagers[3]);
+      if (PhotonNetwork.LocalPlayer.IsMasterClient)
+      {
+         playerManagers.Clear();
+         pinkPlayers.Clear();
+         greenPlayers.Clear();
+         playerManagers.AddRange(FindObjectsOfType<PlayerManager>());
 
-      if (pinkPlayers[0] == GameAdministrator.localPlayer)
-      {
-         GameAdministrator.localPlayer.SendPlayerCharacter(0);
-         GameAdministrator.localPlayer.SendPlayerTeam(1);
-      }
-      
-      if (pinkPlayers[1] == GameAdministrator.localPlayer)
-      {
-         GameAdministrator.localPlayer.SendPlayerCharacter(1);
-         GameAdministrator.localPlayer.SendPlayerTeam(1);
-      }
-      
-      if (greenPlayers[0] == GameAdministrator.localPlayer)
-      {
-         GameAdministrator.localPlayer.SendPlayerCharacter(0);
-         GameAdministrator.localPlayer.SendPlayerTeam(0);
-      }
-      
-      if (greenPlayers[1] == GameAdministrator.localPlayer)
-      {
-         GameAdministrator.localPlayer.SendPlayerCharacter(1);
-         GameAdministrator.localPlayer.SendPlayerTeam(0);
+         pinkPlayers.Add(playerManagers[0]);
+         pinkPlayers.Add(playerManagers[1]);
+         greenPlayers.Add(playerManagers[2]);
+         greenPlayers.Add(playerManagers[3]);
+
+         pinkPlayers[0].SendPlayerCharacter(0);
+         pinkPlayers[0].SendPlayerTeam(1);
+         pinkPlayers[0].controller.enabled = true;
+         
+         pinkPlayers[1].SendPlayerCharacter(1);
+         pinkPlayers[1].SendPlayerTeam(1);
+         pinkPlayers[1].controller.enabled = true;
+
+         greenPlayers[0].SendPlayerCharacter(0);
+         greenPlayers[0].SendPlayerTeam(0);
+         greenPlayers[0].controller.enabled = true;
+
+         greenPlayers[1].SendPlayerCharacter(1);
+         greenPlayers[1].SendPlayerTeam(0);
+         greenPlayers[1].controller.enabled = true;
+
       }
       
       StartGame();
@@ -97,7 +99,32 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
    
    public void StartGame()
    {
-      Debug.Log("Game Start");
+      GameAdministrator.localPlayer.interfaceManager.championSelectCanvas.SetActive(false);
+      
+      switch (GameAdministrator.localPlayer.currentTeam)
+      {
+         case Enums.Team.Green:
+            if (GameAdministrator.localPlayer.photonView.ViewID % 2 == 0)
+            {
+               GameAdministrator.localPlayer.controller.agent.Warp(spawnGreen[0].position);
+            }
+            else
+            {
+               GameAdministrator.localPlayer.controller.agent.Warp(spawnGreen[1].position);
+            }
+            break;
+         
+         case Enums.Team.Pink:
+            if (GameAdministrator.localPlayer.photonView.ViewID % 2 == 0)
+            {
+               GameAdministrator.localPlayer.controller.agent.Warp(spawnPink[0].position);
+            }
+            else
+            {
+               GameAdministrator.localPlayer.controller.agent.Warp(spawnPink[1].position);
+            }
+            break;
+      }
    }
    
    public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -179,4 +206,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
          CheckPlayerCounts();
       }
    }
+
+   #region DEBUG
+
+   public void DEBUG_TeleportToLevel()
+   {
+      GameAdministrator.localPlayer.controller.agent.Warp(spawnGreen[0].position);
+   }
+
+   #endregion
 }

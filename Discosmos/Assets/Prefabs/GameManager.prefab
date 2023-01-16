@@ -46,9 +46,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95548f149e24a564e90a299729896b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 6897011727681354397}
+  spawnPoint: {fileID: 0}
+  playerManagers: []
   pinkPlayers: []
+  pinkTeamReady: 0
   greenPlayers: []
+  greenTeamReady: 0
+  spawnPink:
+  - {fileID: 0}
+  - {fileID: 0}
+  spawnGreen:
+  - {fileID: 0}
+  - {fileID: 0}
+  gameIsFull: 0
+  timeBeforeStart: 20
+  startTimer: 0
+  gameIsStarted: 0
 --- !u!114 &6897011726794225067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,7 +108,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6897011727681354370}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.85, y: 0, z: 3.98}
+  m_LocalPosition: {x: 129.6, y: 1.79, z: -1.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
