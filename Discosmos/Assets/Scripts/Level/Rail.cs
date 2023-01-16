@@ -28,6 +28,8 @@ public class Rail : MonoBehaviour
     [SerializeField] private bool generateRessources;
     public bool addNewPoint;
     public bool removeLastPoint;
+    public bool updatePoints;
+    public bool inversePoints;
     [SerializeField] private GameObject railPoint;
     [SerializeField] private bool visualizeExitDirections;
     [SerializeField] private bool exitDirectionAuto = true;
@@ -155,8 +157,6 @@ public class Rail : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        DrawRailPoints();
-        CreateDistancedNodes();
         foreach (Vector3 pos in distancedNodes)
         {
             Gizmos.DrawSphere(pos,0.1f);
@@ -177,10 +177,23 @@ public class Rail : MonoBehaviour
             RemoveLastPoint();
             removeLastPoint = false;
         }
+
+        if (updatePoints)
+        {
+            UpdatePoints();
+            updatePoints = false;
+        }
+        
+        if (inversePoints)
+        {
+            InversePoints();
+            inversePoints = false;
+        }
+        DrawRailPoints();
+        CreateDistancedNodes();
         
         if (generateRessources)
         {
-            GenerateRessources();
             generateRessources = false;
         }
 
@@ -214,11 +227,25 @@ public class Rail : MonoBehaviour
         railPoints.RemoveAt(railPoints.Count - 1);
     }
     
-    void GenerateRessources()
+    void UpdatePoints()
     {
-        for (int i = 0; i < ressourcesNb; i++)
+        railPoints.Clear();
+        for (int i = 0; i < transform.childCount; i++)
         {
-            
+            RailPoint point = new RailPoint();
+            point.point = transform.GetChild(i);
+            point.previousHandle = transform.GetChild(i).GetChild(0);
+            point.nextHandle = transform.GetChild(i).GetChild(1);
+            railPoints.Add(point);
+        }
+    }
+    void InversePoints()
+    {
+        for (int i = 0; i < railPoints.Count; i++)
+        {
+            railPoints[i].point.localPosition = railPoints[i].point.localPosition * -1;
+            railPoints[i].previousHandle.localPosition = railPoints[i].previousHandle.localPosition * -1;
+            railPoints[i].nextHandle.localPosition = railPoints[i].nextHandle.localPosition * -1;
         }
     }
 
