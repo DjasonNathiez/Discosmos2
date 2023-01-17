@@ -279,7 +279,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     #region CAPACITIES
 
-    private float capacity1Timer;
+    public float capacity1Timer;
     private float capacity1NetworkTime;
     public void SetCapacity1OnCooldown()
     {

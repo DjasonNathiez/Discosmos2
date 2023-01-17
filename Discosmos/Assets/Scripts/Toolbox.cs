@@ -32,6 +32,12 @@
     
     public class Enums
     {
+        public enum CollectableType
+        {
+            Convoy_Decrease,
+            Player_ReduceCooldown
+        }
+        
         public enum GameState
         {
             Disconnected,
