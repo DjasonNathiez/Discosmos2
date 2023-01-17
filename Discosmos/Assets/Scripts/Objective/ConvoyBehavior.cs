@@ -1,11 +1,29 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Timers;
+using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
+using Tools;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Random = UnityEngine.Random;
 
-public class ConvoyBehavior : MonoBehaviour
+public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
 {
+    [Header("REFERENCES")] 
+    public Targetable myTargetable;
+    
+    [Header("PROGRESSION")] 
+    public int pinkProgress;
+    public int greenProgress;
+    public float timeToRelease;
+    public float currentTimeToRelease;
+    public float releaseTimer;
+    public float backupNetworkTime;
+    
+    [Header("MOVEMENT")]
     public float force;
     public float decceleration;
     public bool master;
@@ -14,6 +32,8 @@ public class ConvoyBehavior : MonoBehaviour
     public float xMin;
 
     public bool pointReached;
+    public Enums.Team leftSide;
+    public Enums.Team rightSide;
 
     [Header("HIT STOP AND SHAKING")]
     public bool shaking;
@@ -33,7 +53,46 @@ public class ConvoyBehavior : MonoBehaviour
     public float startFactor;
 
 
-    // Update is called once per frame
+    public void ActiveGameLoop()
+    {
+        pinkProgress = 0;
+        greenProgress = 0;
+        transform.position = curve[startIndex];
+        
+        backupNetworkTime = (float)PhotonNetwork.Time;
+        GameAdministrator.NetworkUpdate += TimerLoop;
+    }
+
+    public void DisableGameLoop()
+    {
+        releaseTimer = 0;
+        GameAdministrator.NetworkUpdate -= TimerLoop;
+    }
+    
+    public void TimerLoop()
+    {
+        if (releaseTimer > currentTimeToRelease)
+        {
+            Release();
+            backupNetworkTime = (float)PhotonNetwork.Time;
+            releaseTimer = 0;
+        }
+        else
+        {
+            releaseTimer = (float) (PhotonNetwork.Time - backupNetworkTime);
+        }
+    }
+
+    private void Awake()
+    {
+        currentTimeToRelease = timeToRelease;
+    }
+
+    private void Start()
+    {
+        myTargetable.SetConvoyUI(pinkProgress, greenProgress);
+    }
+
     void Update()
     {
         if (master)
@@ -54,7 +113,7 @@ public class ConvoyBehavior : MonoBehaviour
             // TEST APPLY FORCES
             if (Input.GetKeyDown(KeyCode.D))
             {
-                ApplyForce(10);
+               ActiveGameLoop();
             }
             if (Input.GetKeyDown(KeyCode.S))
             {
@@ -102,11 +161,34 @@ public class ConvoyBehavior : MonoBehaviour
         if (index == -1)
         {
             transform.position = curve[0];
+
+            switch (leftSide)
+            {
+                case Enums.Team.Green:
+                    GameManager.instance.EndGame(Enums.Team.Green);
+                    break;
+                
+                case Enums.Team.Pink:
+                    GameManager.instance.EndGame(Enums.Team.Pink);
+                    break;
+            }
+            
             StartCoroutine(PointGained());
         }
         else if (index == curve.Count)
         {
             transform.position = curve[curve.Count -1];
+            
+            switch (rightSide)
+            {
+                case Enums.Team.Green:
+                    GameManager.instance.EndGame(Enums.Team.Green);
+                    break;
+                
+                case Enums.Team.Pink:
+                    GameManager.instance.EndGame(Enums.Team.Pink);
+                    break;
+            }
             StartCoroutine(PointGained());
         }
     }
@@ -169,5 +251,59 @@ public class ConvoyBehavior : MonoBehaviour
                 shaking = false;
             }
         }
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        if (photonEvent.Code == RaiseEvent.DamageTarget)
+        {
+            Hashtable data = (Hashtable)photonEvent.CustomData;
+            
+            int[] targets = (int[])data["TargetsID"];
+            if(targets == null) return;
+                    
+            foreach (int id in targets)
+            {
+                if (photonView.ViewID == id)
+                {
+                    TakeDamage(data);
+                }
+            }
+        }
+    }
+
+    public void TakeDamage(Hashtable data)
+    {
+        byte teamByte = (byte) data["SenderTeam"];
+        Enums.Team senderTeam = (Enums.Team) teamByte;
+        
+        int amount = (int) data["Amount"];
+
+        switch (senderTeam)
+        {
+            case Enums.Team.Green:
+                greenProgress += amount;
+                break;
+            
+            case Enums.Team.Pink:
+                pinkProgress += amount;
+                break;
+        }
+        
+        myTargetable.SetConvoyUI(pinkProgress, greenProgress);
+    }
+
+    public void Release()
+    {
+        int releaseAmount = greenProgress - pinkProgress;
+        
+        ApplyForce(releaseAmount);
+
+        greenProgress = 0;
+        pinkProgress = 0;
+        
+        myTargetable.SetConvoyUI(pinkProgress, greenProgress);
+        
+        Debug.Log("Convoy release with an amount of " + releaseAmount);
     }
 }

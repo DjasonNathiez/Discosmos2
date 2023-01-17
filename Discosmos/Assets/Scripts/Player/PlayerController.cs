@@ -63,6 +63,10 @@ public class PlayerController : MonoBehaviour
         AttackInputCheck();
         MovementTypeCheck();
         CapacityInputCheck();
+        
+        
+        mimiAnimator.SetFloat("Force", Mathf.Lerp(myTargetable.healthBar.speedFill.fillAmount, manager.force, Time.deltaTime * 5f));
+        vegaAnimator.SetFloat("Force",Mathf.Lerp(myTargetable.healthBar.speedFill.fillAmount, manager.force, Time.deltaTime * 5f));
     }
 
     private void FixedUpdate()

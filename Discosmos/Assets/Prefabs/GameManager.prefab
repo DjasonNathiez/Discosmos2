@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95548f149e24a564e90a299729896b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  convoy: {fileID: 0}
   spawnPoint: {fileID: 0}
   playerManagers: []
   pinkPlayers: []

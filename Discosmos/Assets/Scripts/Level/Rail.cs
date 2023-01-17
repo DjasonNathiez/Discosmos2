@@ -63,9 +63,12 @@ public class Rail : MonoBehaviour
 
     private void Start()
     {
-        material = new Material(meshRenderer.material);
-        material.name = gameObject.name + " Material";
-        meshRenderer.material = material;
+        if (meshRenderer)
+        {
+            material = new Material(meshRenderer.material);
+            material.name = gameObject.name + " Material";
+            meshRenderer.material = material;
+        }
 
         if(!player) player = GameAdministrator.localPlayer.controller;
     }

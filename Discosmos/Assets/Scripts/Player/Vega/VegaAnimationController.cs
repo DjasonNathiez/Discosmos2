@@ -50,7 +50,7 @@ public class VegaAnimationController : AnimationController
          {
             blackHoleVFX.Stop();
             blackHoleVFX.transform.gameObject.SetActive(false);
-            manager.SetCapacity1OnCooldown();
+            //manager.SetCapacity1OnCooldown();
             blackHoleIsActive = false;
          }
          else

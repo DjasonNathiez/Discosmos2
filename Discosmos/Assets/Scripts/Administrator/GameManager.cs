@@ -9,6 +9,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
+   public static GameManager instance;
+   [Header("REFERENCES")] 
+   public ConvoyBehavior convoy;
+   
    [Header("SPAWN")]
    public Transform spawnPoint;
    public List<PlayerManager> playerManagers;
@@ -28,19 +32,29 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
    private void Awake()
    {
+      if (instance == null)
+      {
+         instance = this;
+      }
+      else
+      {
+         Destroy(gameObject);
+      }
+
       pinkPlayers = new List<PlayerManager>();
       greenPlayers = new List<PlayerManager>();
       playerManagers = new List<PlayerManager>();
       
       GameAdministrator.gameState = Enums.GameState.Game;
-      
+
       CheckPlayerCounts();
    }
 
    private void Start()
    {
      // GameAdministrator.localPlayer.controller.transform.localPosition = spawnPoint.position;
-      GameAdministrator.localPlayer.controller.agent.Warp(spawnPoint.position);
+     GameAdministrator.localPlayer.interfaceManager.championSelectCanvas.SetActive(true);
+     GameAdministrator.localPlayer.controller.agent.Warp(spawnPoint.position);
       GameAdministrator.UpdatePlayersList();
    }
 
@@ -78,33 +92,69 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
          pinkPlayers[0].SendPlayerCharacter(0);
          pinkPlayers[0].SendPlayerTeam(1);
-         pinkPlayers[0].controller.enabled = true;
+         //pinkPlayers[0].controller.enabled = true;
          
          pinkPlayers[1].SendPlayerCharacter(1);
          pinkPlayers[1].SendPlayerTeam(1);
-         pinkPlayers[1].controller.enabled = true;
+        // pinkPlayers[1].controller.enabled = true;
 
          greenPlayers[0].SendPlayerCharacter(0);
          greenPlayers[0].SendPlayerTeam(0);
-         greenPlayers[0].controller.enabled = true;
+        // greenPlayers[0].controller.enabled = true;
 
          greenPlayers[1].SendPlayerCharacter(1);
          greenPlayers[1].SendPlayerTeam(0);
-         greenPlayers[1].controller.enabled = true;
+        // greenPlayers[1].controller.enabled = true;
 
+         int[] pinkId = new int[]
+         {
+            pinkPlayers[0].photonView.ViewID,
+            pinkPlayers[1].photonView.ViewID
+         };
+         
+         int[] greenId = new int[]
+         {
+            greenPlayers[0].photonView.ViewID,
+            greenPlayers[1].photonView.ViewID
+         };
+         
+         Hashtable data = new Hashtable()
+         {
+            {"Pink", pinkId},
+            {"Green", greenId}
+         };
+
+         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All, CachingOption = EventCaching.AddToRoomCacheGlobal};
+
+         PhotonNetwork.RaiseEvent(RaiseEvent.ForceStart, data, raiseEventOptions, SendOptions.SendReliable);
       }
-      
+   }
+
+   public void UpdateForceList(Hashtable data)
+   {
+      Debug.Log("Update Force List");
+      int[] pinkId = (int[]) data["Pink"];
+      int[] greenId = (int[]) data["Green"];
+
+      pinkPlayers.Clear();
+      greenPlayers.Clear();
+
+      pinkPlayers.Add(PhotonView.Find(pinkId[0]).GetComponent<PlayerManager>());
+      pinkPlayers.Add(PhotonView.Find(pinkId[1]).GetComponent<PlayerManager>());
+      greenPlayers.Add(PhotonView.Find(greenId[0]).GetComponent<PlayerManager>());
+      greenPlayers.Add(PhotonView.Find(greenId[1]).GetComponent<PlayerManager>());
+
       StartGame();
    }
    
    public void StartGame()
    {
       GameAdministrator.localPlayer.interfaceManager.championSelectCanvas.SetActive(false);
-      
+
       switch (GameAdministrator.localPlayer.currentTeam)
       {
          case Enums.Team.Green:
-            if (GameAdministrator.localPlayer.photonView.ViewID % 2 == 0)
+            if (GameAdministrator.localPlayer.photonView.ControllerActorNr % 2 == 0)
             {
                GameAdministrator.localPlayer.controller.agent.Warp(spawnGreen[0].position);
             }
@@ -115,7 +165,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             break;
          
          case Enums.Team.Pink:
-            if (GameAdministrator.localPlayer.photonView.ViewID % 2 == 0)
+            if (GameAdministrator.localPlayer.photonView.ControllerActorNr % 2 == 0)
             {
                GameAdministrator.localPlayer.controller.agent.Warp(spawnPink[0].position);
             }
@@ -125,8 +175,33 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             }
             break;
       }
+      
+      convoy.ActiveGameLoop();
    }
-   
+
+   public void EndGame(Enums.Team winner)
+   {
+      gameIsStarted = false;
+      
+      switch (winner)
+      {
+         case Enums.Team.Green:
+            Debug.Log("Green lose");
+            break;
+         
+         case Enums.Team.Pink:
+            Debug.Log("Pink win");
+            break;
+      }
+      
+      //Set Win View
+   }
+
+   public void CheckForReady()
+   {
+      
+   }
+
    public override void OnPlayerEnteredRoom(Player newPlayer)
    {
       base.OnPlayerEnteredRoom(newPlayer);
@@ -201,6 +276,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
    public void OnEvent(EventData photonEvent)
    {
+      if (photonEvent.Code == RaiseEvent.ForceStart)
+      {
+         Hashtable data = (Hashtable) photonEvent.CustomData;
+         
+         UpdateForceList(data);
+      }
+      
       if (photonEvent.Code == RaiseEvent.SetTeam && !gameIsStarted)
       {
          CheckPlayerCounts();

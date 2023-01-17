@@ -53,6 +53,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public float currentSpeed;
     public float baseSpeed;
     public float force;
+    private float visualForce;
     public AnimationCurve speedCurve;
     public AnimationCurve slowDownCurve;
 
@@ -91,9 +92,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         
         if(photonView == null) photonView = PhotonView.Get(gameObject);
     }
-
-  
-
+    
     private void Start()
     {
         name = "Client" + "_" + photonView.Owner.NickName + "_" + photonView.ViewID + "_IsMine : " + photonView.IsMine;
@@ -101,6 +100,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         WaitNextFrame();
         
     }
+    
     async void WaitNextFrame()
     {
         await Task.Yield();
@@ -110,7 +110,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
             controller.myTargetable.healthBar.transform.gameObject.SetActive(true);
         }
         
-        controller.myTargetable.UpdateUI(false, true, currentHealth, maxHealth, false, 0, true, photonView.Owner.NickName);
+      //  controller.myTargetable.UpdateUI(false, true, currentHealth, maxHealth, false, 0, true, photonView.Owner.NickName);
         interfaceManager.UpdatePlayerInRoomCount();
     }
     
@@ -120,16 +120,24 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         {
             currentSpeed = speedCurve.Evaluate(force) + baseSpeed;
             controller.agent.speed = currentSpeed;
-            
-            if (controller.myTargetable)
-            {
-                controller.myTargetable.UpdateUI(false, false, 0, 0, true, Mathf.Lerp(controller.myTargetable.healthBar.speedFill.fillAmount, force, Time.deltaTime * 5f));
-            }
         }
+        
+        switch (currentCharacter)
+        {
+            case Enums.Characters.Mimi:
+                visualForce = controller.mimiAnimator.GetFloat("Force");
+                break;
+                    
+            case Enums.Characters.Vega:
+                visualForce = controller.vegaAnimator.GetFloat("Force");
+                break;
+        }
+        controller.myTargetable.UpdateUI(false, false, 0, 0, true, visualForce);
+        interfaceManager.UpdateSpeedBar(visualForce);
+        
         
         OnCooldownCapacity1?.Invoke();
         OnCooldownCapacity2?.Invoke();
-        
         
     }
 
@@ -178,6 +186,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
         capacity1 = currentData.capacity1;
         capacity2 = currentData.capacity2;
+        
     }
 
     public void ResetPlayerStats()
@@ -188,7 +197,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         currentSpeed = baseSpeed;
         force = 0;
         
-        controller.myTargetable.UpdateUI(false, true, currentHealth, maxHealth);
+        interfaceManager.InitializeHUD(currentHealth, maxHealth, Mathf.Lerp(controller.myTargetable.healthBar.speedFill.fillAmount, force, Time.deltaTime * 5f), photonView.Owner.NickName);
+        controller.myTargetable.UpdateUI(true, true, currentHealth, maxHealth, false, 0, true, photonView.Owner.NickName);
     }
     
     public void ChangePlayerCharacter(int index)
@@ -238,14 +248,18 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         if (!controller.myTargetable.healthBar.transform.gameObject.activeSelf)
         {
             controller.myTargetable.healthBar.transform.gameObject.SetActive(true);
+            controller.myTargetable.UpdateUI(true, true, currentHealth, maxHealth, false, 0, true, photonView.Owner.NickName);
         }
-        
+
         isLoaded = true;
     }
     
     public void ChangePlayerTeam(int index)
     {
-        if(!controller.gameObject.activeSelf) controller.gameObject.SetActive(true);
+        if (!controller.gameObject.activeSelf)
+        {
+            controller.gameObject.SetActive(true);
+        }
 
         switch (index)
         {
@@ -265,7 +279,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     #region CAPACITIES
 
-    private float capacity1Timer;
+    public float capacity1Timer;
     private float capacity1NetworkTime;
     public void SetCapacity1OnCooldown()
     {
@@ -273,13 +287,17 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         capacity1NetworkTime = (float)PhotonNetwork.Time;
         capacity1Timer = 0;
         OnCooldownCapacity1 += CooldownCapacity1;
+        interfaceManager.SetCapacityImageOnCooldown();
     }
 
     void CooldownCapacity1()
     {
+        interfaceManager.UpdateCapacity1Image(capacity1Timer, capacity1.cooldownTime);
+        
         if (capacity1Timer >= capacity1.cooldownTime)
         {
             capacity1InCooldown = false;
+            interfaceManager.UnsetCapacityImageOnCooldown();
             OnCooldownCapacity1 -= CooldownCapacity1;
         }
         else
@@ -330,8 +348,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
             if(convoy != null) break;
         }
 
-        
-        if (convoy != null)
+
+        /*if (convoy != null)
         {
             float position = controller.transform.position.x - convoy.renderBody.transform.position.x;
 
@@ -344,12 +362,13 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
                     convoy.ApplyForce(-damageAmount);
                     break;
             }
-        }
+        }*/
         
         Hashtable data = new Hashtable
         {
             {"TargetsID", targetsID},
-            {"Amount", damageAmount}
+            {"Amount", damageAmount},
+            {"SenderTeam", (byte)currentTeam}
         };
 
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All, CachingOption = EventCaching.AddToRoomCacheGlobal};
@@ -574,6 +593,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
           }
           
           controller.myTargetable.UpdateUI(false, true, currentHealth, maxHealth);
+          interfaceManager.UpdateHealthBar(currentHealth, maxHealth);
       }
 
       void Death()
@@ -596,4 +616,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
           interfaceManager.UpdatePlayerInRoomCount();
       }
 
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        base.OnPlayerLeftRoom(otherPlayer);
+        
+        interfaceManager.UpdatePlayerInRoomCount();
+    }
 }
