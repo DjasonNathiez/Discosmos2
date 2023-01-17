@@ -73516,6 +73516,7 @@ MonoBehaviour:
   mimiAnimationController: {fileID: 3398518024118379765}
   vegaAnimationController: {fileID: 3867938354030811034}
   pointerVFX: {fileID: 87464742355607682}
+  capacity1Timer: 0
 --- !u!114 &6319531978680929546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73557,7 +73558,7 @@ GameObject:
   - component: {fileID: 5093426390933523517}
   m_Layer: 3
   m_Name: Model_CONTROLLER
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

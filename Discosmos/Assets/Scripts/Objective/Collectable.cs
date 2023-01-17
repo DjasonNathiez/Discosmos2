@@ -18,42 +18,47 @@ public class Collectable : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject);
         if(onCooldown) return;
         
-        PlayerManager player = other.GetComponent<PlayerManager>();
+        PlayerManager player = other.GetComponentInParent<PlayerManager>();
 
-        if (player)
+        Debug.Log(player);
+
+        if (!player && !other.CompareTag("Player")) return;
+        
+        switch (type)
         {
-            switch (type)
-            {
-                case Enums.CollectableType.Convoy_Decrease:
-                    ConvoyBehavior convoy = FindObjectOfType<ConvoyBehavior>();
+            case Enums.CollectableType.Convoy_Decrease:
+                ConvoyBehavior convoy = FindObjectOfType<ConvoyBehavior>();
+                if(!convoy) return;
                     
-                    if(!convoy) return;
-                    
-                    switch (player.currentTeam)
-                    {
-                        case Enums.Team.Green:
-                            convoy.pinkProgress -= Mathf.FloorToInt(amount);
-                            break;
+                switch (player.currentTeam)
+                {
+                    case Enums.Team.Green:
+                        convoy.pinkProgress -= Mathf.FloorToInt(amount);
+                        Debug.Log("convoy pink progress down");
+                        break;
                         
-                        case Enums.Team.Pink:
-                            convoy.greenProgress -= Mathf.FloorToInt(amount);
-                            break;
-                    }
+                    case Enums.Team.Pink:
+                        convoy.greenProgress -= Mathf.FloorToInt(amount);
+                        Debug.Log("convoy green progress down");
+                        break;
+                }
                     
-                    break;
+                break;
                 
-                case Enums.CollectableType.Player_ReduceCooldown:
-                    player.capacity1Timer += amount;
-                    break;
-            }
+            case Enums.CollectableType.Player_ReduceCooldown:
+                player.capacity1Timer += amount;
+                Debug.Log("cdr reduced");
+                break;
         }
-
+            
         renderer.enabled = false;
         onCooldown = true;
         backupNetworkTime = (float) PhotonNetwork.Time;
         GameAdministrator.NetworkUpdate += CooldownCollectable;
+
     }
 
     public void Appear()
@@ -82,6 +87,7 @@ public class Collectable : MonoBehaviour
         if (timer >= cooldownDuration)
         {
             onCooldown = false;
+            Appear();
             GameAdministrator.NetworkUpdate -= CooldownCollectable;
         }
         else

@@ -1356,11 +1356,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderer: {fileID: 203820021}
-  type: 0
-  amount: 0
+  type: 1
+  amount: 2
   randomisedApparition: 0
   onCooldown: 0
-  cooldownDuration: 0
+  cooldownDuration: 8
 --- !u!43 &204210942
 Mesh:
   m_ObjectHideFlags: 0
@@ -3434,11 +3434,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderer: {fileID: 447054944}
-  type: 0
-  amount: 0
+  type: 1
+  amount: 2
   randomisedApparition: 0
   onCooldown: 0
-  cooldownDuration: 0
+  cooldownDuration: 8
 --- !u!1 &452316829
 GameObject:
   m_ObjectHideFlags: 0
@@ -3678,11 +3678,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderer: {fileID: 519854460}
-  type: 0
-  amount: 0
+  type: 1
+  amount: 2
   randomisedApparition: 0
   onCooldown: 0
-  cooldownDuration: 0
+  cooldownDuration: 8
 --- !u!1 &535853056
 GameObject:
   m_ObjectHideFlags: 0
@@ -6656,10 +6656,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderer: {fileID: 1134835140}
   type: 0
-  amount: 0
+  amount: 10
   randomisedApparition: 0
   onCooldown: 0
-  cooldownDuration: 0
+  cooldownDuration: 8
 --- !u!1 &1169956853
 GameObject:
   m_ObjectHideFlags: 0
@@ -7157,10 +7157,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderer: {fileID: 1238379268}
   type: 0
-  amount: 0
+  amount: 10
   randomisedApparition: 0
   onCooldown: 0
-  cooldownDuration: 0
+  cooldownDuration: 8
 --- !u!1 &1241073157
 GameObject:
   m_ObjectHideFlags: 0
@@ -8878,11 +8878,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderer: {fileID: 1447982132}
-  type: 0
-  amount: 0
+  type: 1
+  amount: 2
   randomisedApparition: 0
   onCooldown: 0
-  cooldownDuration: 0
+  cooldownDuration: 8
 --- !u!1 &1473841731
 GameObject:
   m_ObjectHideFlags: 0
@@ -13076,10 +13076,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderer: {fileID: 2137116639}
   type: 0
-  amount: 0
+  amount: 10
   randomisedApparition: 0
   onCooldown: 0
-  cooldownDuration: 0
+  cooldownDuration: 8
 --- !u!1 &2138005299
 GameObject:
   m_ObjectHideFlags: 0
@@ -18039,10 +18039,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderer: {fileID: 8214652152568034091}
   type: 0
-  amount: 0
+  amount: 10
   randomisedApparition: 0
   onCooldown: 0
-  cooldownDuration: 0
+  cooldownDuration: 8
 --- !u!4 &8214652152568034518
 Transform:
   m_ObjectHideFlags: 0
