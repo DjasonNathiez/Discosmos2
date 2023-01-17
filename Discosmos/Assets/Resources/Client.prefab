@@ -73011,6 +73011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownerTeam: 0
   hideUI: 0
+  isConvoy: 0
   healthBar:
     transform: {fileID: 0}
     healthFill: {fileID: 0}
@@ -73028,6 +73029,8 @@ MonoBehaviour:
   targetableBody: {fileID: 4809639664043971265}
   heightUI: 40
   type: 0
+  pinkAmountText: {fileID: 0}
+  greenAmountText: {fileID: 0}
 --- !u!195 &1303469052307901206
 NavMeshAgent:
   m_ObjectHideFlags: 0

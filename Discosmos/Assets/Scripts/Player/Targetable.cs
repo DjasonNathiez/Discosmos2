@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using TMPro;
 using Tools;
@@ -11,6 +12,7 @@ public class Targetable : MonoBehaviour
 {
     public Enums.Team ownerTeam;
     public bool hideUI;
+    public bool isConvoy;
     public HealthBar healthBar;
     public GameObject uiObject;
     public PhotonView masterPhotonView;
@@ -20,6 +22,10 @@ public class Targetable : MonoBehaviour
     public Transform targetableBody;
     public float heightUI;
     public UIType type;
+
+    [Header("CONVOY")] 
+    public TextMeshProUGUI pinkAmountText;
+    public TextMeshProUGUI greenAmountText;
 
     private void Awake()
     {
@@ -31,14 +37,34 @@ public class Targetable : MonoBehaviour
         bodyPhotonID = bodyPhotonView.ViewID;
         photonID = masterPhotonView.ViewID;
         
+        if(!hideUI) CreateUI();
     }
 
     private void Start()
     {
-        if(!hideUI) CreateUI();
     }
 
-   
+    public void SetConvoyUI(int pinkAmount, int greenAmount)
+    {
+        pinkAmountText.text = pinkAmount.ToString();
+        greenAmountText.text = greenAmount.ToString();
+
+        if (pinkAmount > greenAmount)
+        {
+            pinkAmountText.fontSize = 46;
+            greenAmountText.fontSize = 36;
+        }
+        else if (greenAmount > pinkAmount)
+        {
+            pinkAmountText.fontSize = 36;
+            greenAmountText.fontSize = 46;
+        }
+        else if (greenAmount == pinkAmount)
+        {
+            pinkAmountText.fontSize = 36;
+            greenAmountText.fontSize = 36;
+        }
+    }
 
     public void CreateUI()
     {
@@ -52,6 +78,8 @@ public class Targetable : MonoBehaviour
                 healthBar.nameText =  healthBar.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
                 healthBar.target =  healthBar.transform.GetChild(4);
                 if(healthBar.name != string.Empty) healthBar.nameText.text = healthBar.name;
+                
+                UpdateUI(true, true, GameAdministrator.localPlayer.currentHealth, GameAdministrator.localPlayer.maxHealth, false, 0, true, GameAdministrator.localPlayer.photonView.Owner.NickName);
                 break;
             
             case UIType.ClassicUI:
@@ -60,18 +88,25 @@ public class Targetable : MonoBehaviour
                 healthBar.healthText = healthBar.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
                 healthBar.target = healthBar.transform.GetChild(2);
                 break;
+            
+            case UIType.ConvoyUI:
+                healthBar.transform = Instantiate(uiObject, Vector3.zero, quaternion.identity, GameAdministrator.localPlayer.canvas).transform;
+                pinkAmountText = healthBar.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+                greenAmountText = healthBar.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+                
+                break;
         }
-        healthBar.transform.gameObject.SetActive(false);
+       // healthBar.transform.gameObject.SetActive(false);
     }
     public void ShowTarget()
     {
-        if(hideUI) return;
+        if(hideUI || isConvoy) return;
         healthBar.target.gameObject.SetActive(true);
     }
     
     public void HideTarget()
     {
-        if(hideUI) return;
+        if(hideUI || isConvoy) return;
         healthBar.target.gameObject.SetActive(false);
     }
 
@@ -105,7 +140,8 @@ public class Targetable : MonoBehaviour
 public enum UIType
 {
     PlayerUI,
-    ClassicUI
+    ClassicUI,
+    ConvoyUI
 }
 
 [Serializable]

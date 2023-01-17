@@ -124,7 +124,7 @@ public class NetworkConnector : MonoBehaviourPunCallbacks
                 PhotonNetwork.AutomaticallySyncScene = true;
                 
                 CreateLocalClient();
-                SetRoomVisual();
+                //SetRoomVisual();
                 
                 if (PhotonNetwork.IsMasterClient)
                 {
