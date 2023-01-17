@@ -9,6 +9,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
+   public static GameManager instance;
    [Header("REFERENCES")] 
    public ConvoyBehavior convoy;
    
@@ -31,6 +32,15 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
    private void Awake()
    {
+      if (instance == null)
+      {
+         instance = this;
+      }
+      else
+      {
+         Destroy(gameObject);
+      }
+
       pinkPlayers = new List<PlayerManager>();
       greenPlayers = new List<PlayerManager>();
       playerManagers = new List<PlayerManager>();
@@ -183,6 +193,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             Debug.Log("Pink win");
             break;
       }
+      
+      //Set Win View
    }
 
    public void CheckForReady()

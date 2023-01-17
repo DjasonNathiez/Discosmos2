@@ -161,11 +161,34 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
         if (index == -1)
         {
             transform.position = curve[0];
+
+            switch (leftSide)
+            {
+                case Enums.Team.Green:
+                    GameManager.instance.EndGame(Enums.Team.Green);
+                    break;
+                
+                case Enums.Team.Pink:
+                    GameManager.instance.EndGame(Enums.Team.Pink);
+                    break;
+            }
+            
             StartCoroutine(PointGained());
         }
         else if (index == curve.Count)
         {
             transform.position = curve[curve.Count -1];
+            
+            switch (rightSide)
+            {
+                case Enums.Team.Green:
+                    GameManager.instance.EndGame(Enums.Team.Green);
+                    break;
+                
+                case Enums.Team.Pink:
+                    GameManager.instance.EndGame(Enums.Team.Pink);
+                    break;
+            }
             StartCoroutine(PointGained());
         }
     }
