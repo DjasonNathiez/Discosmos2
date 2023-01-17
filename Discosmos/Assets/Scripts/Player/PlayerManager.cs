@@ -53,6 +53,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public float currentSpeed;
     public float baseSpeed;
     public float force;
+    private float visualForce;
     public AnimationCurve speedCurve;
     public AnimationCurve slowDownCurve;
 
@@ -119,13 +120,21 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         {
             currentSpeed = speedCurve.Evaluate(force) + baseSpeed;
             controller.agent.speed = currentSpeed;
-            
-            if (controller.myTargetable)
-            {
-                controller.myTargetable.UpdateUI(false, false, 0, 0, true, Mathf.Lerp(controller.myTargetable.healthBar.speedFill.fillAmount, force, Time.deltaTime * 5f));
-                interfaceManager.UpdateSpeedBar(Mathf.Lerp(controller.myTargetable.healthBar.speedFill.fillAmount, force, Time.deltaTime * 5f));
-            }
         }
+        
+        switch (currentCharacter)
+        {
+            case Enums.Characters.Mimi:
+                visualForce = controller.mimiAnimator.GetFloat("Force");
+                break;
+                    
+            case Enums.Characters.Vega:
+                visualForce = controller.vegaAnimator.GetFloat("Force");
+                break;
+        }
+        controller.myTargetable.UpdateUI(false, false, 0, 0, true, visualForce);
+        interfaceManager.UpdateSpeedBar(visualForce);
+        
         
         OnCooldownCapacity1?.Invoke();
         OnCooldownCapacity2?.Invoke();

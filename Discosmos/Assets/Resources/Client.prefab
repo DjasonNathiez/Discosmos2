@@ -15079,6 +15079,9 @@ MonoBehaviour:
   - Type: 3
     SynchronizeType: 1
     Name: Target
+  - Type: 1
+    SynchronizeType: 1
+    Name: Force
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -16460,6 +16463,9 @@ MonoBehaviour:
   - Type: 3
     SynchronizeType: 1
     Name: Target
+  - Type: 1
+    SynchronizeType: 1
+    Name: Force
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
