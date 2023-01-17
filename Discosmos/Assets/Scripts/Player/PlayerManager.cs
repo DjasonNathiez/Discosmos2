@@ -123,6 +123,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
             if (controller.myTargetable)
             {
                 controller.myTargetable.UpdateUI(false, false, 0, 0, true, Mathf.Lerp(controller.myTargetable.healthBar.speedFill.fillAmount, force, Time.deltaTime * 5f));
+                interfaceManager.UpdateSpeedBar(Mathf.Lerp(controller.myTargetable.healthBar.speedFill.fillAmount, force, Time.deltaTime * 5f));
             }
         }
         
@@ -187,6 +188,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         currentSpeed = baseSpeed;
         force = 0;
         
+        interfaceManager.InitializeHUD(currentHealth, maxHealth, Mathf.Lerp(controller.myTargetable.healthBar.speedFill.fillAmount, force, Time.deltaTime * 5f), photonView.Owner.NickName);
         controller.myTargetable.UpdateUI(true, true, currentHealth, maxHealth, false, 0, true, photonView.Owner.NickName);
     }
     
@@ -276,13 +278,17 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         capacity1NetworkTime = (float)PhotonNetwork.Time;
         capacity1Timer = 0;
         OnCooldownCapacity1 += CooldownCapacity1;
+        interfaceManager.SetCapacityImageOnCooldown();
     }
 
     void CooldownCapacity1()
     {
+        interfaceManager.UpdateCapacity1Image(capacity1Timer, capacity1.cooldownTime);
+        
         if (capacity1Timer >= capacity1.cooldownTime)
         {
             capacity1InCooldown = false;
+            interfaceManager.UnsetCapacityImageOnCooldown();
             OnCooldownCapacity1 -= CooldownCapacity1;
         }
         else
@@ -578,6 +584,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
           }
           
           controller.myTargetable.UpdateUI(false, true, currentHealth, maxHealth);
+          interfaceManager.UpdateHealthBar(currentHealth, maxHealth);
       }
 
       void Death()

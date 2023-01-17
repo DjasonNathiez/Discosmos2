@@ -36,14 +36,15 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
       playerManagers = new List<PlayerManager>();
       
       GameAdministrator.gameState = Enums.GameState.Game;
-      
+
       CheckPlayerCounts();
    }
 
    private void Start()
    {
      // GameAdministrator.localPlayer.controller.transform.localPosition = spawnPoint.position;
-      GameAdministrator.localPlayer.controller.agent.Warp(spawnPoint.position);
+     GameAdministrator.localPlayer.interfaceManager.championSelectCanvas.SetActive(true);
+     GameAdministrator.localPlayer.controller.agent.Warp(spawnPoint.position);
       GameAdministrator.UpdatePlayersList();
    }
 
