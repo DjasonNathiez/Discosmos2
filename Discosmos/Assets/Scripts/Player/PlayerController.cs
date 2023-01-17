@@ -145,10 +145,32 @@ public class PlayerController : MonoBehaviour
         
         if (Input.GetMouseButton(1))
         {
-            agent.ResetPath();
-            agent.SetDestination(MouseWorldPosition());
-            isMoving = true;
-           ChangeAnimation(manager.force <= 0 ? 1 : 2);
+            if (target)
+            {
+                target.HideTarget();
+            }
+
+            target = GetTarget();
+
+            if (target)
+            {
+                target.ShowTarget();
+
+                if (onRamp)
+                {
+                    OnExitRail();
+                }
+
+                movementType = Enums.MovementType.FollowTarget;
+                ChangeAnimation(manager.force <= 0 ? 1 : 2);
+            }
+            else
+            {
+                agent.ResetPath();
+                agent.SetDestination(MouseWorldPosition());
+                isMoving = true;
+                ChangeAnimation(manager.force <= 0 ? 1 : 2);
+            }
         }
         
         if (Input.GetMouseButtonDown(1))
@@ -172,11 +194,33 @@ public class PlayerController : MonoBehaviour
             ChangeAnimation(0);
         }
         
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButtonDown(1))
         {
-            agent.ResetPath();
-            agent.SetDestination(MouseWorldPosition());
-            SwitchMovementType(Enums.MovementType.MoveToClick);
+            if (target)
+            {
+                target.HideTarget();
+            }
+
+            target = GetTarget();
+
+            if (target)
+            {
+                target.ShowTarget();
+
+                if (onRamp)
+                {
+                    OnExitRail();
+                }
+
+                movementType = Enums.MovementType.FollowTarget;
+                ChangeAnimation(manager.force <= 0 ? 1 : 2);
+            }
+            else
+            {
+                agent.ResetPath();
+                agent.SetDestination(MouseWorldPosition());
+                SwitchMovementType(Enums.MovementType.MoveToClick);
+            }
             
         }
         
@@ -212,13 +256,37 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButton(1))
         {
-            agent.ResetPath();
-            ResetTarget();
-            agent.SetDestination(MouseWorldPosition());
+            
+            if (target)
+            {
+                target.HideTarget();
+            }
 
-            movementType = Enums.MovementType.MoveToClick;
-            isMoving = true;
-            ChangeAnimation(manager.force <= 0 ? 1 : 2);
+            target = GetTarget();
+
+            if (target)
+            {
+                target.ShowTarget();
+
+                if (onRamp)
+                {
+                    OnExitRail();
+                }
+
+                movementType = Enums.MovementType.FollowTarget;
+                ChangeAnimation(manager.force <= 0 ? 1 : 2);
+            }
+            else
+            {
+              agent.ResetPath();
+              ResetTarget();
+             agent.SetDestination(MouseWorldPosition());
+
+             movementType = Enums.MovementType.MoveToClick;
+             isMoving = true;
+             ChangeAnimation(manager.force <= 0 ? 1 : 2);
+                
+            }
         }
         
         if (Input.GetMouseButtonDown(1))
