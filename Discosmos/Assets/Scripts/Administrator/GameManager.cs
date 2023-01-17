@@ -168,7 +168,28 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
       
       convoy.ActiveGameLoop();
    }
-   
+
+   public void EndGame(Enums.Team winner)
+   {
+      gameIsStarted = false;
+      
+      switch (winner)
+      {
+         case Enums.Team.Green:
+            Debug.Log("Green lose");
+            break;
+         
+         case Enums.Team.Pink:
+            Debug.Log("Pink win");
+            break;
+      }
+   }
+
+   public void CheckForReady()
+   {
+      
+   }
+
    public override void OnPlayerEnteredRoom(Player newPlayer)
    {
       base.OnPlayerEnteredRoom(newPlayer);

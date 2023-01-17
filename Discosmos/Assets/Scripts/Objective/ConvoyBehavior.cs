@@ -32,6 +32,8 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
     public float xMin;
 
     public bool pointReached;
+    public Enums.Team leftSide;
+    public Enums.Team rightSide;
 
     [Header("HIT STOP AND SHAKING")]
     public bool shaking;
@@ -53,6 +55,10 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void ActiveGameLoop()
     {
+        pinkProgress = 0;
+        greenProgress = 0;
+        transform.position = curve[startIndex];
+        
         backupNetworkTime = (float)PhotonNetwork.Time;
         GameAdministrator.NetworkUpdate += TimerLoop;
     }

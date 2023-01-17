@@ -616,4 +616,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
           interfaceManager.UpdatePlayerInRoomCount();
       }
 
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        base.OnPlayerLeftRoom(otherPlayer);
+        
+        interfaceManager.UpdatePlayerInRoomCount();
+    }
 }
