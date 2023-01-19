@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class CameraManager : MonoBehaviour
 {
     [SerializeField] private Transform player;
-    [SerializeField] private float smoothSpeed = 0.125f;
     [SerializeField] private Vector3 offset;
     [SerializeField] private Vector2 rotationOffset;
     [SerializeField] private float cameraSpeed;

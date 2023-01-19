@@ -5,7 +5,7 @@ using UnityEngine;
 public class Collectable : MonoBehaviour
 {
     [Header("REFERENCES")] 
-    public MeshRenderer renderer;
+    public MeshRenderer mRenderer;
 
     [Header("DATA")]
     public Enums.CollectableType type;
@@ -54,7 +54,7 @@ public class Collectable : MonoBehaviour
                 break;
         }
             
-        renderer.enabled = false;
+        mRenderer.enabled = false;
         onCooldown = true;
         backupNetworkTime = (float) PhotonNetwork.Time;
         GameAdministrator.NetworkUpdate += CooldownCollectable;
@@ -79,7 +79,7 @@ public class Collectable : MonoBehaviour
             }
         }
 
-        renderer.enabled = true;
+        mRenderer.enabled = true;
     }
     
     public void CooldownCollectable()

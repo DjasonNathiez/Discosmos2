@@ -11,7 +11,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public PlayerController controller;
     public Camera _camera;
     public GameObject cameraObject;
-    public PhotonView photonView;
+    public PhotonView pView;
     public InterfaceManager interfaceManager;
     
     public GameObject sparkles;
@@ -90,12 +90,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         DontDestroyOnLoad(gameObject);
         
-        if(photonView == null) photonView = PhotonView.Get(gameObject);
+        if(pView == null) pView = PhotonView.Get(gameObject);
     }
     
     private void Start()
     {
-        name = "Client" + "_" + photonView.Owner.NickName + "_" + photonView.ViewID + "_IsMine : " + photonView.IsMine;
+        name = "Client" + "_" + pView.Owner.NickName + "_" + pView.ViewID + "_IsMine : " + pView.IsMine;
         
         WaitNextFrame();
         
@@ -147,12 +147,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     
     public void Initialize()
     {
-        if (photonView == null)
+        if (pView == null)
         {
-            photonView = GetComponent<PhotonView>();
+            pView = GetComponent<PhotonView>();
         }
         
-        if (photonView.IsMine)
+        if (pView.IsMine)
         {
             _camera.enabled = true;
             controller.agent.enabled = true;
@@ -163,7 +163,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void EnablePlayer()
     {
-        if (photonView.IsMine)
+        if (pView.IsMine)
         {
             controller.enabled = true;
             controller.EnableMovement();
@@ -197,8 +197,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         currentSpeed = baseSpeed;
         force = 0;
         
-        interfaceManager.InitializeHUD(currentHealth, maxHealth, Mathf.Lerp(controller.myTargetable.healthBar.speedFill.fillAmount, force, Time.deltaTime * 5f), photonView.Owner.NickName);
-        controller.myTargetable.UpdateUI(true, true, currentHealth, maxHealth, false, 0, true, photonView.Owner.NickName);
+        interfaceManager.InitializeHUD(currentHealth, maxHealth, Mathf.Lerp(controller.myTargetable.healthBar.speedFill.fillAmount, force, Time.deltaTime * 5f), pView.Owner.NickName);
+        controller.myTargetable.UpdateUI(true, true, currentHealth, maxHealth, false, 0, true, pView.Owner.NickName);
     }
     
     public void ChangePlayerCharacter(int index)
@@ -248,7 +248,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         if (!controller.myTargetable.healthBar.transform.gameObject.activeSelf)
         {
             controller.myTargetable.healthBar.transform.gameObject.SetActive(true);
-            controller.myTargetable.UpdateUI(true, true, currentHealth, maxHealth, false, 0, true, photonView.Owner.NickName);
+            controller.myTargetable.UpdateUI(true, true, currentHealth, maxHealth, false, 0, true, pView.Owner.NickName);
         }
 
         isLoaded = true;
@@ -276,7 +276,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
         currentAnimationController.SetTeamMaterial();
         
-        controller.myTargetable.UpdateUI(true, true, currentHealth, maxHealth, false, 0, true, photonView.Owner.NickName, true);
+        controller.myTargetable.UpdateUI(true, true, currentHealth, maxHealth, false, 0, true, pView.Owner.NickName, true);
     }
 
     #region CAPACITIES
@@ -340,7 +340,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     
     public void DealDamage(int[] targetsID, int damageAmount)
     {
-        if(!photonView.IsMine) return;
+        if(!pView.IsMine) return;
 
         ConvoyBehavior convoy = null;
         
@@ -380,7 +380,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void HitStop(int[] targetsID,float time,float shakeForce)
     {
-        if(!photonView.IsMine) return;
+        if(!pView.IsMine) return;
         
         ConvoyBehavior convoy = null;
         
@@ -407,7 +407,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
     
     public void KnockBack(int[] targetsID,float time,float force,Vector3 direction)
     {
-        if(!photonView.IsMine) return;
+        if(!pView.IsMine) return;
         
         Hashtable data = new Hashtable
         {
@@ -428,7 +428,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         
         Hashtable data = new Hashtable()
         {
-            { "ID", photonView.ViewID },
+            { "ID", pView.ViewID },
             { "CharacterID", characterID }
         };
         
@@ -443,7 +443,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         
         Hashtable data = new Hashtable()
         {
-            { "ID", photonView.ViewID },
+            { "ID", pView.ViewID },
             { "TeamID", team }
         };
         
@@ -461,7 +461,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
             int characterID = (int)data["CharacterID"];
             int playerID = (int)data["ID"];
 
-            if(photonView.ViewID != playerID) return;
+            if(pView.ViewID != playerID) return;
                 
             ChangePlayerCharacter(characterID);
         }
@@ -473,7 +473,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
             int teamID = (int)data["TeamID"];
             int playerID = (int)data["ID"];
 
-            if(photonView.ViewID != playerID) return;
+            if(pView.ViewID != playerID) return;
                 
             ChangePlayerTeam(teamID);
         }
@@ -489,7 +489,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
                     
             foreach (int id in targets)
             {
-                if (photonView.ViewID == id)
+                if (pView.ViewID == id)
                 {
                     TakeDamage(data);
                 }
@@ -505,7 +505,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
                     
             foreach (int id in targets)
             { 
-                if (photonView.ViewID == id) 
+                if (pView.ViewID == id) 
                 { 
                     InitializeKnockBack(data);
                 }
@@ -521,7 +521,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
                     
             foreach (int id in targets)
             {
-                if (photonView.ViewID == id) { InitializeHitStop(data); }
+                if (pView.ViewID == id) { InitializeHitStop(data); }
             }
         }
 
@@ -534,7 +534,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
                     
             foreach (int id in targets)
             {
-                if (photonView.ViewID == id)
+                if (pView.ViewID == id)
                 { 
                     Death();
                 }
@@ -591,7 +591,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
           if(currentHealth <= 0)
           {
               RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All, };
-              PhotonNetwork.RaiseEvent(RaiseEvent.Death, new Hashtable{{"ID", photonView.ViewID}}, raiseEventOptions, SendOptions.SendReliable);
+              PhotonNetwork.RaiseEvent(RaiseEvent.Death, new Hashtable{{"ID", pView.ViewID}}, raiseEventOptions, SendOptions.SendReliable);
           }
           
           interfaceManager.UpdateHealthBar(currentHealth, maxHealth);

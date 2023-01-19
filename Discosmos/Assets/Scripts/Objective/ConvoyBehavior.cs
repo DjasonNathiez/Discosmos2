@@ -94,7 +94,6 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
 
     private void Start()
     {
-        myTargetable.SetConvoyUI(pinkProgress, greenProgress);
     }
 
     void Update()
@@ -297,7 +296,6 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
                 break;
         }
         
-        myTargetable.SetConvoyUI(pinkProgress, greenProgress);
     }
 
     public void Release()
@@ -308,8 +306,6 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
 
         greenProgress = 0;
         pinkProgress = 0;
-        
-        myTargetable.SetConvoyUI(pinkProgress, greenProgress);
         
         Debug.Log("Convoy release with an amount of " + releaseAmount);
     }

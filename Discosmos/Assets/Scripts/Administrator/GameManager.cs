@@ -108,14 +108,14 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
          int[] pinkId = new int[]
          {
-            pinkPlayers[0].photonView.ViewID,
-            pinkPlayers[1].photonView.ViewID
+            pinkPlayers[0].pView.ViewID,
+            pinkPlayers[1].pView.ViewID
          };
          
          int[] greenId = new int[]
          {
-            greenPlayers[0].photonView.ViewID,
-            greenPlayers[1].photonView.ViewID
+            greenPlayers[0].pView.ViewID,
+            greenPlayers[1].pView.ViewID
          };
          
          Hashtable data = new Hashtable()
@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
       switch (GameAdministrator.localPlayer.currentTeam)
       {
          case Enums.Team.Green:
-            if (GameAdministrator.localPlayer.photonView.ControllerActorNr % 2 == 0)
+            if (GameAdministrator.localPlayer.pView.ControllerActorNr % 2 == 0)
             {
                GameAdministrator.localPlayer.controller.agent.Warp(spawnGreen[0].position);
             }
@@ -165,7 +165,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             break;
          
          case Enums.Team.Pink:
-            if (GameAdministrator.localPlayer.photonView.ControllerActorNr % 2 == 0)
+            if (GameAdministrator.localPlayer.pView.ControllerActorNr % 2 == 0)
             {
                GameAdministrator.localPlayer.controller.agent.Warp(spawnPink[0].position);
             }

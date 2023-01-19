@@ -62,8 +62,8 @@ public class NetworkConnector : MonoBehaviourPunCallbacks
 
         //DEBUG VISUAL FEEDBACK
         serverStateMessage.text = serverStateMessage.text + " | Nickame : " +
-                                  GameAdministrator.localPlayer.photonView.Owner.NickName + " | ViewID : " +
-                                  GameAdministrator.localPlayer.photonView.ViewID;
+                                  GameAdministrator.localPlayer.pView.Owner.NickName + " | ViewID : " +
+                                  GameAdministrator.localPlayer.pView.ViewID;
     }
 
     #endregion
@@ -180,8 +180,8 @@ public class NetworkConnector : MonoBehaviourPunCallbacks
         GameAdministrator.UpdatePlayersList();
         
         serverStateMessage.text = serverStateMessage.text + " | Nickame : " +
-                                  GameAdministrator.localPlayer.photonView.Owner.NickName + " | ViewID : " +
-                                  GameAdministrator.localPlayer.photonView.ViewID;
+                                  GameAdministrator.localPlayer.pView.Owner.NickName + " | ViewID : " +
+                                  GameAdministrator.localPlayer.pView.ViewID;
 
         if (PhotonNetwork.IsMasterClient)
         {

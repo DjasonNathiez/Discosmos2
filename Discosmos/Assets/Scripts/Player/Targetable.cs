@@ -124,7 +124,7 @@ public class Targetable : MonoBehaviour
                 
                 SetUIBarTeam();
 
-                UpdateUI(true, true, GameAdministrator.localPlayer.currentHealth, GameAdministrator.localPlayer.maxHealth, false, 0, true, GameAdministrator.localPlayer.photonView.Owner.NickName);
+                UpdateUI(true, true, GameAdministrator.localPlayer.currentHealth, GameAdministrator.localPlayer.maxHealth, false, 0, true, GameAdministrator.localPlayer.pView.Owner.NickName);
                 break;
             
             case UIType.ClassicUI:
@@ -132,13 +132,6 @@ public class Targetable : MonoBehaviour
                 healthBar.healthFill = healthBar.transform.GetChild(0).GetComponent<Image>();
                 healthBar.healthText = healthBar.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
                 healthBar.target = healthBar.transform.GetChild(2);
-                break;
-            
-            case UIType.ConvoyUI:
-                healthBar.transform = Instantiate(uiObject, Vector3.zero, quaternion.identity, GameAdministrator.localPlayer.canvas).transform;
-                pinkAmountText = healthBar.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-                greenAmountText = healthBar.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-                
                 break;
         }
        // healthBar.transform.gameObject.SetActive(false);
@@ -177,7 +170,7 @@ public class Targetable : MonoBehaviour
         }
         if (updateSpeed)
         {
-            healthBar.speedFill.fillAmount = speed;
+          if(healthBar.speedFill) healthBar.speedFill.fillAmount = speed;
         }
         if (updateName)
         {
