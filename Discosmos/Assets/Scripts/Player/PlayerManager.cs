@@ -275,6 +275,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         controller.myTargetable.ownerTeam = currentTeam;
 
         currentAnimationController.SetTeamMaterial();
+        
+        controller.myTargetable.UpdateUI(true, true, currentHealth, maxHealth, false, 0, true, photonView.Owner.NickName, true);
     }
 
     #region CAPACITIES
@@ -592,8 +594,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
               PhotonNetwork.RaiseEvent(RaiseEvent.Death, new Hashtable{{"ID", photonView.ViewID}}, raiseEventOptions, SendOptions.SendReliable);
           }
           
-          controller.myTargetable.UpdateUI(false, true, currentHealth, maxHealth);
           interfaceManager.UpdateHealthBar(currentHealth, maxHealth);
+          controller.myTargetable.UpdateUI(false, true, currentHealth, maxHealth);
       }
 
       void Death()

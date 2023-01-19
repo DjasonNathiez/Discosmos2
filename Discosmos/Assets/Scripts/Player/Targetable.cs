@@ -15,6 +15,10 @@ public class Targetable : MonoBehaviour
     public bool isConvoy;
     public HealthBar healthBar;
     public GameObject uiObject;
+    public GameObject greenPrefab;
+    private GameObject greenObject;
+    public GameObject pinkPrefab;
+    private GameObject pinkObject;
     public PhotonView masterPhotonView;
     public PhotonView bodyPhotonView;
     public int photonID;
@@ -36,6 +40,17 @@ public class Targetable : MonoBehaviour
 
         bodyPhotonID = bodyPhotonView.ViewID;
         photonID = masterPhotonView.ViewID;
+
+        switch (GameAdministrator.localPlayer.currentTeam)
+        {
+            case Enums.Team.Green:
+                uiObject = greenPrefab;
+                break;
+            
+            case Enums.Team.Pink:
+                uiObject = pinkPrefab;
+                break;
+        }
         
         if(!hideUI) CreateUI();
     }
@@ -66,19 +81,49 @@ public class Targetable : MonoBehaviour
         }
     }
 
+    public void SetUIBarTeam()
+    {
+        switch (GameAdministrator.localPlayer.currentTeam)
+        {
+            case Enums.Team.Green:
+                greenObject.SetActive(true);
+                pinkObject.SetActive(false);
+                
+                uiObject = greenObject;
+                break;
+            
+            case Enums.Team.Pink:
+                greenObject.SetActive(false);
+                pinkObject.SetActive(true);
+                
+                uiObject = pinkObject;
+                break;
+        }
+
+        ResetHealthBar();
+    }
+
+    public void ResetHealthBar()
+    {
+        healthBar.transform = uiObject.transform;
+        healthBar.healthFill = healthBar.transform.GetChild(0).GetComponent<Image>();
+        healthBar.speedFill =  healthBar.transform.GetChild(1).GetComponent<Image>();
+        healthBar.healthText =  healthBar.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        healthBar.nameText =  healthBar.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
+        healthBar.target =  healthBar.transform.GetChild(4);
+        if(healthBar.name != string.Empty) healthBar.nameText.text = healthBar.name;
+    }
+
     public void CreateUI()
     {
         switch (type)
         {
             case UIType.PlayerUI:
-                healthBar.transform = Instantiate(uiObject, Vector3.zero, quaternion.identity, GameAdministrator.localPlayer.canvas).transform;
-                healthBar.healthFill = healthBar.transform.GetChild(0).GetComponent<Image>();
-                healthBar.speedFill =  healthBar.transform.GetChild(1).GetComponent<Image>();
-                healthBar.healthText =  healthBar.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-                healthBar.nameText =  healthBar.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
-                healthBar.target =  healthBar.transform.GetChild(4);
-                if(healthBar.name != string.Empty) healthBar.nameText.text = healthBar.name;
+                greenObject = Instantiate(greenPrefab, Vector3.zero, quaternion.identity, GameAdministrator.localPlayer.canvas);
+                pinkObject = Instantiate(pinkPrefab, Vector3.zero, quaternion.identity, GameAdministrator.localPlayer.canvas);
                 
+                SetUIBarTeam();
+
                 UpdateUI(true, true, GameAdministrator.localPlayer.currentHealth, GameAdministrator.localPlayer.maxHealth, false, 0, true, GameAdministrator.localPlayer.photonView.Owner.NickName);
                 break;
             
@@ -116,9 +161,14 @@ public class Targetable : MonoBehaviour
         healthBar.transform.position = GameAdministrator.localPlayer._camera.WorldToScreenPoint(targetableBody.position + Vector3.up) + Vector3.up * heightUI;   
     }
 
-    public void UpdateUI(bool updatePos,bool updateHealth = false,int currentHealth = 0,int maxHealth = 0,bool updateSpeed = false,float speed = 0,bool updateName = false, string name = "[not defined]")
+    public void UpdateUI(bool updatePos,bool updateHealth = false,int currentHealth = 0,int maxHealth = 0,bool updateSpeed = false,float speed = 0,bool updateName = false, string name = "[not defined]", bool updateTeam = false)
     {
-        if (hideUI || healthBar == null) return;    
+        if (hideUI || healthBar == null) return;
+
+        if (updateTeam)
+        {
+            SetUIBarTeam();
+        }
         
         if (updateHealth)
         {

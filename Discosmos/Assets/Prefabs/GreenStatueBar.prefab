@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7ea475b6ebd9e494cb90bc209cc68d4a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4dda8af8b9f0fb0459157382cd1d2fdd, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 3108606752618129182}
   - component: {fileID: 3108606752618129181}
   m_Layer: 5
-  m_Name: PlayerStatueBar
+  m_Name: GreenStatueBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 33c04da7e41bba2439dd3f0dd32d31aa, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 82e81408242164348884b2b072970809, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -225,8 +225,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Edaryl
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: bd665f0ce2a579c458a360905b199d1c, type: 2}
-  m_sharedMaterial: {fileID: -8313899221519684662, guid: bd665f0ce2a579c458a360905b199d1c,
+  m_fontAsset: {fileID: 11400000, guid: d2f1547657159484d915cea43d7c4c43, type: 2}
+  m_sharedMaterial: {fileID: -8313899221519684662, guid: d2f1547657159484d915cea43d7c4c43,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -361,8 +361,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 200/200
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: bd665f0ce2a579c458a360905b199d1c, type: 2}
-  m_sharedMaterial: {fileID: -8313899221519684662, guid: bd665f0ce2a579c458a360905b199d1c,
+  m_fontAsset: {fileID: 11400000, guid: d2f1547657159484d915cea43d7c4c43, type: 2}
+  m_sharedMaterial: {fileID: -8313899221519684662, guid: d2f1547657159484d915cea43d7c4c43,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

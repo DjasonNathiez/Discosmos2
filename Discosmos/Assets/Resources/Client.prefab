@@ -4896,7 +4896,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 87464742355607680}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -73635,12 +73635,18 @@ MonoBehaviour:
     name: 
   uiObject: {fileID: 3108606752618129179, guid: ee29605912c55fe4c8a555d5b3b957fa,
     type: 3}
+  greenPrefab: {fileID: 3108606752618129179, guid: 349caf3dcedae9d438398cde73dabab9,
+    type: 3}
+  pinkPrefab: {fileID: 3108606752618129179, guid: ee29605912c55fe4c8a555d5b3b957fa,
+    type: 3}
+  pinkObject: {fileID: 3108606752618129179, guid: ee29605912c55fe4c8a555d5b3b957fa,
+    type: 3}
   masterPhotonView: {fileID: 6319531978680929546}
   bodyPhotonView: {fileID: 820134595730722678}
   photonID: 0
   bodyPhotonID: 0
   targetableBody: {fileID: 4809639664043971265}
-  heightUI: 40
+  heightUI: 46
   type: 0
   pinkAmountText: {fileID: 0}
   greenAmountText: {fileID: 0}
