@@ -73640,7 +73640,7 @@ MonoBehaviour:
   photonID: 0
   bodyPhotonID: 0
   targetableBody: {fileID: 4809639664043971265}
-  heightUI: 40
+  heightUI: 46
   type: 0
   pinkAmountText: {fileID: 0}
   greenAmountText: {fileID: 0}
