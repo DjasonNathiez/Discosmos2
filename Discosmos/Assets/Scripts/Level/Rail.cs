@@ -14,6 +14,7 @@ public class Rail : MonoBehaviour
     public List<Vector3> distancedNodes = new List<Vector3>(0);
     [SerializeField] private bool loop;
     [SerializeField] private List<Transform> forms;
+    public LineRenderer lineRenderer;
 
     [Header("Ramp")] 
     [SerializeField] private Vector2[] railVertices;
@@ -22,6 +23,7 @@ public class Rail : MonoBehaviour
     public float space;
     public Mesh endPointsMesh;
     public float endPointMeshSize = 1;
+    public GameObject endPointObj;
 
     [Header("Tool")] 
     [SerializeField] private bool generateRail;
@@ -30,6 +32,7 @@ public class Rail : MonoBehaviour
     public bool removeLastPoint;
     public bool updatePoints;
     public bool inversePoints;
+    public bool line;
     [SerializeField] private GameObject railPoint;
     [SerializeField] private bool visualizeExitDirections;
     [SerializeField] private bool exitDirectionAuto = true;
@@ -192,6 +195,12 @@ public class Rail : MonoBehaviour
             InversePoints();
             inversePoints = false;
         }
+        
+        if (line)
+        {
+            Line();
+            line = false;
+        }
         DrawRailPoints();
         CreateDistancedNodes();
         
@@ -228,6 +237,13 @@ public class Rail : MonoBehaviour
     {
         DestroyImmediate(railPoints[railPoints.Count - 1].point.gameObject);
         railPoints.RemoveAt(railPoints.Count - 1);
+    }
+    
+    void Line()
+    {
+        lineRenderer.positionCount = distancedNodes.Count;
+        lineRenderer.SetPositions(distancedNodes.ToArray());
+        
     }
     
     void UpdatePoints()

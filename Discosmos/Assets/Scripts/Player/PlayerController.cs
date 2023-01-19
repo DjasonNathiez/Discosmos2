@@ -324,7 +324,7 @@ public class PlayerController : MonoBehaviour
                     return;
                 }
             }
-            rampProgress = 0;
+            rampProgress -= 1;
         }
 
         if (onRamp)

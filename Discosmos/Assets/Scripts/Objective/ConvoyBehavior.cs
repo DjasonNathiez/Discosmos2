@@ -45,6 +45,7 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
     public float nextShakeTimer = 0.02f;
     public float shakeFrequency = 0.02f;
     public Transform renderBody;
+    public GameObject smokeEffect;
 
     public List<Vector3> curve;
     public int index;
@@ -156,6 +157,7 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
             transform.position = Vector3.Lerp(curve[index],curve[index+1],factor);
             force = Mathf.Lerp(force, 0, decceleration * Time.deltaTime);
             transform.rotation = Quaternion.Euler(0,((transform.position.x%70)/70)*360,0);   
+            smokeEffect.transform.rotation = Quaternion.LookRotation(((curve[index+1] -curve[index])*force).normalized);
         }
     }
 

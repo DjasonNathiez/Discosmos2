@@ -14789,7 +14789,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 4809639664043971265}
-  smoothSpeed: 0.125
   offset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0}
   cameraSpeed: 1
@@ -73427,7 +73426,7 @@ MonoBehaviour:
   controller: {fileID: 7642643474159619362}
   _camera: {fileID: 4180196416988361070}
   cameraObject: {fileID: 491137559752174878}
-  photonView: {fileID: 6319531978680929546}
+  pView: {fileID: 0}
   interfaceManager: {fileID: 3868304563685543607}
   sparkles: {fileID: 3350498519046102532}
   isCasting: 0
