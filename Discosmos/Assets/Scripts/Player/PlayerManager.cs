@@ -592,8 +592,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
               PhotonNetwork.RaiseEvent(RaiseEvent.Death, new Hashtable{{"ID", photonView.ViewID}}, raiseEventOptions, SendOptions.SendReliable);
           }
           
-          controller.myTargetable.UpdateUI(false, true, currentHealth, maxHealth);
           interfaceManager.UpdateHealthBar(currentHealth, maxHealth);
+          controller.myTargetable.UpdateUI(false, true, currentHealth, maxHealth);
       }
 
       void Death()
