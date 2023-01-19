@@ -275,6 +275,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         controller.myTargetable.ownerTeam = currentTeam;
 
         currentAnimationController.SetTeamMaterial();
+        
+        controller.myTargetable.UpdateUI(true, true, currentHealth, maxHealth, false, 0, true, photonView.Owner.NickName, true);
     }
 
     #region CAPACITIES

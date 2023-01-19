@@ -73635,6 +73635,12 @@ MonoBehaviour:
     name: 
   uiObject: {fileID: 3108606752618129179, guid: ee29605912c55fe4c8a555d5b3b957fa,
     type: 3}
+  greenPrefab: {fileID: 3108606752618129179, guid: 349caf3dcedae9d438398cde73dabab9,
+    type: 3}
+  pinkPrefab: {fileID: 3108606752618129179, guid: ee29605912c55fe4c8a555d5b3b957fa,
+    type: 3}
+  pinkObject: {fileID: 3108606752618129179, guid: ee29605912c55fe4c8a555d5b3b957fa,
+    type: 3}
   masterPhotonView: {fileID: 6319531978680929546}
   bodyPhotonView: {fileID: 820134595730722678}
   photonID: 0
