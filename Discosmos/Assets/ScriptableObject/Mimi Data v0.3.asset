@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6192cf89e5e7f3344b456a3cb7f96d91, type: 3}
   m_Name: Mimi Data v0.3
   m_EditorClassIdentifier: 
-  maxHealth: 200
+  maxHealth: 75
   baseSpeed: 4
   speedCurve:
     serializedVersion: 2
@@ -62,7 +62,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  attackDamage: 10
+  attackDamage: 5
   attackRange: 4
   attackSpeed: 3.2
   damageMultiplier:
@@ -71,17 +71,17 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 3
-      outSlope: 3
+      inSlope: 6
+      outSlope: 6
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 4
-      inSlope: 3
-      outSlope: 3
+      value: 7
+      inSlope: 6
+      outSlope: 6
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334

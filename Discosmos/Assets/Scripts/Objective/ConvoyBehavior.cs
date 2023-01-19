@@ -59,11 +59,11 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
         greenProgress = 0;
         transform.position = curve[startIndex];
         
-        backupNetworkTime = (float)PhotonNetwork.Time;
-        GameAdministrator.NetworkUpdate += TimerLoop;
+        /*backupNetworkTime = (float)PhotonNetwork.Time;
+        GameAdministrator.NetworkUpdate += TimerLoop;*/
     }
 
-    public void DisableGameLoop()
+    /*public void DisableGameLoop()
     {
         releaseTimer = 0;
         GameAdministrator.NetworkUpdate -= TimerLoop;
@@ -81,11 +81,15 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
         {
             releaseTimer = (float) (PhotonNetwork.Time - backupNetworkTime);
         }
-    }
+    }*/
 
     private void Awake()
     {
         currentTimeToRelease = timeToRelease;
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            master = true;
+        }
     }
 
     private void Start()
@@ -207,9 +211,12 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
     
     public void ApplyForce(float impulse)
     {
-        if (!pointReached)
+        if (master)
         {
-            force += impulse;   
+            if (!pointReached)
+            {
+                force += impulse;   
+            }   
         }
     }
     
@@ -282,11 +289,11 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
         switch (senderTeam)
         {
             case Enums.Team.Green:
-                greenProgress += amount;
+                ApplyForce(-amount);
                 break;
             
             case Enums.Team.Pink:
-                pinkProgress += amount;
+                ApplyForce(amount);
                 break;
         }
         

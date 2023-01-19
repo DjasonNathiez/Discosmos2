@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6192cf89e5e7f3344b456a3cb7f96d91, type: 3}
   m_Name: Vega Data v0.3
   m_EditorClassIdentifier: 
-  maxHealth: 350
+  maxHealth: 120
   baseSpeed: 3.5
   speedCurve:
     serializedVersion: 2
@@ -62,7 +62,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  attackDamage: 12
+  attackDamage: 6
   attackRange: 2
   attackSpeed: 0.6
   damageMultiplier:

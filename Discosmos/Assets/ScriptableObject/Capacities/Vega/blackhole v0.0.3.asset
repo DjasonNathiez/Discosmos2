@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f5fe2d946bd86a4ebcde6feed035ec6, type: 3}
   m_Name: blackhole v0.0.3
   m_EditorClassIdentifier: 
-  amount: 5
+  amount: 8
   index: 0
   castTime: 0
   cooldownTime: 15
