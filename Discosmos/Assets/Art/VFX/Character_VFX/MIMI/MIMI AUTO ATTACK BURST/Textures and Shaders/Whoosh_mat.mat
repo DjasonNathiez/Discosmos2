@@ -41,11 +41,13 @@ Material:
     m_Floats:
     - _4: 8
     - _D_calage_de_frame: 0
+    - _Dissolve: 0
     - _Nombre_de_colonne: 5
     - _Nombre_de_frame: 5
     - _Nombre_de_ligne: 1
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Taille_noise: 15
     - _Transparent: 1
     m_Colors:
     - _Color: {r: 4.504694, g: 2.4400425, b: 17.924929, a: 0}

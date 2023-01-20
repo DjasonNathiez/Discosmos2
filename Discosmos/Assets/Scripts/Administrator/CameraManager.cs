@@ -11,6 +11,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private float cameraSpeed;
     
     [SerializeField] private AnimationCurve cameraZoomCurve;
+    [SerializeField] private AnimationCurve cameraFOVCurve;
     [SerializeField] private AnimationCurve speedLinesCurve;
     [SerializeField] private Transform speedLines;
 
@@ -25,6 +26,7 @@ public class CameraManager : MonoBehaviour
     private Vector3 nextPos;
     private Vector3 forward;
     private Vector3 right;
+    public Camera cam;
 
     private void Awake()
     {
@@ -128,11 +130,13 @@ public class CameraManager : MonoBehaviour
         {
             if (activeZoom)
             {
-                transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * zoomInActive, Time.deltaTime * 5);   
+                transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * zoomInActive, Time.deltaTime * 5); 
+                cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, 60, Time.deltaTime * 5); 
             }
             else
             {
-                transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * cameraZoomCurve.Evaluate(playerController.manager.force), Time.deltaTime * 3);   
+                transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * cameraZoomCurve.Evaluate(playerController.manager.force), Time.deltaTime * 5);  
+                cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, cameraFOVCurve.Evaluate(playerController.manager.force), Time.deltaTime * 5); 
             }
         }
 
