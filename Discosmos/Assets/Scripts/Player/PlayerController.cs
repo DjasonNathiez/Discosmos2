@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     [Header("ATTACK")] 
     public Targetable target;
 
+    public Targetable cursorTarget;
     private Vector3 knockbackDirection;
     public float knockBackDuration;
     public float knockBackTime;
@@ -60,10 +61,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        AttackInputCheck();
+        //AttackInputCheck();
         MovementTypeCheck();
         CapacityInputCheck();
-        
+        CursorCheck();
         
         mimiAnimator.SetFloat("Force", Mathf.Lerp(myTargetable.healthBar.speedFill.fillAmount, manager.force, Time.deltaTime * 5f));
         vegaAnimator.SetFloat("Force",Mathf.Lerp(myTargetable.healthBar.speedFill.fillAmount, manager.force, Time.deltaTime * 5f));
@@ -118,6 +119,25 @@ public class PlayerController : MonoBehaviour
             case Enums.MovementType.Attack:
                 Attack();
                 break;
+        }
+    }
+
+    void CursorCheck()
+    {
+        Targetable cursorOn = CheckForMouseDetection();
+        if (cursorOn && cursorOn != target)
+        {
+            if (cursorOn != cursorTarget)
+            {
+                if(cursorTarget) cursorTarget.circleCursor.SetActive(false);   
+                cursorTarget = cursorOn;
+                cursorTarget.circleCursor.SetActive(true);   
+            }
+        }
+        else if(cursorTarget)
+        {
+            cursorTarget.circleCursor.SetActive(false);   
+            cursorTarget = null;
         }
     }
 
@@ -353,9 +373,10 @@ public class PlayerController : MonoBehaviour
 
     void AttackInputCheck()
     {
-        if (Input.GetMouseButtonDown(0))
+        /*
+        if (Input.GetMouseButtonDown(1))
         {
-            if (target)
+            /*if (target)
             {
                 target.HideTarget();
             }
@@ -387,7 +408,7 @@ public class PlayerController : MonoBehaviour
                 ChangeAnimation(0);
             } 
             */
-        }
+        
         
     }
     
@@ -660,6 +681,24 @@ public class PlayerController : MonoBehaviour
         }
         return null;
     }
+     
+     public Targetable CheckForMouseDetection()
+     {
+         if (!manager._camera) return null;
+        
+         Ray ray = manager._camera.ScreenPointToRay(Input.mousePosition);
+         if (Physics.Raycast(ray, out RaycastHit hit))
+         {
+             Targetable targetable = hit.transform.GetComponent<Targetable>();
+
+             if (!targetable || targetable == myTargetable) return null;
+
+             if (manager.currentTeam == targetable.ownerTeam) return null;
+             
+             return targetable;
+         }
+         return null;
+     }
      
      public void ResetTarget()
      {

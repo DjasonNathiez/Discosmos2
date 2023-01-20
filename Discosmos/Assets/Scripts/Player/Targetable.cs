@@ -26,6 +26,8 @@ public class Targetable : MonoBehaviour
     public Transform targetableBody;
     public float heightUI;
     public UIType type;
+    public GameObject circleCursor;
+    public GameObject attackCursor;
 
     [Header("CONVOY")] 
     public TextMeshProUGUI pinkAmountText;
@@ -138,14 +140,13 @@ public class Targetable : MonoBehaviour
     }
     public void ShowTarget()
     {
-        if(hideUI || isConvoy) return;
-        healthBar.target.gameObject.SetActive(true);
+        attackCursor.SetActive(true);
+        circleCursor.SetActive(false);
     }
     
     public void HideTarget()
     {
-        if(hideUI || isConvoy) return;
-        healthBar.target.gameObject.SetActive(false);
+        attackCursor.SetActive(false);
     }
 
     private void LateUpdate()
