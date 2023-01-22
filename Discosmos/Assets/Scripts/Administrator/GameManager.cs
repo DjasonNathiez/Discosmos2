@@ -15,15 +15,16 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
    
    [Header("SPAWN")]
    public Transform spawnPoint;
-   public List<PlayerManager> playerManagers;
+   public List<PlayerInRoom> playersInRoom;
    
-   public List<PlayerManager> pinkPlayers;
-   public bool pinkTeamReady;
-   public List<PlayerManager> greenPlayers;
-   public bool greenTeamReady;
-
    public Transform[] spawnPink;
    public Transform[] spawnGreen;
+
+   [Header("PLAYERS")]
+   public List<PlayerInRoom> pinkPlayers;
+   public List<PlayerInRoom> greenPlayers;
+
+   private bool localIsReady = false;
    
    public bool gameIsFull;
    public float timeBeforeStart = 60;
@@ -41,13 +42,11 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
          Destroy(gameObject);
       }
 
-      pinkPlayers = new List<PlayerManager>();
-      greenPlayers = new List<PlayerManager>();
-      playerManagers = new List<PlayerManager>();
+      pinkPlayers = new List<PlayerInRoom>();
+      greenPlayers = new List<PlayerInRoom>();
+      playersInRoom = new List<PlayerInRoom>();
       
       GameAdministrator.gameState = Enums.GameState.Game;
-
-      CheckPlayerCounts();
    }
 
    private void Start()
@@ -55,98 +54,26 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
      // GameAdministrator.localPlayer.controller.transform.localPosition = spawnPoint.position;
      GameAdministrator.localPlayer.interfaceManager.championSelectCanvas.SetActive(true);
      GameAdministrator.localPlayer.controller.agent.Warp(spawnPoint.position);
-      GameAdministrator.UpdatePlayersList();
-   }
-
-   private void Update()
-   {
-      if (gameIsFull && !gameIsStarted)
-      {
-         if (startTimer >= timeBeforeStart)
-         {
-            gameIsStarted = true;
-            ForceStartGame();
-         }
-         else
-         {
-            startTimer += Time.deltaTime;
-         }
-      }
-      
-   }
-
-   public void ForceStartGame()
-   {
-
-      if (PhotonNetwork.LocalPlayer.IsMasterClient)
-      {
-         playerManagers.Clear();
-         pinkPlayers.Clear();
-         greenPlayers.Clear();
-         playerManagers.AddRange(FindObjectsOfType<PlayerManager>());
-
-         pinkPlayers.Add(playerManagers[0]);
-         pinkPlayers.Add(playerManagers[1]);
-         greenPlayers.Add(playerManagers[2]);
-         greenPlayers.Add(playerManagers[3]);
-
-         pinkPlayers[0].SendPlayerCharacter(0);
-         pinkPlayers[0].SendPlayerTeam(1);
-         //pinkPlayers[0].controller.enabled = true;
-         
-         pinkPlayers[1].SendPlayerCharacter(1);
-         pinkPlayers[1].SendPlayerTeam(1);
-        // pinkPlayers[1].controller.enabled = true;
-
-         greenPlayers[0].SendPlayerCharacter(0);
-         greenPlayers[0].SendPlayerTeam(0);
-        // greenPlayers[0].controller.enabled = true;
-
-         greenPlayers[1].SendPlayerCharacter(1);
-         greenPlayers[1].SendPlayerTeam(0);
-        // greenPlayers[1].controller.enabled = true;
-
-         int[] pinkId = new int[]
-         {
-            pinkPlayers[0].pView.ViewID,
-            pinkPlayers[1].pView.ViewID
-         };
-         
-         int[] greenId = new int[]
-         {
-            greenPlayers[0].pView.ViewID,
-            greenPlayers[1].pView.ViewID
-         };
-         
-         Hashtable data = new Hashtable()
-         {
-            {"Pink", pinkId},
-            {"Green", greenId}
-         };
-
-         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All, CachingOption = EventCaching.AddToRoomCacheGlobal};
-
-         PhotonNetwork.RaiseEvent(RaiseEvent.ForceStart, data, raiseEventOptions, SendOptions.SendReliable);
-      }
-   }
-
-   public void UpdateForceList(Hashtable data)
-   {
-      Debug.Log("Update Force List");
-      int[] pinkId = (int[]) data["Pink"];
-      int[] greenId = (int[]) data["Green"];
-
-      pinkPlayers.Clear();
-      greenPlayers.Clear();
-
-      pinkPlayers.Add(PhotonView.Find(pinkId[0]).GetComponent<PlayerManager>());
-      pinkPlayers.Add(PhotonView.Find(pinkId[1]).GetComponent<PlayerManager>());
-      greenPlayers.Add(PhotonView.Find(greenId[0]).GetComponent<PlayerManager>());
-      greenPlayers.Add(PhotonView.Find(greenId[1]).GetComponent<PlayerManager>());
-
-      StartGame();
+     GameAdministrator.UpdatePlayersList();
    }
    
+
+   public void ReadyCheck()
+   {
+      Debug.Log("READY CHECK");
+      localIsReady = !localIsReady;
+      
+      Hashtable data = new Hashtable()
+      {
+         {"Sender", GameAdministrator.localPlayer.pView.ViewID},
+         {"IsReady", localIsReady}
+      };
+      
+      RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All, CachingOption = EventCaching.AddToRoomCacheGlobal};
+
+      PhotonNetwork.RaiseEvent(RaiseEvent.ReadySelect, data, raiseEventOptions, SendOptions.SendReliable);
+   }
+
    public void StartGame()
    {
       GameAdministrator.localPlayer.interfaceManager.championSelectCanvas.SetActive(false);
@@ -197,95 +124,144 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
       //Set Win View
    }
 
-   public void CheckForReady()
+   public void CheckPlayersInRoom(Hashtable data = null)
    {
+      if (data == null) return;
       
-   }
+      Debug.Log("CHECK");
 
-   public override void OnPlayerEnteredRoom(Player newPlayer)
-   {
-      base.OnPlayerEnteredRoom(newPlayer);
+      bool ready = false;
+      int id = 0;
 
-      CheckPlayerCounts();
-   }
-
-   public override void OnPlayerLeftRoom(Player otherPlayer)
-   {
-      base.OnPlayerLeftRoom(otherPlayer);
+      id = (int) data["Sender"];
+      ready = (bool) data["IsReady"];
       
-      CheckPlayerCounts();
-   }
-
-   public void CheckPlayerCounts()
-   {
-      if (PhotonNetwork.CurrentRoom.PlayerCount == GameAdministrator.instance.playerPerGame)
+      PlayerInRoom pim = new PlayerInRoom()
       {
-         if (!gameIsFull)
-         {
-            gameIsFull = true;
-            startTimer = 0;
-         }
-         
-         playerManagers.Clear();
-         pinkPlayers.Clear();
-         greenPlayers.Clear();
-         
-         playerManagers.AddRange(FindObjectsOfType<PlayerManager>());
+         isReady = ready,
+         pManager = PhotonView.Find(id).GetComponent<PlayerManager>(),
+         pTeam = PhotonView.Find(id).GetComponent<PlayerManager>().currentTeam
+      };
 
-         foreach (var manager in playerManagers)
-         {
-            switch (manager.currentTeam)
-            {
-               case Enums.Team.Green:
-                  if(!greenPlayers.Contains(manager)) greenPlayers.Add(manager);
-                  break;
-               
-               case Enums.Team.Pink:
-                  if(!pinkPlayers.Contains(manager)) pinkPlayers.Add(manager);
-                  break;
-            }
-         }
+      if (playersInRoom.Count == 0)
+      {
+         playersInRoom.Add(pim);
 
-         if (pinkPlayers.Count == GameAdministrator.instance.playerPerGame / 2 &&
-             greenPlayers.Count == GameAdministrator.instance.playerPerGame)
-         {
-            if (pinkPlayers[0].currentCharacter != pinkPlayers[1].currentCharacter)
-            {
-               pinkTeamReady = true;
-            }
-
-            if (greenPlayers[0].currentCharacter != greenPlayers[1].currentCharacter)
-            {
-               greenTeamReady = true;
-            }
-         }
-
-         if (pinkTeamReady && greenTeamReady)
-         {
-            GameAdministrator.localPlayer.interfaceManager.championSelectCanvas.SetActive(false);
-            GameAdministrator.localPlayer.ResetPlayerStats();
-            StartGame();
-         }
       }
       else
       {
-         gameIsFull = false;
+         for (int i = 0; i < playersInRoom.Count; i++)
+         {
+            if (playersInRoom[i].pManager == pim.pManager)
+            {
+               pinkPlayers[i].isReady = pim.isReady;
+               playersInRoom[i].pTeam = pim.pTeam;
+            }
+
+            if (i == playersInRoom.Count)
+            {
+               if (playersInRoom[i].pManager == pim.pManager)
+               {
+                  playersInRoom[i].isReady = pim.isReady;
+                  playersInRoom[i].pTeam = pim.pTeam;
+                  break;
+               }
+               else
+               {
+                  playersInRoom.Add(pim);
+                  break;
+               }
+            }
+         }
+      }
+      
+      
+         
+      switch (pim.pManager.currentTeam)
+      {
+         case Enums.Team.Green:
+            for (int i = 0; i < greenPlayers.Count; i++)
+            {
+               if (greenPlayers[i].pManager == pim.pManager)
+               {
+                  greenPlayers[i].isReady = pim.isReady;
+                  greenPlayers[i].pTeam = pim.pTeam;
+                  return;
+               }
+
+               if (i == greenPlayers.Count)
+               {
+                  if (greenPlayers[i].pManager == pim.pManager)
+                  {
+                     greenPlayers[i].isReady = pim.isReady;
+                     greenPlayers[i].pTeam = pim.pTeam;
+                     break;
+                  }
+                  else
+                  {
+                     greenPlayers.Add(pim);
+                     break;
+                  }
+               }
+               
+            }
+            break;
+               
+         case Enums.Team.Pink:
+            for (int i = 0; i < pinkPlayers.Count; i++)
+            {
+               if (pinkPlayers[i].pManager == pim.pManager)
+               {
+                  pinkPlayers[i].isReady = pim.isReady;
+                  pinkPlayers[i].pTeam = pim.pTeam;
+                  return;
+               }
+
+               if (i == pinkPlayers.Count)
+               {
+                  if (pinkPlayers[i].pManager == pim.pManager)
+                  {
+                     pinkPlayers[i].isReady = pim.isReady;
+                     pinkPlayers[i].pTeam = pim.pTeam;
+                     break;
+                  }
+                  else
+                  {
+                     pinkPlayers.Add(pim);
+                     break;
+                  }
+               }
+               
+            }
+            break;
       }
 
-   }
+      int readyCount = 0;
+      
+      if (PhotonNetwork.LocalPlayer.IsMasterClient)
+      {
+         foreach (var playerInRoom in playersInRoom)
+         {
+            if (playerInRoom.isReady == true)
+            {
+               readyCount++;
+            }
+         }
 
+         if (readyCount >= GameAdministrator.instance.playerPerGame)
+         {
+            StartGame();
+         }
+      }
+   }
+   
    public void OnEvent(EventData photonEvent)
    {
-      if (photonEvent.Code == RaiseEvent.ForceStart)
+      if (photonEvent.Code == RaiseEvent.ReadySelect)
       {
          Hashtable data = (Hashtable) photonEvent.CustomData;
          
-         UpdateForceList(data);
-      }
-      
-      if (photonEvent.Code == RaiseEvent.SetTeam && !gameIsStarted)
-      {
-         CheckPlayerCounts();
+         CheckPlayersInRoom(data);
       }
    }
 
@@ -297,4 +273,11 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
    }
 
    #endregion
+}
+
+[Serializable] public class PlayerInRoom
+{
+   public PlayerManager pManager;
+   public bool isReady;
+   public Enums.Team pTeam;
 }

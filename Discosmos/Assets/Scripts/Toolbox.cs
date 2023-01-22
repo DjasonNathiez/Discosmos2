@@ -17,7 +17,7 @@
         //PlayerSetup
         public static byte SetCharacter = 1;
         public static byte SetTeam = 2;
-        public static byte ForceStart = 3;
+        public static byte ReadySelect = 3;
         
         //Input
         public static byte Input = 10;
