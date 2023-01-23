@@ -14,6 +14,7 @@ public class InterfaceManager : MonoBehaviourPunCallbacks
     [Header("CHAMPION SELECTION")] 
     public GameObject championSelectCanvas;
     public TextMeshProUGUI playerInRoomText;
+    public UIIndicatorsManager uiIndicatorsManager;
 
     [Header("HUD")] 
     public GameObject hud;
@@ -198,5 +199,39 @@ public class InterfaceManager : MonoBehaviourPunCallbacks
     public void UpdatePlayerInRoomCount()
     {
         playerInRoomText.text = PhotonNetwork.CurrentRoom.PlayerCount + "/" + GameAdministrator.instance.playerPerGame;
+    }
+
+    public void CreateIndics(PlayerManager manager)
+    {
+        int sprite;
+        int arrow;
+        if (manager.currentCharacter == Enums.Characters.Mimi)
+        {
+            if (manager.currentTeam == Enums.Team.Green)
+            {
+                sprite = 0;
+                arrow = 4;
+            }
+            else
+            {
+                sprite = 2;
+                arrow = 5;
+            }
+        }
+        else
+        {
+            if (manager.currentTeam == Enums.Team.Green)
+            {
+                sprite = 1;
+                arrow = 4;
+            }
+            else
+            {
+                sprite = 3;
+                arrow = 5;
+            }
+        }
+        
+        uiIndicatorsManager.AddIndic(manager.controller.gameObject,sprite,arrow,out int indicNb);
     }
 }

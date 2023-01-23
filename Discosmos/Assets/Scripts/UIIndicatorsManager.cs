@@ -23,10 +23,6 @@ public class UIIndicatorsManager : MonoBehaviour
     private void Start()
     {
         center = cam.WorldToScreenPoint(camCenter.position);
-        for (int i = 0; i < obj.Count; i++)
-        {
-            CreateImages(i,i%2+4);
-        }
 
         rectTransformed = new Rect(rectAdjusted.rect.position + (Vector2) rectAdjusted.position, rectAdjusted.rect.size);
     }

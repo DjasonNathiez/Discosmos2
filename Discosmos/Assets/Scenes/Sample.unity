@@ -41122,6 +41122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 839b72d32d4b35444bec189a542e1067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   ownerTeam: 2
   hideUI: 1
   isConvoy: 1

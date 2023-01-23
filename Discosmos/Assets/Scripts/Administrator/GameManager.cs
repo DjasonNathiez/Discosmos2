@@ -115,6 +115,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
       
       GameAdministrator.localPlayer.interfaceManager.championSelectCanvas.SetActive(false);
       GameAdministrator.localPlayer.interfaceManager.scoreCanvas.SetActive(true);
+      for (int i = 0; i < playersInRoom.Count; i++)
+      {
+         if (playersInRoom[i].pManager != GameAdministrator.localPlayer)
+         {
+            GameAdministrator.localPlayer.interfaceManager.CreateIndics(playersInRoom[i].pManager);
+         }
+      }
       GameAdministrator.localPlayer.Respawn();
       //GameAdministrator.localPlayer.controller.agent.Warp(localSpawnPoint.position);
 
