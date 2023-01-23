@@ -20,15 +20,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 10.705605
-      outSlope: 10.705605
+      inSlope: 16.177359
+      outSlope: 16.177359
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.11896431
+      outWeight: 0.027991602
     - serializedVersion: 3
       time: 1
-      value: 5
+      value: 8
       inSlope: 0.99056625
       outSlope: 0.99056625
       tangentMode: 0
@@ -63,7 +63,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   attackDamage: 5
-  attackRange: 4
+  attackRange: 5.5
   attackSpeed: 3.2
   damageMultiplier:
     serializedVersion: 2
