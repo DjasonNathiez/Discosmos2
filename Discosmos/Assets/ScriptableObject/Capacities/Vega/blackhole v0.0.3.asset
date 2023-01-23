@@ -17,5 +17,5 @@ MonoBehaviour:
   castTime: 0
   cooldownTime: 15
   durationBase: 6
-  speedBase: 0
+  speedBase: 1
   stopMovement: 1
