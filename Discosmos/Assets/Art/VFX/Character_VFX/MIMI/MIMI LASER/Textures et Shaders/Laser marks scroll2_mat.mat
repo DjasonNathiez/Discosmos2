@@ -47,8 +47,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _D_but_horaire: 0.062
-    - _Fin_horaire: 0.335
+    - _D_but_horaire: 0
+    - _Fin_horaire: 0.168
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:

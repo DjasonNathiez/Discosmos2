@@ -73,7 +73,8 @@
             KeepDirection,
             Slide,
             FollowTarget,
-            Attack
+            Attack,
+            Tornado
         }
     }
 }

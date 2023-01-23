@@ -53,7 +53,7 @@ Material:
     - _Tiling: 1
     - _Transparent: 1
     m_Colors:
-    - _Color: {r: 1.2003694, g: 0.5334975, b: 25.474504, a: 0}
+    - _Color: {r: 4.8014774, g: 2.6674874, b: 101.89802, a: 0}
     - _main_tex_speed: {r: -1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &3017723563517958477

@@ -20,8 +20,7 @@ public class PlayerController : MonoBehaviour
     private bool isMoving;
     private bool isAttacking;
 
-    [Header("MOVEMENT")] 
-    private Vector3 direction;
+    [Header("MOVEMENT")] public Vector3 direction;
     private bool movementEnabled;
     private float hitStopTime;
     private float hitStopTimer;
@@ -65,7 +64,10 @@ public class PlayerController : MonoBehaviour
         MovementTypeCheck();
         CapacityInputCheck();
         CursorCheck();
-        
+        if (knockBackTime > 0)
+        {
+            ApplyKnockBack();
+        }
         mimiAnimator.SetFloat("Force", Mathf.Lerp(myTargetable.healthBar.speedFill.fillAmount, manager.force, Time.deltaTime * 5f));
         vegaAnimator.SetFloat("Force",Mathf.Lerp(myTargetable.healthBar.speedFill.fillAmount, manager.force, Time.deltaTime * 5f));
     }
@@ -118,6 +120,10 @@ public class PlayerController : MonoBehaviour
             
             case Enums.MovementType.Attack:
                 Attack();
+                break;
+            
+            case Enums.MovementType.Tornado:
+                Tornado();
                 break;
         }
     }
@@ -249,6 +255,13 @@ public class PlayerController : MonoBehaviour
             manager.pointerVFX.transform.position = new Vector3(agent.destination.x, manager.pointerVFX.transform.position.y, agent.destination.z);
             manager.pointerVFX.Play();
         }
+    }
+    
+    private void Tornado()
+    {
+        transform.position += direction * ((manager.currentSpeed + manager.vegaData.capacity1.speedBase) * Time.deltaTime);
+        Vector3 mouse = MouseWorldPosition();
+        direction = Vector3.Lerp(direction,(new Vector3(mouse.x,transform.position.y,mouse.z) - transform.position).normalized,Time.deltaTime*3);
     }
 
     private void FollowTarget()
@@ -547,7 +560,7 @@ public class PlayerController : MonoBehaviour
                 if (manager.capacity1Visu)
                 {
                     manager.capacity1Visu.transform.rotation = Quaternion.Euler(0,Quaternion.LookRotation(MouseWorldPosition()- transform.position).eulerAngles.y,0);
-                    manager.capacity1Visu.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                    manager.capacity1Visu.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
                 }
             }
             
