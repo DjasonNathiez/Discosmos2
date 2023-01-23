@@ -65,6 +65,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture2D:
+        m_Texture: {fileID: 2800000, guid: dca182df3cf8aa64da4e6f6ff1bfb0a1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -116,11 +120,12 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _NextColor: {r: 0.5, g: 0.32830188, b: 0.28537735, a: 0}
-    - _PreviousColor: {r: 0.9137255, g: 0.33975148, b: 0.29803917, a: 0}
+    - _NextColor: {r: 2, g: 0.26666668, b: 0, a: 0}
+    - _PreviousColor: {r: 10.65946, g: 6.071767, b: 1.0558898, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _UsingColor: {r: 1, g: 0, b: 0, a: 0}
-    - _UsingEmissive: {r: 3.0267763, g: 1.8328469, b: 0.52825814, a: 0}
+    - _UsingEmissive: {r: 84.6918, g: 46.22894, b: 3.595405, a: 0}
+    - _scroll: {r: 0.54, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &3635944004786217586
 MonoBehaviour:
