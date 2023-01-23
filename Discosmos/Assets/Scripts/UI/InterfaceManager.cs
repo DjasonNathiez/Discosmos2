@@ -24,6 +24,14 @@ public class InterfaceManager : MonoBehaviourPunCallbacks
 
     public Image capacity1fillAmount;
     public TextMeshProUGUI capacity1text;
+    
+    public TextMeshProUGUI gameTimerText;
+    public double gameTimer = 0;
+    
+    public TextMeshProUGUI scoreTextPink;
+    public TextMeshProUGUI scoreTextGreen;
+    public int scorePink = 0;
+    public int scoreGreen = 0;
 
     #region HUD
 
@@ -35,6 +43,14 @@ public class InterfaceManager : MonoBehaviourPunCallbacks
         healthFillAmount.fillAmount = (float) currentHealth / maxHealth;
         healthText.text = currentHealth + "/" + maxHealth;
         speedFillAmount.fillAmount = currentSpeed;
+        
+        gameTimerText = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
+        gameTimerText.text = gameTimer.ToString();
+        
+        scoreTextPink = GameObject.Find("ScorePink").GetComponent<TextMeshProUGUI>();
+        scoreTextGreen = GameObject.Find("ScoreGreen").GetComponent<TextMeshProUGUI>();
+        scoreTextPink.text = scorePink.ToString();
+        scoreTextGreen.text = scoreGreen.ToString();
     }
     
     public void UpdateHealthBar(int currentHealth, int maxHealth)
@@ -67,6 +83,20 @@ public class InterfaceManager : MonoBehaviourPunCallbacks
     public void UpdatePortrait()
     {
         
+    }
+    
+    public void UpdateGameTimer(float timer)
+    {
+        gameTimer = (int)(gameTimer - timer);
+        gameTimerText.text = Mathf.FloorToInt(timer).ToString();
+    }
+
+    public void UpdateScore(int green, int pink)
+    {
+        scorePink = pink;
+        scoreGreen = green;
+        scoreTextPink.text = scorePink.ToString();
+        scoreTextGreen.text = scoreGreen.ToString();
     }
     
 
