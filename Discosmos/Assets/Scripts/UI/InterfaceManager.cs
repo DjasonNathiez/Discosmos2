@@ -71,6 +71,16 @@ public class InterfaceManager : MonoBehaviourPunCallbacks
     
 
     #endregion
+
+    public void Ready()
+    {
+        GameManager gm = FindObjectOfType<GameManager>();
+
+        if (gm)
+        {
+            gm.ReadyCheck();
+        }
+    }
     
     public void SetCharacterChoice(string choice)
     {
