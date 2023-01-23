@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Tools;
 using UnityEngine;
 
@@ -13,13 +14,11 @@ public class VegaAnimationController : AnimationController
    [Header("BLACK HOLE")] 
    public bool blackHoleIsActive;
    public ParticleSystem blackHoleVFX;
-   public CapacityHitBox outsideBlackHole;
-   public float attractForce = 1;
    public CapacityHitBox insideBlackHole;
-   public float tickDamageRate;
-   private float tickDamageTimer;
    private float timer;
-   
+   public List<int> blackHoleHitted;
+   public List<float> hittedTimers;
+
    public override void SetTeamMaterial()
    {
       base.SetTeamMaterial();
@@ -52,6 +51,9 @@ public class VegaAnimationController : AnimationController
             blackHoleVFX.transform.gameObject.SetActive(false);
             //manager.SetCapacity1OnCooldown();
             blackHoleIsActive = false;
+            manager.controller.ChangeAnimation(1);
+            manager.controller.movementType = Enums.MovementType.KeepDirection;
+            manager.force *= 0.2f;
          }
          else
          {
@@ -64,48 +66,55 @@ public class VegaAnimationController : AnimationController
    {
       if (blackHoleIsActive)
       {
-         OutsideBlackHoleEffect();
          InsideBlackHoleEffect();
-      }
-   }
-
-   private void OutsideBlackHoleEffect()
-   {
-      foreach (GameObject target in outsideBlackHole.targets)
-      {
-         Rigidbody rb = target.GetComponent<Rigidbody>();
-         rb.velocity = (transform.position - rb.transform.position).normalized * attractForce;
       }
    }
 
    private void InsideBlackHoleEffect()
    {
-      
-      foreach (GameObject target in insideBlackHole.targets)
+      for (int i = 0; i < insideBlackHole.idOnIt.Count; i++)
       {
-         Rigidbody rb = target.GetComponent<Rigidbody>();
-         rb.velocity = (transform.position - rb.transform.position).normalized * (attractForce * Time.deltaTime);
+         if (!blackHoleHitted.Contains(insideBlackHole.idOnIt[i]))
+         {
+            blackHoleHitted.Add(insideBlackHole.idOnIt[i]);
+            int[] idArray = new[] {1};
+            idArray[0] = insideBlackHole.idOnIt[i];
+            manager.DealDamage(idArray, manager.capacity1.amount); 
+            manager.HitStop(idArray,  0.3f, 0.3f);
+            manager.KnockBack(idArray,0.45f + 0.3f * manager.force,9f + 3f * manager.force,insideBlackHole.targets[i].transform.position - transform.position);
+            hittedTimers.Add(1);
+         }
+         else
+         {
+            if (hittedTimers[i] <= 0)
+            {
+               hittedTimers.RemoveAt(i);
+               blackHoleHitted.RemoveAt(i);
+               break;
+            }
+         }
       }
-      
-      if (tickDamageTimer >= tickDamageRate)
+
+      for (int i = 0; i < hittedTimers.Count; i++)
       {
-         manager.DealDamage(insideBlackHole.idOnIt.ToArray(), manager.capacity1.amount);
-         tickDamageTimer = 0;
-      }
-      else
-      {
-         tickDamageTimer += Time.deltaTime;
+         hittedTimers[i] -= Time.deltaTime;
       }
    }
    
    public void CastVegaBlackHole()
    {
-      blackHoleVFX.transform.gameObject.SetActive(true);
-      blackHoleVFX.Play();
-      timer = 0;
-      blackHoleIsActive = true;
-      manager.capacity1InCooldown = true;
-      manager.controller.EnableMovement();
+      if (!blackHoleIsActive)
+      {
+         blackHoleVFX.transform.gameObject.SetActive(true);
+         blackHoleVFX.Play();
+         timer = 0;
+         blackHoleIsActive = true;
+         manager.capacity1InCooldown = true;
+         manager.controller.EnableMovement();
+         manager.controller.movementType = Enums.MovementType.Tornado;
+         Vector3 mouse = manager.controller.MouseWorldPosition();
+         manager.controller.direction = (new Vector3(mouse.x, transform.position.y, mouse.z) - transform.position).normalized;
+      }
    }
 
    public void CallVegaBlackHoleVFX()

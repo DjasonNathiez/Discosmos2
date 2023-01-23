@@ -72,7 +72,7 @@ public class MimiAnimationController : AnimationController
         autoAttackTrail.SetPosition(1,target.position);
         attackFX = true;
         autoAttackImpactFX.Play();
-        autoAttackImpactFX.transform.position = target.position;
+        autoAttackImpactFX.transform.position = target.position+Vector3.up*0.5f;
     }
     
     public void CastMimiLaser()
