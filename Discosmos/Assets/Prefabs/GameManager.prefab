@@ -48,17 +48,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   convoy: {fileID: 0}
   spawnPoint: {fileID: 0}
-  playerManagers: []
-  pinkPlayers: []
-  pinkTeamReady: 0
-  greenPlayers: []
-  greenTeamReady: 0
+  playersInRoom: []
   spawnPink:
   - {fileID: 0}
   - {fileID: 0}
   spawnGreen:
   - {fileID: 0}
   - {fileID: 0}
+  pinkPlayers: []
+  greenPlayers: []
   gameIsFull: 0
   timeBeforeStart: 20
   startTimer: 0

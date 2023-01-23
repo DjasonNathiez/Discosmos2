@@ -40856,7 +40856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownerTeam: 2
-  hideUI: 0
+  hideUI: 1
   isConvoy: 1
   healthBar:
     transform: {fileID: 0}
@@ -40876,10 +40876,9 @@ MonoBehaviour:
   targetableBody: {fileID: 6012514801959566914}
   heightUI: 40
   type: 2
-  circleCursor: {fileID: 1422605305}
-  attackCursor: {fileID: 52425009}
   pinkAmountText: {fileID: 0}
   greenAmountText: {fileID: 0}
+  circleCursor: {fileID: 1422605305}
 --- !u!114 &6012514801300316457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41642,7 +41641,7 @@ PrefabInstance:
         type: 3}
       propertyPath: convoy
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6012514801300316457}
     - target: {fileID: 6897011726794225065, guid: 66e18c26a23644b4682cb364dc047199,
         type: 3}
       propertyPath: spawnPoint
@@ -41668,11 +41667,6 @@ PrefabInstance:
       propertyPath: spawnGreen.Array.data[1]
       value: 
       objectReference: {fileID: 1726881274}
-    - target: {fileID: 6897011726794225067, guid: 66e18c26a23644b4682cb364dc047199,
-        type: 3}
-      propertyPath: sceneViewId
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6897011726794225070, guid: 66e18c26a23644b4682cb364dc047199,
         type: 3}
       propertyPath: m_Name

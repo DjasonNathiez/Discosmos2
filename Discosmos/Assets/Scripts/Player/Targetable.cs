@@ -26,12 +26,11 @@ public class Targetable : MonoBehaviour
     public Transform targetableBody;
     public float heightUI;
     public UIType type;
-    public GameObject circleCursor;
-    public GameObject attackCursor;
 
     [Header("CONVOY")] 
     public TextMeshProUGUI pinkAmountText;
     public TextMeshProUGUI greenAmountText;
+    public GameObject circleCursor;
 
     private void Awake()
     {
@@ -140,19 +139,20 @@ public class Targetable : MonoBehaviour
     }
     public void ShowTarget()
     {
-        attackCursor.SetActive(true);
-        circleCursor.SetActive(false);
+        if(hideUI || isConvoy) return;
+        healthBar.target.gameObject.SetActive(true);
     }
     
     public void HideTarget()
     {
-        attackCursor.SetActive(false);
+        if(hideUI || isConvoy) return;
+        healthBar.target.gameObject.SetActive(false);
     }
 
     private void LateUpdate()
     {
         if(hideUI) return;
-        healthBar.transform.position = GameAdministrator.localPlayer._camera.WorldToScreenPoint(targetableBody.position + Vector3.up) + Vector3.up * heightUI;   
+        if(healthBar != null) healthBar.transform.position = GameAdministrator.localPlayer._camera.WorldToScreenPoint(targetableBody.position + Vector3.up) + Vector3.up * heightUI;   
     }
 
     public void UpdateUI(bool updatePos,bool updateHealth = false,int currentHealth = 0,int maxHealth = 0,bool updateSpeed = false,float speed = 0,bool updateName = false, string name = "[not defined]", bool updateTeam = false)

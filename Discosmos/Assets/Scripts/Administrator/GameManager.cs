@@ -146,29 +146,32 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
       if (playersInRoom.Count == 0)
       {
          playersInRoom.Add(pim);
-
       }
       else
       {
          for (int i = 0; i < playersInRoom.Count; i++)
          {
-            if (playersInRoom[i].pManager == pim.pManager)
-            {
-               pinkPlayers[i].isReady = pim.isReady;
-               playersInRoom[i].pTeam = pim.pTeam;
-            }
-
-            if (i == playersInRoom.Count)
+            Debug.Log(playersInRoom[i].pManager + " at " + i);
+            
+            if (i >= playersInRoom.Count -1)
             {
                if (playersInRoom[i].pManager == pim.pManager)
                {
                   playersInRoom[i].isReady = pim.isReady;
                   playersInRoom[i].pTeam = pim.pTeam;
-                  break;
+                  
                }
                else
                {
                   playersInRoom.Add(pim);
+               }
+            }
+            else
+            {
+               if (playersInRoom[i].pManager == pim.pManager)
+               {
+                  playersInRoom[i].isReady = pim.isReady;
+                  playersInRoom[i].pTeam = pim.pTeam;
                   break;
                }
             }
@@ -238,21 +241,19 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
       int readyCount = 0;
       
-      if (PhotonNetwork.LocalPlayer.IsMasterClient)
-      {
+     
          foreach (var playerInRoom in playersInRoom)
          {
             if (playerInRoom.isReady == true)
             {
                readyCount++;
             }
-         }
 
-         if (readyCount >= GameAdministrator.instance.playerPerGame)
-         {
-            StartGame();
+            if (readyCount >= GameAdministrator.instance.playerPerGame)
+            {
+            StartGame(); 
+            }
          }
-      }
    }
    
    public void OnEvent(EventData photonEvent)

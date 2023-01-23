@@ -73769,10 +73769,9 @@ MonoBehaviour:
   targetableBody: {fileID: 4809639664043971265}
   heightUI: 46
   type: 0
-  circleCursor: {fileID: 3559677542236044882}
-  attackCursor: {fileID: 7949478525285888945}
   pinkAmountText: {fileID: 0}
   greenAmountText: {fileID: 0}
+  circleCursor: {fileID: 3559677542236044882}
 --- !u!195 &1303469052307901206
 NavMeshAgent:
   m_ObjectHideFlags: 0
