@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class Targetable : MonoBehaviour
 {
+    public PlayerManager player;
     public Enums.Team ownerTeam;
     public bool hideUI;
     public bool isConvoy;
@@ -84,7 +85,7 @@ public class Targetable : MonoBehaviour
 
     public void SetUIBarTeam()
     {
-        switch (GameAdministrator.localPlayer.currentTeam)
+        switch (player.currentTeam)
         {
             case Enums.Team.Green:
                 greenObject.SetActive(true);

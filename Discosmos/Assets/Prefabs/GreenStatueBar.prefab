@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4dda8af8b9f0fb0459157382cd1d2fdd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2b35b5d025c79ed4da682200f9bd8af8, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 82e81408242164348884b2b072970809, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 653e11254a105794ab5c4516f39b849d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_text: Edaryl
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d2f1547657159484d915cea43d7c4c43, type: 2}
-  m_sharedMaterial: {fileID: -8313899221519684662, guid: d2f1547657159484d915cea43d7c4c43,
+  m_sharedMaterial: {fileID: -1979272488826150766, guid: d2f1547657159484d915cea43d7c4c43,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -362,7 +362,7 @@ MonoBehaviour:
   m_text: 200/200
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d2f1547657159484d915cea43d7c4c43, type: 2}
-  m_sharedMaterial: {fileID: -8313899221519684662, guid: d2f1547657159484d915cea43d7c4c43,
+  m_sharedMaterial: {fileID: -1979272488826150766, guid: d2f1547657159484d915cea43d7c4c43,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -495,7 +495,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a8a3c815dca67344486c397f1697495e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 41833170ddbdbc845a69d8c9a2c87e7b, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1

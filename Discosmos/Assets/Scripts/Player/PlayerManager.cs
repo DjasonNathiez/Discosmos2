@@ -197,8 +197,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         currentSpeed = baseSpeed;
         force = 0;
         
-        interfaceManager.InitializeHUD(currentHealth, maxHealth, Mathf.Lerp(controller.myTargetable.healthBar.speedFill.fillAmount, force, Time.deltaTime * 5f), pView.Owner.NickName);
-        controller.myTargetable.UpdateUI(true, true, currentHealth, maxHealth, false, 0, true, pView.Owner.NickName);
+        if(photonView.IsMine) interfaceManager.InitializeHUD(currentHealth, maxHealth, Mathf.Lerp(controller.myTargetable.healthBar.speedFill.fillAmount, force, Time.deltaTime * 5f), pView.Owner.NickName);
+        if(photonView.IsMine) interfaceManager.SetHUD(currentCharacter, currentTeam);
+        controller.myTargetable.UpdateUI(true, true, currentHealth, maxHealth, false, 0, true, pView.Owner.NickName, true);
     }
     
     public void ChangePlayerCharacter(int index)
@@ -248,7 +249,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         if (!controller.myTargetable.healthBar.transform.gameObject.activeSelf)
         {
             controller.myTargetable.healthBar.transform.gameObject.SetActive(true);
-            controller.myTargetable.UpdateUI(true, true, currentHealth, maxHealth, false, 0, true, pView.Owner.NickName);
+            controller.myTargetable.UpdateUI(true, true, currentHealth, maxHealth, false, 0, true, pView.Owner.NickName, true);
         }
 
         isLoaded = true;
@@ -259,6 +260,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         {
             gm.ReadyCheck(false, photonView.ViewID);
         }
+        
+        interfaceManager.SetHUD(currentCharacter, currentTeam);
     }
     
     public void ChangePlayerTeam(int index)
@@ -292,6 +295,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
          {
              gm.ReadyCheck(false, photonView.ViewID);
          }
+         
+         interfaceManager.SetHUD(currentCharacter, currentTeam);
     }
 
     #region CAPACITIES
@@ -364,22 +369,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
             convoy = PhotonView.Find(id).GetComponent<ConvoyBehavior>();
             if(convoy != null) break;
         }
-
-
-        /*if (convoy != null)
-        {
-            float position = controller.transform.position.x - convoy.renderBody.transform.position.x;
-
-            switch (position)
-            {
-                case < 0:
-                    convoy.ApplyForce(damageAmount);
-                    break;
-                case > 0:
-                    convoy.ApplyForce(-damageAmount);
-                    break;
-            }
-        }*/
         
         Hashtable data = new Hashtable
         {
@@ -542,17 +531,16 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
         if (photonEvent.Code == RaiseEvent.Death)
         {
+            Debug.Log("Death event");
+            
             Hashtable data = (Hashtable)photonEvent.CustomData;
 
-            int[] targets = (int[])data["TargetsID"];
+            int targets = (int)data["ID"];
             if(targets == null) return;
                     
-            foreach (int id in targets)
-            {
-                if (pView.ViewID == id)
-                { 
-                    Death();
-                }
+            if (pView.ViewID == targets)
+            { 
+                Death();
             }
         }
             
@@ -592,19 +580,18 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
               if (holdingDamage > 0)
               {
                   currentHealth -= amount;
-                 // GameObject textDmg = Instantiate(textDamage, controller.myTargetable.healthBar.transform.position + Vector3.up * 30, quaternion.identity, MobsUIManager.instance.canvas);
-                //  textDmg.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "-" + amount;
               }
           }
           else
           {
               currentHealth -= amount;
-             // GameObject textDmg = Instantiate(textDamage, controller.myTargetable.healthBar.transform.position + Vector3.up * 30, quaternion.identity, MobsUIManager.instance.canvas);
-             // textDmg.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "-" + amount;
           }
         
           if(currentHealth <= 0)
           {
+              if(!photonView.IsMine) return;
+              
+              Debug.Log("Must Death");
               RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All, };
               PhotonNetwork.RaiseEvent(RaiseEvent.Death, new Hashtable{{"ID", pView.ViewID}}, raiseEventOptions, SendOptions.SendReliable);
           }
@@ -615,13 +602,20 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
       void Death()
       {
-          //TODO ALL LOGIC BRO WTF
+          Debug.Log("Death");
           Respawn();
       }
       
       public void Respawn()
       {
-          currentHealth = maxHealth;
+          ResetPlayerStats();
+          
+          GameManager gm = FindObjectOfType<GameManager>();
+          
+          if (gm)
+          {
+              controller.agent.Warp(gm.localSpawnPoint.position);
+          }
       }
       
       #endregion

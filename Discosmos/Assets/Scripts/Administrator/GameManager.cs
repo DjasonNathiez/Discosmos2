@@ -23,7 +23,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
    [Header("PLAYERS")]
    public List<PlayerInRoom> pinkPlayers;
    public List<PlayerInRoom> greenPlayers;
-
+   public Transform localSpawnPoint;
+   
    private bool localIsReady = false;
    
    public bool gameIsFull;
@@ -36,7 +37,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
    public double timer;
    private double lastTickTime;
    public Enums.Team defaultWinner = Enums.Team.Neutral;
-   public double gameTimer = 300;
+   public float gameTimer = 300;
 
 
    private void Awake()
@@ -89,38 +90,41 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
    public void StartGame()
    {
-      GameAdministrator.localPlayer.interfaceManager.championSelectCanvas.SetActive(false);
-
       switch (GameAdministrator.localPlayer.currentTeam)
       {
          case Enums.Team.Green:
-            if (GameAdministrator.localPlayer.pView.ControllerActorNr % 2 == 0)
+            for (int i = 0; i < greenPlayers.Count; i++)
             {
-               GameAdministrator.localPlayer.controller.agent.Warp(spawnGreen[0].position);
-            }
-            else
-            {
-               GameAdministrator.localPlayer.controller.agent.Warp(spawnGreen[1].position);
+               if (greenPlayers[i].pManager == GameAdministrator.localPlayer && i <= spawnGreen.Length)
+               {
+                  localSpawnPoint = spawnGreen[i];
+               }
             }
             break;
          
          case Enums.Team.Pink:
-            if (GameAdministrator.localPlayer.pView.ControllerActorNr % 2 == 0)
+            for (int i = 0; i < pinkPlayers.Count; i++)
             {
-               GameAdministrator.localPlayer.controller.agent.Warp(spawnPink[0].position);
-            }
-            else
-            {
-               GameAdministrator.localPlayer.controller.agent.Warp(spawnPink[1].position);
+               if (pinkPlayers[i].pManager == GameAdministrator.localPlayer && i <= spawnPink.Length)
+               {
+                  localSpawnPoint = spawnPink[i];
+               }
             }
             break;
       }
+      
+      GameAdministrator.localPlayer.interfaceManager.championSelectCanvas.SetActive(false);
+      GameAdministrator.localPlayer.interfaceManager.scoreCanvas.SetActive(true);
+      GameAdministrator.localPlayer.Respawn();
+      //GameAdministrator.localPlayer.controller.agent.Warp(localSpawnPoint.position);
+
       timer = 0;
       interfaceManager.UpdateGameTimer((float)timer);
       lastTickTime = PhotonNetwork.Time;
+      
       GameAdministrator.NetworkUpdate += GameTimer;
       
-      convoy.ActiveGameLoop();
+      convoy.InitConvoy();
    }
    
    public void GameTimer()
@@ -157,8 +161,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             Debug.Log("Pink win");
             break;
       }
-      
-      //Set Win View
    }
 
    public void CheckPlayersInRoom(Hashtable data = null)
