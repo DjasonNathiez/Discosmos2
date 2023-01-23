@@ -12,6 +12,10 @@ public class NetworkConnector : MonoBehaviourPunCallbacks
     [Header("INTERFACE")]
     public GameObject connectorGroup;
     public GameObject roomEnterGroup;
+    public Vector3 camConnectScreenPos;
+    public Vector3 camRoomScreenPos;
+    public GameObject camera;
+    public float camSpeed;
     
     [Header("CONNECTOR")]
     public TMP_InputField usernameInputField;
@@ -34,21 +38,28 @@ public class NetworkConnector : MonoBehaviourPunCallbacks
     
     public void EnterServerButton()
     {
-        if (usernameInputField.text != String.Empty)
+        Debug.Log("KEBAB");
+        
+      
+        PhotonNetwork.ConnectUsingSettings();
+            
+        serverStateMessage.text = "Connecting...";
+            
+        connectServerButton.interactable = false;
+    }
+
+    public void MoveCamera()
+    {
+        if (camera.transform.position.x < camRoomScreenPos.x)
         {
-            PhotonNetwork.ConnectUsingSettings();
-            
-            serverStateMessage.text = "Connecting...";
-            
-            connectServerButton.interactable = false;
-            usernameInputField.interactable = false;
+            camera.transform.position += camRoomScreenPos * camSpeed * Time.deltaTime;
         }
         else
         {
-            errorMessage.text = "Please, enter a username.";
+            GameAdministrator.NetworkUpdate -= MoveCamera;
         }
     }
-
+    
     #region INIT PLAYER
 
     void CreateLocalClient()
@@ -76,6 +87,7 @@ public class NetworkConnector : MonoBehaviourPunCallbacks
         
         //DEBUG VISUAL FEEDBACK
         serverStateMessage.text = "Connected to server.";
+        GameAdministrator.NetworkUpdate += MoveCamera;
 
         PhotonNetwork.JoinLobby(lobby);
     }
