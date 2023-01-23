@@ -1285,7 +1285,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1359,7 +1359,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -1574,7 +1574,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1648,7 +1648,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -1977,7 +1977,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2035,7 +2035,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -2339,20 +2339,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -3809,7 +3818,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3865,7 +3874,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -4441,20 +4450,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -4572,7 +4590,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4631,7 +4649,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -4772,20 +4790,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -5262,20 +5289,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -6199,7 +6235,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6256,7 +6292,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -6374,7 +6410,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6431,7 +6467,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -6752,7 +6788,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6825,7 +6861,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -7038,7 +7074,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7095,7 +7131,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -7536,7 +7572,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7599,7 +7635,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -8054,20 +8090,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -8244,20 +8289,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -9043,7 +9097,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9120,7 +9174,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -9262,20 +9316,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -9777,7 +9840,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9835,7 +9898,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -9922,7 +9985,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9981,7 +10044,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -10293,7 +10356,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10356,7 +10419,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -10666,7 +10729,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10723,7 +10786,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -10905,7 +10968,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10959,7 +11022,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -11119,20 +11182,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -11499,20 +11571,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -13258,7 +13339,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13314,7 +13395,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -13401,7 +13482,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13460,7 +13541,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -13578,7 +13659,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13634,7 +13715,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -14175,7 +14256,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14238,7 +14319,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -14378,20 +14459,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -14989,20 +15079,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -15991,7 +16090,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16045,7 +16144,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -16554,7 +16653,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16613,7 +16712,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -17294,20 +17393,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -17648,7 +17756,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -17721,7 +17829,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -17967,7 +18075,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -18023,7 +18131,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -18179,20 +18287,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -18724,7 +18841,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -18788,7 +18905,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -18976,20 +19093,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -19138,7 +19264,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19201,7 +19327,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -21614,20 +21740,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -22227,20 +22362,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -22391,7 +22535,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -22468,7 +22612,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -22588,7 +22732,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3472edaf4ed14344c99a95d47c17a6c1, type: 2}
+  - {fileID: 2100000, guid: ed937789c21c21f48af5f70654b5264c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -22652,7 +22796,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -28447,20 +28591,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -28761,20 +28914,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -29239,20 +29401,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -39061,20 +39232,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -39272,20 +39452,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -40156,20 +40345,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -40632,20 +40830,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -41469,20 +41676,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -41853,20 +42069,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -42760,20 +42985,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -42860,20 +43094,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -43126,20 +43369,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.15
-      inSlope: -0.020890832
-      outSlope: -0.020890832
+      inSlope: -0.000000014890741
+      outSlope: -0.000000014890741
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.061932582
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: -0.23838767
-      outSlope: -0.23838767
+      value: 0.15
+      inSlope: -0.00023600584
+      outSlope: -0.00023600584
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04131484
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
