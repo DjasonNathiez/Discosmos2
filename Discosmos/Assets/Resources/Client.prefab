@@ -39802,11 +39802,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capacity1Input: 97
   capacity2Input: 122
+  glideInput: 32
   agent: {fileID: 1303469052307901206}
   manager: {fileID: 6339477792097956558}
   rb: {fileID: 607407433554177250}
   myTargetable: {fileID: 7603272037051560777}
   movementType: 0
+  isGliding: 0
   direction: {x: 0, y: 0, z: 0}
   target: {fileID: 7603272037051560777}
   cursorTarget: {fileID: 0}
@@ -39855,10 +39857,9 @@ MonoBehaviour:
   targetableBody: {fileID: 4809639664043971265}
   heightUI: 46
   type: 0
-  circleCursor: {fileID: 3559677542236044882}
-  attackCursor: {fileID: 7949478525285888945}
   pinkAmountText: {fileID: 0}
   greenAmountText: {fileID: 0}
+  circleCursor: {fileID: 3559677542236044882}
 --- !u!195 &1303469052307901206
 NavMeshAgent:
   m_ObjectHideFlags: 0

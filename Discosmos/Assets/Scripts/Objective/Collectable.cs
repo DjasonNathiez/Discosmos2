@@ -1,3 +1,4 @@
+using System;
 using Photon.Pun;
 using Tools;
 using UnityEngine;
@@ -15,6 +16,11 @@ public class Collectable : MonoBehaviour
     public float cooldownDuration;
     private float timer;
     private float backupNetworkTime;
+
+    private void Awake()
+    {
+        mRenderer = GetComponent<MeshRenderer>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {

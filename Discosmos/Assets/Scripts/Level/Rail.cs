@@ -125,7 +125,7 @@ public class Rail : MonoBehaviour
                         transition = false;
                     }
                 }
-                else if(player.movementType != Enums.MovementType.Tornado)
+                else if(player.movementType != Enums.MovementType.Tornado && player.isGliding)
                 {
                     if(Vector3.SqrMagnitude(new Vector3(player.transform.position.x,0,player.transform.position.z) - new Vector3(distancedNodes[0].x,0,distancedNodes[0].z)) <= entryZoneLenght * entryZoneLenght)
                     {

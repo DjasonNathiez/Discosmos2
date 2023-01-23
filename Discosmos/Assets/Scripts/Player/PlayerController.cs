@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [Header("INPUTS")] 
     public KeyCode capacity1Input = KeyCode.A;
     public KeyCode capacity2Input = KeyCode.Z;
+    public KeyCode glideInput = KeyCode.Space;
 
     [Header("REFERENCES")] 
     public NavMeshAgent agent;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public Enums.MovementType movementType;
     private bool isMoving;
     private bool isAttacking;
+    public bool isGliding;
 
     [Header("MOVEMENT")] public Vector3 direction;
     private bool movementEnabled;
@@ -60,6 +62,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        isGliding = Input.GetKey(glideInput);
         //AttackInputCheck();
         MovementTypeCheck();
         CapacityInputCheck();
