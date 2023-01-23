@@ -41011,6 +41011,10 @@ MonoBehaviour:
   factor: 0
   startIndex: 43
   startFactor: 0
+  pinkPoints: 0
+  greenPoints: 0
+  maxPoints: 2
+  winner: 0
 --- !u!136 &6012514801300316461
 CapsuleCollider:
   m_ObjectHideFlags: 0

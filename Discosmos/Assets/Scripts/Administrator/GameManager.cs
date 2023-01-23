@@ -30,6 +30,14 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
    public float timeBeforeStart = 60;
    public float startTimer;
    public bool gameIsStarted;
+   
+   [Header("UI")]
+   public InterfaceManager interfaceManager;
+   public double timer;
+   private double lastTickTime;
+   public Enums.Team defaultWinner = Enums.Team.Neutral;
+   public double gameTimer = 300;
+
 
    private void Awake()
    {
@@ -55,6 +63,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
      GameAdministrator.localPlayer.interfaceManager.championSelectCanvas.SetActive(true);
      GameAdministrator.localPlayer.controller.agent.Warp(spawnPoint.position);
      GameAdministrator.UpdatePlayersList();
+     interfaceManager = GameAdministrator.localPlayer.interfaceManager;
    }
    
 
@@ -102,8 +111,32 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             }
             break;
       }
+      timer = 0;
+      interfaceManager.UpdateGameTimer((float)timer);
+      lastTickTime = PhotonNetwork.Time;
+      GameAdministrator.NetworkUpdate += GameTimer;
       
       convoy.ActiveGameLoop();
+   }
+   
+   public void GameTimer()
+   {
+      
+      interfaceManager.UpdateGameTimer((float)timer);
+      
+      
+         if (timer >= gameTimer)
+         {
+            EndGame(defaultWinner);
+            GameAdministrator.NetworkUpdate -= GameTimer;
+            Debug.Log("END GAME");
+         }
+         else
+         {
+            timer = PhotonNetwork.Time - lastTickTime;
+            Debug.Log(timer);
+         }
+      
    }
 
    public void EndGame(Enums.Team winner)
@@ -270,6 +303,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
    public void DEBUG_TeleportToLevel()
    {
       GameAdministrator.localPlayer.controller.agent.Warp(spawnGreen[0].position);
+      gameIsStarted = true;
+      lastTickTime = PhotonNetwork.Time;
    }
 
    #endregion

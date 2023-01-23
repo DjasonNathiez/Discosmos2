@@ -52,6 +52,14 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
     public float factor;
     public int startIndex;
     public float startFactor;
+    
+    [Header("POINTS")]
+    public int pinkPoints;
+    public int greenPoints;
+    public int maxPoints;
+    public Enums.Team winner;
+    private GameManager gameManager;
+    private InterfaceManager interfaceManager;
 
 
     public void ActiveGameLoop()
@@ -95,6 +103,8 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
 
     private void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
+        interfaceManager = FindObjectOfType<InterfaceManager>();
     }
 
     void Update()
@@ -134,6 +144,12 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
                 InitializeHitStop(0.2f, 0.15f);
             }
         }
+        GameManager.instance.defaultWinner = winner;
+
+        if (pinkPoints ==  maxPoints || greenPoints == maxPoints)
+        {
+            gameManager.EndGame(winner);
+        }
     }
 
     void ApplyMovement()
@@ -167,33 +183,35 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
         {
             transform.position = curve[0];
 
-            switch (leftSide)
-            {
-                case Enums.Team.Green:
-                    GameManager.instance.EndGame(Enums.Team.Green);
-                    break;
-                
-                case Enums.Team.Pink:
-                    GameManager.instance.EndGame(Enums.Team.Pink);
-                    break;
-            }
+            // switch (leftSide)
+            // {
+            //     case Enums.Team.Green:
+            //         GameManager.instance.EndGame(Enums.Team.Green);
+            //         break;
+            //     
+            //     case Enums.Team.Pink:
+            //         GameManager.instance.EndGame(Enums.Team.Pink);
+            //         break;
+            // }
             
+            pinkPoints++;
             StartCoroutine(PointGained());
         }
         else if (index == curve.Count)
         {
             transform.position = curve[curve.Count -1];
             
-            switch (rightSide)
-            {
-                case Enums.Team.Green:
-                    GameManager.instance.EndGame(Enums.Team.Green);
-                    break;
-                
-                case Enums.Team.Pink:
-                    GameManager.instance.EndGame(Enums.Team.Pink);
-                    break;
-            }
+            // switch (rightSide)
+            // {
+            //     case Enums.Team.Green:
+            //         GameManager.instance.EndGame(Enums.Team.Green);
+            //         break;
+            //     
+            //     case Enums.Team.Pink:
+            //         GameManager.instance.EndGame(Enums.Team.Pink);
+            //         break;
+            // }
+            greenPoints++;
             StartCoroutine(PointGained());
         }
     }
@@ -202,12 +220,25 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         pointReached = true;
         force = 0;
+        interfaceManager.UpdateScore(greenPoints, pinkPoints);
         yield return new WaitForSeconds(1);
         transform.position = new Vector3(0, transform.position.y, transform.position.z);
         force = 0;
         pointReached = false;
         index = startIndex;
         factor = startFactor;
+        if (pinkPoints > greenPoints)
+        {
+            winner = Enums.Team.Pink;
+        }
+        else if (greenPoints > pinkPoints)
+        {
+            winner = Enums.Team.Green;
+        }
+        else
+        {
+            winner = Enums.Team.Neutral;
+        }
     }
     
     public void ApplyForce(float impulse)
