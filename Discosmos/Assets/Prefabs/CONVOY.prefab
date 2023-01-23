@@ -15154,6 +15154,10 @@ MonoBehaviour:
   factor: 0
   startIndex: 43
   startFactor: 0
+  pinkPoints: 0
+  greenPoints: 0
+  maxPoints: 2
+  winner: 0
 --- !u!114 &6012514801898265536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15187,6 +15191,8 @@ MonoBehaviour:
   targetableBody: {fileID: 6012514801500538023}
   heightUI: 40
   type: 2
+  circleCursor: {fileID: 0}
+  attackCursor: {fileID: 0}
   pinkAmountText: {fileID: 0}
   greenAmountText: {fileID: 0}
 --- !u!114 &6314092693385512065

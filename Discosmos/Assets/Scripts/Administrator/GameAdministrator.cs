@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Photon.Pun;
+using TMPro;
 using Tools;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameAdministrator : MonoBehaviourPunCallbacks
 {
@@ -26,6 +29,7 @@ public class GameAdministrator : MonoBehaviourPunCallbacks
 
     public static List<PlayerManager> players;
     
+    
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -48,6 +52,7 @@ public class GameAdministrator : MonoBehaviourPunCallbacks
     {
         OnUpdated?.Invoke();
     }
+    
 
     public void UpdateNetwork()
     {
