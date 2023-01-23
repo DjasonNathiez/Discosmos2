@@ -252,6 +252,13 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         }
 
         isLoaded = true;
+
+        GameManager gm = FindObjectOfType<GameManager>();
+
+        if (gm)
+        {
+            gm.ReadyCheck(false, photonView.ViewID);
+        }
     }
     
     public void ChangePlayerTeam(int index)
@@ -277,6 +284,14 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         currentAnimationController.SetTeamMaterial();
         
         controller.myTargetable.UpdateUI(true, true, currentHealth, maxHealth, false, 0, true, pView.Owner.NickName, true);
+
+      
+        GameManager gm = FindObjectOfType<GameManager>();
+        
+         if (gm)
+         {
+             gm.ReadyCheck(false, photonView.ViewID);
+         }
     }
 
     #region CAPACITIES

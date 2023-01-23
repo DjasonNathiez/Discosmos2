@@ -56,17 +56,21 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
      GameAdministrator.localPlayer.controller.agent.Warp(spawnPoint.position);
      GameAdministrator.UpdatePlayersList();
    }
-   
 
-   public void ReadyCheck()
+   public void ReadyButton()
+   {
+      localIsReady = !localIsReady;
+      ReadyCheck(localIsReady, GameAdministrator.localPlayer.pView.ViewID);
+   }
+
+   public void ReadyCheck(bool isReady, int sender)
    {
       Debug.Log("READY CHECK");
-      localIsReady = !localIsReady;
       
       Hashtable data = new Hashtable()
       {
-         {"Sender", GameAdministrator.localPlayer.pView.ViewID},
-         {"IsReady", localIsReady}
+         {"Sender", sender},
+         {"IsReady", isReady}
       };
       
       RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All, CachingOption = EventCaching.AddToRoomCacheGlobal};
@@ -151,8 +155,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
       {
          for (int i = 0; i < playersInRoom.Count; i++)
          {
-            Debug.Log(playersInRoom[i].pManager + " at " + i);
-            
             if (i >= playersInRoom.Count -1)
             {
                if (playersInRoom[i].pManager == pim.pManager)
@@ -178,82 +180,38 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
          }
       }
       
-      
-         
-      switch (pim.pManager.currentTeam)
+      pinkPlayers.Clear();
+      greenPlayers.Clear();
+
+      foreach (var player in playersInRoom)
       {
-         case Enums.Team.Green:
-            for (int i = 0; i < greenPlayers.Count; i++)
-            {
-               if (greenPlayers[i].pManager == pim.pManager)
-               {
-                  greenPlayers[i].isReady = pim.isReady;
-                  greenPlayers[i].pTeam = pim.pTeam;
-                  return;
-               }
-
-               if (i == greenPlayers.Count)
-               {
-                  if (greenPlayers[i].pManager == pim.pManager)
-                  {
-                     greenPlayers[i].isReady = pim.isReady;
-                     greenPlayers[i].pTeam = pim.pTeam;
-                     break;
-                  }
-                  else
-                  {
-                     greenPlayers.Add(pim);
-                     break;
-                  }
-               }
-               
-            }
-            break;
-               
-         case Enums.Team.Pink:
-            for (int i = 0; i < pinkPlayers.Count; i++)
-            {
-               if (pinkPlayers[i].pManager == pim.pManager)
-               {
-                  pinkPlayers[i].isReady = pim.isReady;
-                  pinkPlayers[i].pTeam = pim.pTeam;
-                  return;
-               }
-
-               if (i == pinkPlayers.Count)
-               {
-                  if (pinkPlayers[i].pManager == pim.pManager)
-                  {
-                     pinkPlayers[i].isReady = pim.isReady;
-                     pinkPlayers[i].pTeam = pim.pTeam;
-                     break;
-                  }
-                  else
-                  {
-                     pinkPlayers.Add(pim);
-                     break;
-                  }
-               }
-               
-            }
-            break;
+         switch (player.pTeam)
+         {
+            case Enums.Team.Green:
+               greenPlayers.Add(player);
+               break;
+            
+            case Enums.Team.Pink:
+               pinkPlayers.Add(player);
+               break;
+         }
       }
-
+      
       int readyCount = 0;
       
-     
-         foreach (var playerInRoom in playersInRoom)
-         {
-            if (playerInRoom.isReady == true)
+      foreach (var playerInRoom in playersInRoom)
+      {
+            if (playerInRoom.isReady)
             {
                readyCount++;
             }
 
             if (readyCount >= GameAdministrator.instance.playerPerGame)
-            {
-            StartGame(); 
+            { 
+               if(pinkPlayers.Count != 2 || greenPlayers.Count != 2) return;
+               StartGame();
             }
-         }
+      }
    }
    
    public void OnEvent(EventData photonEvent)

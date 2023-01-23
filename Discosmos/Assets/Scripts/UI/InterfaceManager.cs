@@ -78,7 +78,7 @@ public class InterfaceManager : MonoBehaviourPunCallbacks
 
         if (gm)
         {
-            gm.ReadyCheck();
+            gm.ReadyButton();
         }
     }
     
