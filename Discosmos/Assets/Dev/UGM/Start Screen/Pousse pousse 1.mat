@@ -55,6 +55,6 @@ Material:
     - _Couleur: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _speed: 4
+    - _speed: 0.9
     m_Colors: []
   m_BuildTextureStacks: []
