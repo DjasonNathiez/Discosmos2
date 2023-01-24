@@ -32,6 +32,7 @@ public class Targetable : MonoBehaviour
     public TextMeshProUGUI pinkAmountText;
     public TextMeshProUGUI greenAmountText;
     public GameObject circleCursor;
+    public GameObject attackCursor;
 
     private void Awake()
     {
@@ -140,14 +141,13 @@ public class Targetable : MonoBehaviour
     }
     public void ShowTarget()
     {
-        if(hideUI || isConvoy) return;
-        healthBar.target.gameObject.SetActive(true);
+        circleCursor.SetActive(false);
+        attackCursor.SetActive(true);
     }
     
     public void HideTarget()
     {
-        if(hideUI || isConvoy) return;
-        healthBar.target.gameObject.SetActive(false);
+        attackCursor.SetActive(false);
     }
 
     private void LateUpdate()

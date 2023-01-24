@@ -555,7 +555,15 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(capacity1Input))
             {
-                if(manager.capacity1Visu) manager.capacity1Visu.SetActive(true);
+                switch (manager.currentCharacter)
+                {
+                    case Enums.Characters.Mimi:
+                        if(manager.capacity1Visu) manager.capacity1Visu.SetActive(true);
+                        break;
+                    case Enums.Characters.Vega:
+                        if(manager.capacity2Visu) manager.capacity2Visu.SetActive(true);
+                        break;
+                }
             }
             
             if (Input.GetKey(capacity1Input))
@@ -572,6 +580,7 @@ public class PlayerController : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0,Quaternion.LookRotation(MouseWorldPosition()- transform.position).eulerAngles.y,0);
 
                 if(manager.capacity1Visu) manager.capacity1Visu.SetActive(false);
+                if(manager.capacity2Visu) manager.capacity2Visu.SetActive(false);
             
                 if(onRamp) OnExitRail();
                 ChangeAnimation(manager.currentAnimationController.capacity1Index);
@@ -581,38 +590,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (!manager.capacity2InCooldown)
-        {
-            if (Input.GetKeyDown(capacity2Input))
-            {
-                if(manager.capacity2Visu) manager.capacity2Visu.SetActive(true);
-            }
 
-            if (Input.GetKey(capacity2Input))
-            {
-                if (manager.capacity2Visu)
-                {
-                    manager.capacity2Visu.transform.rotation = Quaternion.Euler(0,Quaternion.LookRotation(MouseWorldPosition()- transform.position).eulerAngles.y,0);
-                    manager.capacity2Visu.transform.position =
-                        new Vector3(transform.position.x, 0, transform.position.z);
-                }
-            }
-            
-            if (Input.GetKeyUp(capacity2Input))
-            {
-                transform.rotation = Quaternion.Euler(0,Quaternion.LookRotation(MouseWorldPosition()- transform.position).eulerAngles.y,0);
-            
-                if(manager.capacity2Visu) manager.capacity2Visu.SetActive(false);
-            
-                if(onRamp) OnExitRail();
-                ChangeAnimation(manager.currentAnimationController.capacity2Index);
-                if(manager.capacity1.stopMovement) DisableMovement();
-                manager.SetCapacity2OnCooldown();
-                
-            }
-        }
-        
-       
     }
 
     #endregion
