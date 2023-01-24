@@ -35,7 +35,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Scrolling_texture:
-        m_Texture: {fileID: 2800000, guid: 81ea369aee0807848a5564c41480c08b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4f508eb6c6679e54e8d027c71f8626d6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2D:
@@ -56,12 +56,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Opacit_texture: 18.87
+    - _Opacit_texture: 8.33
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Size_gradient: 0.64
-    - _Speed_rotation: 0
-    - _Speed_scroolling: -1.53
+    - _Size_gradient: 0.46
+    - _Speed_rotation: -1.43
+    - _Speed_scroolling: -0.5
     - _Texture: 0
     m_Colors:
     - _Color: {r: 3.9999995, g: 3.9999995, b: 3.9999995, a: 0}
