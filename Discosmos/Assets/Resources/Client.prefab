@@ -20824,7 +20824,7 @@ MonoBehaviour:
   manager: {fileID: 6339477792097956558}
   championSelectCanvas: {fileID: 163923476507481450}
   playerInRoomText: {fileID: 8513229356618515867}
-  uiIndicatorsManager: {fileID: 0}
+  uiIndicatorsManager: {fileID: 5074491315532056510}
   hud: {fileID: 6579875933863581961}
   scoreCanvas: {fileID: 2608854007048898399}
   namePortraitText: {fileID: 339515444059241369}
@@ -21104,7 +21104,7 @@ GameObject:
   - component: {fileID: 7659212442392591767}
   - component: {fileID: 7754746656448831177}
   - component: {fileID: 6438349348984926567}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fill (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21153,7 +21153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.03529412}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -142091,7 +142091,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5574353596326525003}
   - component: {fileID: 5074491315532056510}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: UIIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
