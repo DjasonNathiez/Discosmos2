@@ -141,12 +141,15 @@ public class Targetable : MonoBehaviour
     }
     public void ShowTarget()
     {
+        if(hideUI) return;
+        
         circleCursor.SetActive(false);
         attackCursor.SetActive(true);
     }
     
     public void HideTarget()
     {
+        if(hideUI) return;
         attackCursor.SetActive(false);
     }
 

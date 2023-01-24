@@ -121,12 +121,6 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
                 InitializeHitStop(0.2f, 0.15f);
             }
         }
-        
-
-        if (pinkPoints ==  maxPoints || greenPoints == maxPoints)
-        {
-            gameManager.EndGame(winner);
-        }
     }
 
     void ApplyMovement()
@@ -156,17 +150,28 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
 
     void CheckForPoint()
     {
+        if(index > curve.Count) return;
+        
         if (index == -1)
         {
             transform.position = curve[0];
-            pinkPoints++;
+            greenPoints++;
             StartCoroutine(PointGained());
+
+            if (greenPoints == maxPoints)
+            {
+                GameManager.instance.EndGame(winner);
+            }
         }
         else if (index == curve.Count)
         {
             transform.position = curve[curve.Count -1];
-            greenPoints++;
+            pinkPoints++;
             StartCoroutine(PointGained());
+            if (pinkPoints == maxPoints)
+            {
+                GameManager.instance.EndGame(winner);
+            }
         }
     }
 

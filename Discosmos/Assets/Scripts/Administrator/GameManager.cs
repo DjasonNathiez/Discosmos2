@@ -4,6 +4,7 @@ using ExitGames.Client.Photon;
 using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using Tools;
 using UnityEngine;
 
@@ -38,8 +39,14 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
    private double lastTickTime;
    public Enums.Team defaultWinner = Enums.Team.Neutral;
    public float gameTimer = 300;
-
-
+   
+   public TMP_FontAsset pinkFontWin;
+   public TMP_FontAsset greenFontWin;
+   public TextMeshProUGUI winText;
+   public GameObject winObj;
+   public GameObject readyObj;
+   public TextMeshProUGUI readyCount;
+   
    private void Awake()
    {
       if (instance == null)
@@ -75,7 +82,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
    public void ReadyCheck(bool isReady, int sender)
    {
-      Debug.Log("READY CHECK");
       
       Hashtable data = new Hashtable()
       {
@@ -90,6 +96,18 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
    public void StartGame()
    {
+      winObj.SetActive(false);
+      convoy.pinkPoints = 0;
+      convoy.greenPoints = 0;
+      
+      interfaceManager.UpdateScore(convoy.greenPoints, convoy.pinkPoints);
+
+      foreach (var p in playersInRoom)
+      {
+         p.isReady = false;
+      }
+      localIsReady = false;
+      
       switch (GameAdministrator.localPlayer.currentTeam)
       {
          case Enums.Team.Green:
@@ -115,6 +133,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
       
       GameAdministrator.localPlayer.interfaceManager.championSelectCanvas.SetActive(false);
       GameAdministrator.localPlayer.interfaceManager.scoreCanvas.SetActive(true);
+      
       for (int i = 0; i < playersInRoom.Count; i++)
       {
          if (playersInRoom[i].pManager != GameAdministrator.localPlayer)
@@ -122,9 +141,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             GameAdministrator.localPlayer.interfaceManager.CreateIndics(playersInRoom[i].pManager);
          }
       }
+      
       GameAdministrator.localPlayer.Respawn();
-      //GameAdministrator.localPlayer.controller.agent.Warp(localSpawnPoint.position);
-
+      
       timer = 0;
       interfaceManager.UpdateGameTimer((float)timer);
       lastTickTime = PhotonNetwork.Time;
@@ -144,12 +163,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
          {
             EndGame(defaultWinner);
             GameAdministrator.NetworkUpdate -= GameTimer;
-            Debug.Log("END GAME");
          }
          else
          {
             timer = PhotonNetwork.Time - lastTickTime;
-            Debug.Log(timer);
          }
       
    }
@@ -157,24 +174,29 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
    public void EndGame(Enums.Team winner)
    {
       gameIsStarted = false;
-      
+      GameAdministrator.localPlayer.interfaceManager.scoreCanvas.SetActive(false);
+      readyCount.text = "0/4";
+
       switch (winner)
       {
          case Enums.Team.Green:
-            Debug.Log("Green lose");
+            winObj.SetActive(true);
+            winText.font = greenFontWin;
+            winText.text = "Green Win !";
             break;
          
          case Enums.Team.Pink:
-            Debug.Log("Pink win");
+            winObj.SetActive(true);
+            winText.font = greenFontWin;
+            winText.text = "Pink Win !";
             break;
       }
+      
    }
 
    public void CheckPlayersInRoom(Hashtable data = null)
    {
       if (data == null) return;
-      
-      Debug.Log("CHECK");
 
       bool ready = false;
       int id = 0;
@@ -254,6 +276,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                StartGame();
             }
       }
+
+      this.readyCount.text = readyCount.ToString() + "/4";
    }
    
    public void OnEvent(EventData photonEvent)

@@ -38,13 +38,8 @@ public class NetworkConnector : MonoBehaviourPunCallbacks
     
     public void EnterServerButton()
     {
-        Debug.Log("KEBAB");
-        
-      
         PhotonNetwork.ConnectUsingSettings();
-            
-        serverStateMessage.text = "Connecting...";
-            
+        
         connectServerButton.interactable = false;
     }
 
@@ -70,11 +65,6 @@ public class NetworkConnector : MonoBehaviourPunCallbacks
         GameAdministrator.localPlayer.GetComponent<PhotonView>().Owner.NickName = usernameInputField.text;
         
         GameAdministrator.localPlayer.Initialize();
-
-        //DEBUG VISUAL FEEDBACK
-        serverStateMessage.text = serverStateMessage.text + " | Nickame : " +
-                                  GameAdministrator.localPlayer.pView.Owner.NickName + " | ViewID : " +
-                                  GameAdministrator.localPlayer.pView.ViewID;
     }
 
     #endregion
@@ -85,8 +75,6 @@ public class NetworkConnector : MonoBehaviourPunCallbacks
     {
         base.OnConnectedToMaster();
         
-        //DEBUG VISUAL FEEDBACK
-        serverStateMessage.text = "Connected to server.";
         GameAdministrator.NetworkUpdate += MoveCamera;
 
         PhotonNetwork.JoinLobby(lobby);
@@ -96,9 +84,6 @@ public class NetworkConnector : MonoBehaviourPunCallbacks
     {
         base.OnJoinedLobby();
         
-        //DEBUG VISUAL FEEDBACK
-        serverStateMessage.text = "Connected to lobby.";
-
         switch (GameAdministrator.roomState)
         {
             case Enums.NetworkRoomState.Inside:
@@ -122,8 +107,6 @@ public class NetworkConnector : MonoBehaviourPunCallbacks
         {
             case Enums.GameState.Disconnected:
                 
-                serverStateMessage.text = "Connected to room : " + PhotonNetwork.CurrentRoom.Name + " | Current Lobby : " + PhotonNetwork.CurrentLobby.Name + " | Player in Room : " + PhotonNetwork.CurrentRoom.Players.Count;
-
                 connectorGroup.SetActive(false);
                 roomEnterGroup.SetActive(true);
 
@@ -131,7 +114,6 @@ public class NetworkConnector : MonoBehaviourPunCallbacks
                 break;
             
             case Enums.GameState.Hub:
-                serverStateMessage.text = "Connected to room : " + PhotonNetwork.CurrentRoom.Name + " | Current Lobby : " + PhotonNetwork.CurrentLobby.Name + " | Player in Room : " + PhotonNetwork.CurrentRoom.Players.Count;
                 
                 PhotonNetwork.AutomaticallySyncScene = true;
                 
@@ -144,15 +126,9 @@ public class NetworkConnector : MonoBehaviourPunCallbacks
                 }
                 
                 break;
-            
-            case Enums.GameState.Game:
-                serverStateMessage.text = "Connected to room : " + PhotonNetwork.CurrentRoom.Name + " | Current Lobby : " + PhotonNetwork.CurrentLobby.Name + " | Player in Room : " + PhotonNetwork.CurrentRoom.Players.Count;
-                break;
         }
         
         GameAdministrator.roomState = Enums.NetworkRoomState.Inside;
-
-        Debug.Log(GameAdministrator.gameState + "-" + GameAdministrator.roomState);
     }
 
     public override void OnLeftRoom()
@@ -190,10 +166,6 @@ public class NetworkConnector : MonoBehaviourPunCallbacks
         base.OnPlayerEnteredRoom(newPlayer);
         
         GameAdministrator.UpdatePlayersList();
-        
-        serverStateMessage.text = serverStateMessage.text + " | Nickame : " +
-                                  GameAdministrator.localPlayer.pView.Owner.NickName + " | ViewID : " +
-                                  GameAdministrator.localPlayer.pView.ViewID;
 
         if (PhotonNetwork.IsMasterClient)
         {
