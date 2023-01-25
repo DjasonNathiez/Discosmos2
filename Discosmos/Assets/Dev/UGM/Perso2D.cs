@@ -10,7 +10,7 @@ public class Perso2D : MonoBehaviour
     float vitesse_y_actuelle;
     float vitesse_x_actuelle;
     float vitesse_z_actuelle;
-    public float gravité = 10;
+    public float gravity = 10;
     
     void Start()
     {
@@ -37,8 +37,8 @@ public class Perso2D : MonoBehaviour
         //tester contact avec le sol
         bool contact_sol = gameObject.transform.position.y <= 0;
 
-        //gravité
-        if (!contact_sol) vitesse_y_actuelle -= gravité * Time.deltaTime;
+        //gravitï¿½
+        if (!contact_sol) vitesse_y_actuelle -= gravity * Time.deltaTime;
         else
         {
             vitesse_y_actuelle = 0;
