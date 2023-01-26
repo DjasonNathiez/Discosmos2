@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using DG.Tweening;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -191,8 +192,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void ResetPlayerStats()
     {
-        SetData();
-        
         currentHealth = maxHealth;
         currentSpeed = baseSpeed;
         force = 0;
@@ -318,6 +317,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
         
         if (capacity1Timer >= capacity1.cooldownTime)
         {
+            interfaceManager.CapacityPumpScale();
             capacity1InCooldown = false;
             interfaceManager.UnsetCapacityImageOnCooldown();
             OnCooldownCapacity1 -= CooldownCapacity1;
@@ -595,7 +595,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IOnEventCallback
               RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All, };
               PhotonNetwork.RaiseEvent(RaiseEvent.Death, new Hashtable{{"ID", pView.ViewID}}, raiseEventOptions, SendOptions.SendReliable);
           }
-          
+          interfaceManager.HealthShakeOnDamage();
           interfaceManager.UpdateHealthBar(currentHealth, maxHealth);
           controller.myTargetable.UpdateUI(false, true, currentHealth, maxHealth);
       }
