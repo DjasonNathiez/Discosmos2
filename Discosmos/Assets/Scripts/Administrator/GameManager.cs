@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
    public GameObject winObj;
    public GameObject readyObj;
    public TextMeshProUGUI readyCount;
-   
+
    private void Awake()
    {
       if (instance == null)
@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
    public void ReadyButton()
    {
       localIsReady = !localIsReady;
+      interfaceManager.SwitchUIReady(localIsReady);
       ReadyCheck(localIsReady, GameAdministrator.localPlayer.pView.ViewID);
    }
 
@@ -176,6 +177,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
       gameIsStarted = false;
       GameAdministrator.localPlayer.interfaceManager.scoreCanvas.SetActive(false);
       readyCount.text = "0/4";
+      interfaceManager.cSelectReadyCountTxt.text = "0/4";
 
       switch (winner)
       {
@@ -277,6 +279,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             }
       }
 
+      interfaceManager.cSelectReadyCountTxt.text = readyCount.ToString() + "/4";
       this.readyCount.text = readyCount.ToString() + "/4";
    }
    

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Photon.Pun;
 using TMPro;
 using Tools;
@@ -15,7 +16,11 @@ public class InterfaceManager : MonoBehaviourPunCallbacks
     public GameObject championSelectCanvas;
     public TextMeshProUGUI playerInRoomText;
     public UIIndicatorsManager uiIndicatorsManager;
-
+    
+    public Color unselectColor = new Color(147, 147, 147, 1);
+    public Color selectColor = new Color(255, 255, 255, 1);
+    public Image[] champSelectPanel;
+    
     [Header("HUD")] 
     public GameObject hud;
     public GameObject scoreCanvas;
@@ -46,8 +51,42 @@ public class InterfaceManager : MonoBehaviourPunCallbacks
     public int scorePink = 0;
     public int scoreGreen = 0;
 
+    [Header("READY")]
+    public Image buttonReadyImg;
+    public TextMeshProUGUI buttonReadyTxt;
+    public Sprite readyOnSprite;
+    public Sprite readyOffSprite;
+    public TMP_FontAsset readyOnFont;
+    public TMP_FontAsset readyOffFont;
+    public TextMeshProUGUI cSelectReadyCountTxt;
+
+    public GameObject capacityObject;
+    public float capacityPumpScale;
+
+    public Transform healthObject;
+    public float healthShakeScale;
+    public float healthShakeDuration;
+
+    public float portraitShakeScale;
+    public float portraitShakeDuration;
+    public Color portraitColorTint;
+    public Transform portraitTransform;
+    
     #region HUD
 
+    public void CapacityPumpScale()
+    {
+        capacityObject.transform.DOPunchScale(capacityObject.transform.localScale * capacityPumpScale, 0.5f);
+    }
+
+    public void HealthShakeOnDamage()
+    {
+        portraitTransform.DOShakeScale(portraitShakeDuration, portraitShakeScale);
+        portraitImage.DOColor(portraitColorTint, 0.2f).OnComplete(() => { portraitImage.DOColor(Color.white, 0.2f);});
+        healthFillAmount.DOColor(portraitColorTint, 0.2f).OnComplete(() => { healthFillAmount.DOColor(Color.white, 0.2f);});
+        healthObject.DOShakeScale(healthShakeDuration, healthShakeScale);
+    }
+    
     public void InitializeHUD(int currentHealth, int maxHealth, float currentSpeed, string nickname)
     {
         hud.SetActive(true);
@@ -155,6 +194,8 @@ public class InterfaceManager : MonoBehaviourPunCallbacks
         scoreGreen = green;
         scoreTextPink.text = scorePink.ToString();
         scoreTextGreen.text = scoreGreen.ToString();
+        scoreTextGreen.transform.DOPunchScale(scoreTextGreen.transform.localScale * 1.2f, 0.5f);
+        scoreTextPink.transform.DOPunchScale(scoreTextPink.transform.localScale * 1.2f, 0.5f);
     }
     
 
@@ -163,10 +204,43 @@ public class InterfaceManager : MonoBehaviourPunCallbacks
     public void Ready()
     {
         GameManager gm = FindObjectOfType<GameManager>();
-
+        
         if (gm)
         {
             gm.ReadyButton();
+        }
+    }
+
+    public void SwitchColorsChamp(int index)
+    {
+        for (int i = 0; i < champSelectPanel.Length; i++)
+        {
+            if (i == index)
+            {
+                champSelectPanel[i].transform.GetChild(0).GetComponent<Image>().color = selectColor;
+                champSelectPanel[i].color = selectColor;
+            }
+            else
+            {
+                champSelectPanel[i].transform.GetChild(0).GetComponent<Image>().color = unselectColor;
+                champSelectPanel[i].color = unselectColor;
+            }
+        }
+    }
+    
+    public void SwitchUIReady(bool isReady)
+    {
+        switch (isReady)
+        {
+            case true:
+                buttonReadyImg.sprite = readyOnSprite;
+                buttonReadyTxt.font = readyOnFont;
+                break;
+            
+            case false:
+                buttonReadyImg.sprite = readyOffSprite;
+                buttonReadyTxt.font = readyOffFont;
+                break;
         }
     }
     
@@ -198,7 +272,7 @@ public class InterfaceManager : MonoBehaviourPunCallbacks
     
     public void UpdatePlayerInRoomCount()
     {
-        playerInRoomText.text = PhotonNetwork.CurrentRoom.PlayerCount + "/" + GameAdministrator.instance.playerPerGame;
+      //  playerInRoomText.text = PhotonNetwork.CurrentRoom.PlayerCount + "/" + GameAdministrator.instance.playerPerGame;
     }
 
     public void CreateIndics(PlayerManager manager)

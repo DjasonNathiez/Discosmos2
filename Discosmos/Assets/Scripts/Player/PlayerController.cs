@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Photon.Pun;
 using Tools;
 using UnityEngine;
@@ -584,6 +585,9 @@ public class PlayerController : MonoBehaviour
             
                 if(onRamp) OnExitRail();
                 ChangeAnimation(manager.currentAnimationController.capacity1Index);
+                
+                manager.interfaceManager.CapacityPumpScale();
+                
                 if(manager.capacity1.stopMovement) DisableMovement();
                 manager.SetCapacity1OnCooldown();
                 

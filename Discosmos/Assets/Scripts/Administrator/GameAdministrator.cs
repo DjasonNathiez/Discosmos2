@@ -78,5 +78,10 @@ public class GameAdministrator : MonoBehaviourPunCallbacks
         players.AddRange(FindObjectsOfType<PlayerManager>());
     }
 
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
    
 }
