@@ -97,6 +97,7 @@ public class MimiAnimationController : AnimationController
                     laserGreenVFX.transform.position.y, manager.controller.transform.position.z);
         
                 laserGreenVFX.transform.rotation = Quaternion.Euler(0,Quaternion.LookRotation(manager.controller.MouseWorldPosition() - manager.controller.transform.position).eulerAngles.y - 90,0);
+                laserHitBox = laserGreenVFX.transform.GetChild(0).GetComponent<CapacityHitBox>();
                 laserGreenVFX.Play();
                 break;
             
@@ -105,6 +106,7 @@ public class MimiAnimationController : AnimationController
                     laserPinkVFX.transform.position.y, manager.controller.transform.position.z);
         
                 laserPinkVFX.transform.rotation = Quaternion.Euler(0,Quaternion.LookRotation(manager.controller.MouseWorldPosition() - manager.controller.transform.position).eulerAngles.y - 90,0);
+                laserHitBox = laserPinkVFX.transform.GetChild(0).GetComponent<CapacityHitBox>();
                 laserPinkVFX.Play();
                 break;
         }
