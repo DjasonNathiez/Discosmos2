@@ -99,27 +99,6 @@ public class ConvoyBehavior : MonoBehaviourPunCallbacks, IOnEventCallback
                     ApplyMovement();
                 }   
             }
-
-
-            // TEST APPLY FORCES
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-               InitConvoy();
-            }
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                ApplyForce(-10);
-            }
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                ApplyForce(-50);
-                InitializeHitStop(0.2f, 0.15f);
-            }
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                ApplyForce(50);
-                InitializeHitStop(0.2f, 0.15f);
-            }
         }
     }
 

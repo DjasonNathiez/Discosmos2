@@ -179,10 +179,12 @@ public class PlayerController : MonoBehaviour
             {
                 target.HideTarget();
             }
+            
+            if(target == GetTarget() && GetTarget() != null) return;
 
             target = GetTarget();
 
-            if (target)
+            if (target != null)
             {
                 target.ShowTarget();
 
@@ -230,10 +232,12 @@ public class PlayerController : MonoBehaviour
             {
                 target.HideTarget();
             }
+            
+            if(target == GetTarget() && GetTarget() != null) return;
 
             target = GetTarget();
 
-            if (target)
+            if (target != null)
             {
                 target.ShowTarget();
 
@@ -372,9 +376,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void EnableMovement()
+    public void EnableMovement(bool enableAnimSwitch = false)
     {
         movementEnabled = true;
+        if (enableAnimSwitch)
+        {
+            ChangeAnimation(0);
+        }
     }
     
     public void DisableMovement()

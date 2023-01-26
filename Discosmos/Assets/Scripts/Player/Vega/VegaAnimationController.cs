@@ -13,8 +13,11 @@ public class VegaAnimationController : AnimationController
 
    [Header("BLACK HOLE")] 
    public bool blackHoleIsActive;
-   public ParticleSystem blackHoleVFX;
+   public ParticleSystem greenBlackHoleVFX;
+   public ParticleSystem pinkBlackHoleVFX;
    public CapacityHitBox insideBlackHole;
+   public CapacityHitBox greenInside;
+   public CapacityHitBox pinkInside;
    private float timer;
    public List<int> blackHoleHitted;
    public List<float> hittedTimers;
@@ -47,8 +50,10 @@ public class VegaAnimationController : AnimationController
       {
          if (timer >= manager.capacity1.durationBase)
          {
-            blackHoleVFX.Stop();
-            blackHoleVFX.transform.gameObject.SetActive(false);
+            greenBlackHoleVFX.Stop();
+            greenBlackHoleVFX.transform.gameObject.SetActive(false);
+            pinkBlackHoleVFX.Stop();
+            pinkBlackHoleVFX.transform.gameObject.SetActive(false);
             //manager.SetCapacity1OnCooldown();
             blackHoleIsActive = false;
             manager.controller.ChangeAnimation(1);
@@ -105,8 +110,23 @@ public class VegaAnimationController : AnimationController
    {
       if (!blackHoleIsActive)
       {
-         blackHoleVFX.transform.gameObject.SetActive(true);
-         blackHoleVFX.Play();
+         switch (manager.currentTeam)
+         {
+            case Enums.Team.Green:
+
+               greenBlackHoleVFX.transform.gameObject.SetActive(true);
+               greenBlackHoleVFX.Play();
+               insideBlackHole = greenInside;
+               break;
+            
+            case Enums.Team.Pink:
+               pinkBlackHoleVFX.transform.gameObject.SetActive(true);
+               pinkBlackHoleVFX.Play();
+               insideBlackHole = pinkInside;
+
+               break;
+         }
+         
          timer = 0;
          blackHoleIsActive = true;
          manager.capacity1InCooldown = true;

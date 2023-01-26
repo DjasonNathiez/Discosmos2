@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Tools;
 using UnityEngine;
 
 public class MimiAnimationController : AnimationController
@@ -14,7 +15,8 @@ public class MimiAnimationController : AnimationController
     public bool attackFX;
 
     [Header("LASER VFX")] 
-    public ParticleSystem laserVFX;
+    public ParticleSystem laserGreenVFX;
+    public ParticleSystem laserPinkVFX;
     public CapacityHitBox laserHitBox;
     
     public override void AttackVFX()
@@ -79,19 +81,34 @@ public class MimiAnimationController : AnimationController
     {
         int damages = Mathf.RoundToInt(manager.capacity1.amount * manager.damageMultiplier.Evaluate(manager.force));
         manager.DealDamage(laserHitBox.idOnIt.ToArray(), damages);
+        manager.force *= 0.2f;
         manager.HitStop(laserHitBox.idOnIt.ToArray(), manager.force > 0 ? 0.7f * manager.force + 0.2f: 0.2f,manager.force > 0 ? 0.3f * manager.force + 0.1f: 0.1f);
         Vector3 kbDirection = transform.forward;
         manager.KnockBack(laserHitBox.idOnIt.ToArray(), manager.force > 0 ? 0.6f * manager.force : 0,manager.force > 0 ? 11f * manager.force : 0,kbDirection.normalized);
-        manager.controller.EnableMovement();
+        manager.controller.EnableMovement(true);
     }
 
     public void CallMimiLaserVFX()
     {
-        laserVFX.transform.position = new Vector3(manager.controller.transform.position.x,
-            laserVFX.transform.position.y, manager.controller.transform.position.z);
+        switch (manager.currentTeam)
+        {
+            case Enums.Team.Green:
+                laserGreenVFX.transform.position = new Vector3(manager.controller.transform.position.x,
+                    laserGreenVFX.transform.position.y, manager.controller.transform.position.z);
         
-        laserVFX.transform.rotation = Quaternion.Euler(0,Quaternion.LookRotation(manager.controller.MouseWorldPosition() - manager.controller.transform.position).eulerAngles.y - 90,0);
-        laserVFX.Play();
+                laserGreenVFX.transform.rotation = Quaternion.Euler(0,Quaternion.LookRotation(manager.controller.MouseWorldPosition() - manager.controller.transform.position).eulerAngles.y - 90,0);
+                laserGreenVFX.Play();
+                break;
+            
+            case Enums.Team.Pink:
+                laserPinkVFX.transform.position = new Vector3(manager.controller.transform.position.x,
+                    laserPinkVFX.transform.position.y, manager.controller.transform.position.z);
+        
+                laserPinkVFX.transform.rotation = Quaternion.Euler(0,Quaternion.LookRotation(manager.controller.MouseWorldPosition() - manager.controller.transform.position).eulerAngles.y - 90,0);
+                laserPinkVFX.Play();
+                break;
+        }
+       
     }
 
     public void CastMimiUltimate()
